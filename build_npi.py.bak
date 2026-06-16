@@ -9,20 +9,13 @@ import re
 import datetime
 import hashlib
 import openpyxl
-from openpyxl.styles import Font, PatternFill, Alignment
-from openpyxl.utils import get_column_letter
-import urllib.request
 
 # ── 路径配置 ──
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 EXCEL_PATH = r"C:\Users\msipm\Desktop\work\Spec總表.xlsx"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 HTML_PATH  = os.path.join(BASE_DIR, "npi_dashboard.html")
-HTML_PATH2 = os.path.join(BASE_DIR, "npi_dashboard2.html")
 JSON_PATH  = os.path.join(BASE_DIR, "npi_data.json")
 SEARCH_HTML_PATH = os.path.join(BASE_DIR, "npi_search.html")
-
-# GitHub Pages 上的 npi_dashboard.html URL（用于实时对比 MP）
-GITHUB_HTML_URL = "https://kabonka.github.io/npi-dashboard/npi_dashboard.html"
 
 # Excel Schedule sheet 列映射 (1-indexed, Row 1=表头)
 COL = {
@@ -109,57 +102,22 @@ def read_excel():
     return records
 
 
-def fetch_github_records():
-    """从 GitHub Pages 获取最新的 npi_dashboard.html，解析其中的 JSON 数据"""
-    try:
-        req = urllib.request.Request(
-            GITHUB_HTML_URL,
-            headers={"User-Agent": "Mozilla/5.0"}
-        )
-        with urllib.request.urlopen(req, timeout=8) as resp:
-            html = resp.read().decode("utf-8")
-        # 从 HTML 中解析 const DATA = { ... };
-        match = re.search(r'const DATA = (\{[\s\S]*?\});', html)
-        if not match:
-            print("⚠️ 无法从 GitHub HTML 中解析 JSON 数据")
-            return {}
-        json_str = match.group(1)
-        # 移除/替换非法控制字符（JSON 字符串中不允许的字符）
-        json_str = json_str.replace('\t', ' ')  # Tab 替换为空格
-        json_str = re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f]', '', json_str)  # 移除其他控制字符
-        data = json.loads(json_str)
-        records = {r.get("model", "") + "|" + r.get("mkt", "") + "|" + r.get("cpu", "") + "|" + r.get("gpu", ""): r for r in data.get("records", [])}
-        print(f"已从 GitHub 获取 {len(records)} 条记录用于对比")
-        return records
-    except Exception as e:
-        print(f"⚠️ 从 GitHub 获取数据失败: {e}")
-        return {}
-
-
 def detect_mp_changes(new_records):
-    """对比 GitHub 上的最新 JSON，检测 MP 日期或 stage 有变动的记录，标记 mp_changed"""
-    # 先从 GitHub 获取最新数据
-    github_records = fetch_github_records()
-    
-    # 如果 GitHub 获取失败，回退到本地 JSON
-    if not github_records:
-        print("回退到本地 JSON 对比...")
-        if not os.path.exists(JSON_PATH):
-            return new_records
-        try:
-            with open(JSON_PATH, "r", encoding="utf-8") as f:
-                old_data = json.load(f)
-            github_records = {r.get("model", "") + "|" + r.get("mkt", "") + "|" + r.get("cpu", "") + "|" + r.get("gpu", ""): r for r in old_data.get("records", [])}
-        except Exception:
-            return new_records
+    """对比上次构建的 JSON，检测 MP 日期或 stage 有变动的记录，标记 mp_changed"""
+    if not os.path.exists(JSON_PATH):
+        return new_records
 
-    changed_count = 0
-    compare_stages = {'Design', 'DVT', 'EVT', 'MVT', 'ATS'}
+    try:
+        with open(JSON_PATH, "r", encoding="utf-8") as f:
+            old_data = json.load(f)
+        # 按 model+mkt 匹配（比 orig_idx 更稳健，避免 Excel 行序变动导致误判）
+        old_records = {(r.get("model",""), r.get("mkt","")): r for r in old_data.get("records", [])}
+    except Exception:
+        return new_records
+
     for r in new_records:
-        if r.get("stage", "") not in compare_stages:
-            continue
-        key = r.get("model", "") + "|" + r.get("mkt", "") + "|" + r.get("cpu", "") + "|" + r.get("gpu", "")
-        old = github_records.get(key)
+        key = (r.get("model", ""), r.get("mkt", ""))
+        old = old_records.get(key)
         if not old:
             # 新增记录，不算 MP 变动
             continue
@@ -167,16 +125,8 @@ def detect_mp_changes(new_records):
         new_mp = r.get("dates", {}).get("MP", "")
         old_stage = old.get("stage", "")
         new_stage = r.get("stage", "")
-        if old_mp != new_mp:
+        if old_mp != new_mp or old_stage != new_stage:
             r["mp_changed"] = True
-            r["old_mp"] = old_mp
-            r["old_stage"] = old_stage
-            changed_count += 1
-
-    if changed_count > 0:
-        print(f"与 GitHub 版本对比，检测到 {changed_count} 条 MP 变动")
-    else:
-        print("与 GitHub 版本对比，未检测到 MP 变动")
 
     return new_records
 
@@ -202,27 +152,11 @@ def inject_html(records):
         f.write(new_html)
 
 
-def inject_html2(records):
-    """把数据写入 npi_dashboard2.html"""
-    with open(HTML_PATH2, "r", encoding="utf-8") as f:
-        html = f.read()
-
-    data_obj = {"records": records, "buildTime": datetime.datetime.now().strftime("%Y/%m/%d %H:%M:%S")}
-    json_str = json.dumps(data_obj, ensure_ascii=False, indent=2)
-
-    pattern = r"const DATA = \{[\s\S]*?\n\};"
-    replacement = f"const DATA = {json_str};"
-
-    new_html, count = re.subn(pattern, replacement, html, count=1)
-    if count == 0:
-        raise RuntimeError("未在 npi_dashboard2.html 中找到 'const DATA = { ... };' 块")
-
-    with open(HTML_PATH2, "w", encoding="utf-8") as f:
-        f.write(new_html)
-
-
 def generate_xlsx(records):
     """生成带折叠分组的 Excel 文件（H~M 列默认折叠，子行默认折叠）"""
+    from openpyxl.utils import get_column_letter
+    from openpyxl.styles import Font, PatternFill, Alignment
+
     wb = openpyxl.Workbook()
     ws = wb.active
     ws.title = "NPI Dashboard"
@@ -252,19 +186,12 @@ def generate_xlsx(records):
         'BTO-':'00BCD4','ATS-':'66BB6A','Pending':'8899AA'
     }
 
-    # 排序：与 Dashboard 默认 sortKey='mp' 对齐
-    # 1. 按 model 分组 → 组内按 MP 最早优先 + highlight 长度降序
-    # 2. 组间按最早 MP 排序
+    # 数据行（按 Model 分组）
     from collections import OrderedDict
-    model_groups = OrderedDict()
+    groups = OrderedDict()
     for rec in records:
         m = rec.get('model','')
-        model_groups.setdefault(m, []).append(rec)
-    for rows in model_groups.values():
-        rows.sort(key=lambda r: (r.get('mp_sort','') or 'Z', -(len(r.get('highlight','')) if r.get('highlight','') and r['highlight'] != '.' else 0)))
-    # 组间排序
-    sorted_models = sorted(model_groups.keys(), key=lambda m: model_groups[m][0].get('mp_sort','') or 'Z')
-    groups = OrderedDict((m, model_groups[m]) for m in sorted_models)
+        groups.setdefault(m, []).append(rec)
 
     row_idx = 2
     no = 1
@@ -273,22 +200,15 @@ def generate_xlsx(records):
     for model, recs in groups.items():
         for i, rec in enumerate(recs):
             dates = rec.get('dates', {})
-            # status/highlight 在写入前做「数字)」换行处理
-            raw_status = rec.get('status','')
-            raw_hl = rec.get('highlight','')
-            def _wrap_text(t):
-                if not t or not re.search(r'\d+[)）]', t):
-                    return t
-                return re.sub(r'([^\n])(\s*)(\d+[)）])', r'\1\n\3', t)
             vals = [no, rec.get('model',''), rec.get('mkt',''), rec.get('stage',''),
                     rec.get('cpu',''), rec.get('gpu',''), rec.get('npm','')]
             for k in dk:
                 vals.append(dates.get(k, ''))
-            vals.extend([_wrap_text(raw_status), _wrap_text(raw_hl)])
+            vals.extend([rec.get('status',''), rec.get('highlight','')])
 
             for j, v in enumerate(vals):
                 cell = ws.cell(row_idx, j+1, v)
-                cell.alignment = Alignment(vertical="center", wrap_text=(j >= len(vals)-2))
+                cell.alignment = Alignment(vertical="center")
                 if j == 0:
                     cell.alignment = Alignment(horizontal="center", vertical="center")
                 if j == 3:  # Stage 列加颜色
@@ -298,7 +218,7 @@ def generate_xlsx(records):
             is_parent = (i == 0)
             if is_parent:
                 ws.cell(row_idx, 2).font = Font(bold=True, size=11)
-                # 不设置固定行高，让 Excel 自动适应换行内容
+                ws.row_dimensions[row_idx].height = 20
             else:
                 ws.cell(row_idx, 2).font = Font(size=10, color="666666")
                 ws.cell(row_idx, 2).alignment = Alignment(indent=2, vertical="center")
@@ -312,15 +232,14 @@ def generate_xlsx(records):
             no += 1
             row_idx += 1
 
-    # I~M 列（9~13，DVT-start~ATS-start）折叠在 Kickoff(col 8) 之下，默认收起
-    for c in range(9, 14):
+    # H~M 列（8~13）折叠并默认隐藏
+    for c in range(8, 14):
         col_letter = get_column_letter(c)
-        ws.column_dimensions[col_letter].outline_level = 1
+        ws.column_dimensions[col_letter].outlineLevel = 1
         ws.column_dimensions[col_letter].hidden = True
 
-    # 大纲属性：右侧汇总 + 显示展开/折叠按钮
-    ws.sheet_properties.outlinePr = openpyxl.worksheet.properties.Outline(summaryRight=True)
-    ws.sheet_view.showOutlineSymbols = True
+    # 大纲属性
+    ws.sheet_properties.outlinePr = openpyxl.worksheet.properties.Outline(summaryBelow=False)
 
     # 冻结首行
     ws.freeze_panes = 'A2'
@@ -381,7 +300,6 @@ body{{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sa
 .ms-dd input[type=checkbox]{{margin-right:8px;accent-color:#4472C4;width:16px;height:16px}}
 /* ── 列表区 ── */
 .list-wrap{{padding:0 24px 24px;overflow-x:auto}}
-.status-note{{padding:8px 12px;margin-bottom:6px;font-size:13px;font-weight:bold;color:#FFC000}}
 .list-table{{width:100%;border-collapse:collapse;font-size:14px;margin-top:0}}
 .list-table thead th{{position:sticky;top:0;z-index:5;background:var(--bg2);color:var(--text2);font-size:12px;font-weight:600;text-transform:uppercase;padding:10px 12px;border-bottom:2px solid var(--border);text-align:left;white-space:nowrap}}
 .list-table tbody tr{{cursor:pointer;transition:background .15s}}
@@ -392,17 +310,7 @@ body{{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sa
 .list-table .col-stage{{min-width:80px;max-width:90px}}
 .list-table .col-bto{{min-width:100px;max-width:110px}}
 .list-table .col-mp{{min-width:100px;max-width:110px}}
-.list-table .col-status{{min-width:100px;max-width:200px}}
-.list-table .col-hl{{min-width:100px;max-width:200px}}
-/* ── 折叠 ── */
-.list-table .col-toggle{{width:30px;min-width:30px;text-align:center;cursor:pointer;color:var(--text2);font-size:16px;user-select:none}}
-.list-table .col-toggle:hover{{color:#fff}}
-.list-table tbody tr.child-row{{display:none}}
-.list-table tbody tr.child-row.open{{display:table-row}}
-.list-table tbody tr.child-row td{{color:var(--text2);font-size:13px}}
-.list-table tbody tr.child-row td.col-model{{padding-left:24px}}
-.list-table tbody tr.child-row td.col-status{{overflow:hidden;text-overflow:ellipsis;max-width:200px}}
-.list-table tbody tr.child-row td.col-hl{{overflow:hidden;text-overflow:ellipsis;max-width:200px}}
+.list-table .col-npm{{min-width:70px;max-width:100px}}
 /* Stage badge */
 .badge{{display:inline-block;padding:2px 8px;border-radius:3px;font-size:11px;font-weight:600;color:#fff}}
 .badge-Kickoff{{background:var(--kickoff)}}.badge-Design{{background:var(--design)}}
@@ -410,9 +318,6 @@ body{{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sa
 .badge-MVT{{background:var(--mvt)}}.badge-ATS{{background:var(--ats)}}
 .badge-Study{{background:var(--study);color:#333}}.badge-MP{{background:var(--mp)}}
 .badge-m{{background:var(--mvt)}}.badge-M{{background:var(--mp)}}
-/* MP 变动行高亮 */
-.list-table tbody tr.mp-changed{{background:rgba(255,0,0,0.2)!important;border-left:3px solid #ff4444}}
-.list-table tbody tr.mp-changed:hover{{background:rgba(255,0,0,0.3)!important}}
 /* 空状态 */
 .empty{{text-align:center;padding:60px 20px;color:var(--text2);font-size:14px}}
 /* ── 统计栏 ── */
@@ -426,8 +331,6 @@ body{{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sa
 .stat-item.stat-EVT .stat-num{{color:#ED7D31}}
 .stat-item.stat-MVT .stat-num{{color:#FF4444}}
 .stat-item.stat-ATS .stat-num{{color:#70AD47}}
-.stat-item.stat-Study .stat-num{{color:#FFC000}}
-.stat-item.stat-MP .stat-num{{color:#FF69B4}}
 .stat-item{{cursor:pointer;transition:background .15s,box-shadow .15s}}
 .stat-item:hover{{background:rgba(68,114,196,.12)}}
 .stat-item.active{{box-shadow:inset 0 0 0 2px currentColor}}
@@ -464,8 +367,6 @@ body{{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sa
     <div class="stat-item stat-EVT" onclick="onStatClick('EVT')"><span class="stat-label">EVT</span><span class="stat-num" id="statEVT">0</span></div>
     <div class="stat-item stat-MVT" onclick="onStatClick('MVT')"><span class="stat-label">MVT</span><span class="stat-num" id="statMVT">0</span></div>
     <div class="stat-item stat-ATS" onclick="onStatClick('ATS')"><span class="stat-label">ATS</span><span class="stat-num" id="statATS">0</span></div>
-    <div class="stat-item stat-Study" onclick="onStatClick('Study')"><span class="stat-label">Study</span><span class="stat-num" id="statStudy">0</span></div>
-    <div class="stat-item stat-MP" onclick="onStatClick('MP')"><span class="stat-label">MP</span><span class="stat-num" id="statMP">0</span></div>
   </div>
   <div class="filter-title">NPI Select and Search</div>
   <div class="filter-bar">
@@ -487,17 +388,14 @@ body{{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sa
     </div>
   </div>
   <div class="list-wrap">
-    <div class="status-note">已MP SKU，Current Status中，&quot;+数字&quot;表delay天数，&quot;-数字&quot;表pull in天数，&quot;0&quot;表准时MP</div>
     <table class="list-table">
       <thead><tr>
         <th class="col-model">Model</th>
-        <th class="col-toggle"></th>
         <th class="col-mkt">MKT Name</th>
         <th class="col-stage">Stage</th>
         <th class="col-bto">BTO Ready</th>
         <th class="col-mp">MP</th>
-        <th class="col-status">Current Status</th>
-        <th class="col-hl">Highlight</th>
+        <th class="col-npm">NPM</th>
       </tr></thead>
       <tbody id="listBody"></tbody>
     </table>
@@ -520,12 +418,9 @@ const DATA = {json_str};
 // ── 筛选状态 ──
 let filterModelVals=new Set();
 let filterMktVals=new Set();
-const filterStageVals=new Set(['Design','DVT','EVT','MVT','ATS','MP','Study']);
-const filterYearVals=new Set(['2026','2027']);
 let searchModelVal='';
 let searchMktVal='';
 let statStageFilter='';
-let expandedModels=new Set();
 
 // ── 多选下拉 ──
 function getUniqueModels(){{return [...new Set(DATA.records.map(r=>r.model))].sort((a,b)=>a.localeCompare(b,undefined,{{numeric:true}}));}}
@@ -533,10 +428,7 @@ function getUniqueMkts(){{return [...new Set(DATA.records.map(r=>r.mkt.split(' '
 
 function buildMsDropdown(id){{
   const dd=document.getElementById(id+'MsDd');
-  let items;
-  if(id==='model')items=getUniqueModels();
-  else if(id==='mkt')items=getUniqueMkts();
-  else return;
+  const items=id==='model'?getUniqueModels():getUniqueMkts();
   let h='<div class="ms-all" onclick="msToggleAll(\\''+id+'\\')">(Select All / None)</div>';
   items.forEach(v=>{{
     h+='<label><input type="checkbox" value="'+escAttr(v)+'" onchange="msChange(\\''+id+'\\')"> '+escHtml(v)+'</label>';
@@ -566,12 +458,12 @@ function msChange(id){{
   const cbs=dd.querySelectorAll('input[type=checkbox]');
   const vals=new Set();
   cbs.forEach(c=>{{if(c.checked)vals.add(c.value);}});
-  if(id==='model')filterModelVals=vals;
-  else if(id==='mkt')filterMktVals=vals;
+  if(id==='model')filterModelVals=vals; else filterMktVals=vals;
   const btn=document.getElementById(id+'MsBtn');
   const total=id==='model'?getUniqueModels().length:getUniqueMkts().length;
-  btn.textContent=vals.size===total?'All':vals.size===0?'All '+(id==='model'?'Models':'MKT'):vals.size+' selected';
-  if(id==='model'||id==='mkt'){{statStageFilter='';document.querySelectorAll('.stat-item').forEach(el=>el.classList.remove('active'));}}
+  btn.textContent=vals.size===0?(id==='model'?'All Models':'All MKT'):vals.size+' selected';
+  statStageFilter='';
+  document.querySelectorAll('.stat-item').forEach(el=>el.classList.remove('active'));
   renderList();
 }}
 
@@ -580,11 +472,11 @@ function escHtml(s){{return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
 
 // ── 统计 ──
 function updateStats(){{
-  const activeStages=['Design','DVT','EVT','MVT','ATS','Study','MP','m','M'];
+  const activeStages=['Design','DVT','EVT','MVT','ATS','m','M'];
   const filtered=getFilteredRecords();
   // Model统计：active stage中Model去重
   const modelSet=new Set();
-  let design=0,dvt=0,evt=0,mvt=0,ats=0,study=0,mp=0;
+  let design=0,dvt=0,evt=0,mvt=0,ats=0;
   filtered.forEach(r=>{{
     const s=(r.stage||'').trim();
     if(activeStages.includes(s))modelSet.add(r.model);
@@ -593,8 +485,6 @@ function updateStats(){{
     if(s==='EVT')evt++;
     if(s==='MVT'||s==='m')mvt++;
     if(s==='ATS')ats++;
-    if(s==='Study')study++;
-    if(s==='MP'||s==='M')mp++;
   }});
   document.getElementById('statModel').textContent=modelSet.size;
   document.getElementById('statDesign').textContent=design;
@@ -602,8 +492,6 @@ function updateStats(){{
   document.getElementById('statEVT').textContent=evt;
   document.getElementById('statMVT').textContent=mvt;
   document.getElementById('statATS').textContent=ats;
-  document.getElementById('statStudy').textContent=study;
-  document.getElementById('statMP').textContent=mp;
 }}
 
 // ── 统计点击筛选 ──
@@ -646,16 +534,12 @@ function onSearchChange(){{
 
 // ── 过滤+排序 ──
 function getFilteredRecords(){{
+  const activeStages=['Design','DVT','EVT','MVT','ATS','m','M'];
+  const listStages=['Design','DVT','EVT','MVT','ATS','m'];
   return DATA.records.filter(r=>{{
+    // 列表只显示 Design/DVT/EVT/MVT/ATS（m=MVT别名）
     const stg=(r.stage||'').trim();
-    // Stage 筛选
-    if(filterStageVals.size>0&&!filterStageVals.has(stg))return false;
-    // MP Year 筛选
-    if(filterYearVals.size>0){{
-      const mpDate=r.dates?r.dates['MP']||'':'';
-      if(mpDate){{const mpYear=mpDate.substring(0,4);if(!filterYearVals.has(mpYear))return false;}}
-      else return false;
-    }}
+    if(!listStages.includes(stg))return false;
     if(filterModelVals.size>0&&!filterModelVals.has(r.model))return false;
     if(filterMktVals.size>0&&!filterMktVals.has(r.mkt.split(' ')[0]))return false;
     if(searchModelVal){{const q=searchModelVal.toLowerCase();if(!r.model.toLowerCase().includes(q))return false;}}
@@ -663,37 +547,16 @@ function getFilteredRecords(){{
     // 统计栏筛选
     if(statStageFilter==='MVT'){{
       if(stg!=='MVT'&&stg!=='m')return false;
-    }} else if(statStageFilter==='MP'){{
-      if(stg!=='MP'&&stg!=='M')return false;
     }} else if(statStageFilter){{
       if(stg!==statStageFilter)return false;
     }}
     return true;
   }});
 }}
-function getGroupedAndSorted(){{
-  // Group by model
-  const map={{}};
-  const all=getFilteredRecords();
-  all.forEach(r=>{{
-    if(!map[r.model])map[r.model]=[];
-    map[r.model].push(r);
-  }});
-  // Within each group: sort by MP earliest first, highlight length desc, orig_idx
-  const hlLen=r=>(r.highlight&&r.highlight!=='.')?r.highlight.length:0;
-  Object.values(map).forEach(arr=>arr.sort((a,b)=>{{
-    const ma=a.dates?a.dates['MP']||'':'';
-    const mb=b.dates?b.dates['MP']||'':'';
-    return ma.localeCompare(mb)||hlLen(b)-hlLen(a)||a.orig_idx-b.orig_idx;
-  }}));
-  // Between groups: sort by first record's MP (earliest first)
-  const entries=Object.entries(map);
-  entries.sort((a,b)=>{{
-    const ma=a[1][0].dates?a[1][0].dates['MP']||'':'';
-    const mb=b[1][0].dates?b[1][0].dates['MP']||'':'';
-    return ma.localeCompare(mb);
-  }});
-  return entries;
+function getSortedRecords(recs){{
+  const s=[...recs];
+  s.sort((a,b)=>a.model.localeCompare(b.model,undefined,{{numeric:true}}));
+  return s;
 }}
 
 // ── 渲染列表 ──
@@ -712,71 +575,31 @@ function renderList(){{
     return;
   }}
 
-  const groups=getGroupedAndSorted();
+  const filtered=getFilteredRecords();
+  const sorted=getSortedRecords(filtered);
   table.style.display='';
   document.getElementById('statsInfo').textContent='Updated: '+DATA.buildTime;
   updateStats();
 
-  if(!groups.length){{tbody.innerHTML='';empty.style.display='block';return;}}
+  if(!sorted.length){{tbody.innerHTML='';empty.style.display='block';return;}}
   empty.style.display='none';
 
   let h='';
-  for(const[model,rows]of groups){{
-    const parent=rows[0];
-    const hasChildren=rows.length>1;
-    const isExpanded=expandedModels.has(model);
-
-    // Parent: mp_changed on any child
-    const anyChanged=rows.some(r=>r.mp_changed);
-    const rowClass=anyChanged?' class="mp-changed"':'';
-
-    const stage=parent.stage||'';
-    const bto=parent.dates?parent.dates['BTO ready']||'':'';
-    const mp=parent.dates?parent.dates['MP']||'':'';
+  sorted.forEach(r=>{{
+    const stage=r.stage||'';
+    const bto=r.dates?r.dates['BTO ready']||'':'';
+    const mp=r.dates?r.dates['MP']||'':'';
     const cls='badge badge-'+stage.replace(/\\s/g,'');
-
-    h+='<tr'+rowClass+' onclick="openDetail('+parent.orig_idx+')">';
-    h+='<td class="col-model">'+escHtml(parent.model)+'</td>';
-    if(hasChildren)h+='<td class="col-toggle" onclick="event.stopPropagation();toggleExpand(\\''+escAttr(parent.model)+'\\')">'+(isExpanded?'−':'+')+'</td>';
-    else h+='<td class="col-toggle"></td>';
-    h+='<td class="col-mkt" title="'+escAttr(parent.mkt)+'">'+escHtml(parent.mkt)+'</td>';
+    h+='<tr onclick="openDetail('+r.orig_idx+')">';
+    h+='<td class="col-model">'+escHtml(r.model)+'</td>';
+    h+='<td class="col-mkt" title="'+escAttr(r.mkt)+'">'+escHtml(r.mkt)+'</td>';
     h+='<td class="col-stage"><span class="'+cls+'">'+escHtml(stage)+'</span></td>';
     h+='<td class="col-bto">'+escHtml(bto)+'</td>';
     h+='<td class="col-mp">'+escHtml(mp)+'</td>';
-    h+='<td class="col-status">'+escHtml(parent.status||'')+'</td>';
-    h+='<td class="col-hl">'+escHtml(parent.highlight||'')+'</td>';
+    h+='<td class="col-npm">'+escHtml(r.npm||'')+'</td>';
     h+='</tr>';
-
-    if(hasChildren){{
-      for(let i=1;i<rows.length;i++){{
-        const r=rows[i];
-        const show=isExpanded;
-        const childCls=r.mp_changed?' mp-changed':'';
-        const stg=r.stage||'';
-        const cb=r.dates?r.dates['BTO ready']||'':'';
-        const cm=r.dates?r.dates['MP']||'':'';
-        const ccls='badge badge-'+stg.replace(/\\s/g,'');
-        h+='<tr class="child-row'+(show?' open':'')+childCls+'" onclick="openDetail('+r.orig_idx+')">';
-        h+='<td class="col-model">'+escHtml(r.model)+'</td>';
-        h+='<td class="col-toggle"></td>';
-        h+='<td class="col-mkt" title="'+escAttr(r.mkt)+'">'+escHtml(r.mkt)+'</td>';
-        h+='<td class="col-stage"><span class="'+ccls+'">'+escHtml(stg)+'</span></td>';
-        h+='<td class="col-bto">'+escHtml(cb)+'</td>';
-        h+='<td class="col-mp">'+escHtml(cm)+'</td>';
-        h+='<td class="col-status">'+escHtml(r.status||'')+'</td>';
-        h+='<td class="col-hl">'+escHtml(r.highlight||'')+'</td>';
-        h+='</tr>';
-      }}
-    }}
-  }}
+  }});
   tbody.innerHTML=h;
-}}
-
-// ── 折叠 ──
-function toggleExpand(model){{
-  if(expandedModels.has(model))expandedModels.delete(model);
-  else expandedModels.add(model);
-  renderList();
 }}
 
 // ── 详情模态框 ──
@@ -795,13 +618,13 @@ document.getElementById('detailModal').addEventListener('click',function(e){{
   if(e.target===this)closeDetail();
 }});
 
-// ── 排版工具：遇「數字)」或「數字）」換行分段 ──
+// ── 排版工具：有"数字."就换行分段，否则原样输出 ──
 function formatSectionText(text){{
   if(!text)return 'N/A';
-  if(!/\\d+[)）]/.test(text))return escHtml(text);
-  // 在每個非開頭的「數字)」或「數字）」前斷行
-  const formatted=text.replace(/([^\\n])(\\s*)(\\d+[)）])/g,'$1\\n$3');
-  const parts=formatted.split('\\n').map(s=>s.trim()).filter(s=>s);
+  // 检测是否含有效序号（数字. 后面不是数字，避免 7.0 被切）
+  if(!/\\d+\\.[^\\d]/.test(text))return escHtml(text);
+  // 按 (空格 | 中文句号后) 跟着「数字.非数字」分割
+  const parts=text.split(/(?:[\\s]+|(?<=。))(?=\\d+\\.[^\\d])/).map(s=>s.trim()).filter(s=>s);
   if(parts.length<=1)return escHtml(text);
   return parts.map(p=>'<div style="margin-bottom:6px">'+escHtml(p)+'</div>').join('');
 }}
@@ -851,105 +674,16 @@ renderList();
     print(f"Search HTML 已生成: {SEARCH_HTML_PATH}")
 
 
-def update_mp_change_log(changed_records, base_dir):
-    """更新 MP 变动记录 Excel。
-    首次运行时新建文件，后续追加新记录。
-    所有记录按 Model 排序，相同 Model 归在一起。
-    """
-    if not changed_records:
-        return
-
-    xlsx_path = os.path.join(base_dir, "MP变动记录.xlsx")
-    headers = ["Model", "MKT Name", "CPU", "GPU", "NPM", "Stage",
-               "原MP", "新MP", "新MP-原MP(天)", "Highlight", "修改时间"]
-
-    # 计算日期差（天数）
-    def _day_diff(old_str, new_str):
-        if not old_str or not new_str:
-            return "N/A"
-        try:
-            d1 = datetime.datetime.strptime(old_str, "%Y/%m/%d")
-            d2 = datetime.datetime.strptime(new_str, "%Y/%m/%d")
-            return (d2 - d1).days
-        except Exception:
-            return "N/A"
-
-    now_str = datetime.datetime.now().strftime("%Y/%m/%d %H:%M:%S")
-
-    # 构建本次新增行
-    new_rows = []
-    for r in changed_records:
-        old_mp = r.get("old_mp", "")
-        new_mp = r.get("dates", {}).get("MP", "")
-        new_rows.append([
-            r.get("model", ""),
-            r.get("mkt", ""),
-            r.get("cpu", ""),
-            r.get("gpu", ""),
-            r.get("npm", ""),
-            r.get("stage", ""),
-            old_mp,
-            new_mp,
-            _day_diff(old_mp, new_mp),
-            r.get("highlight", ""),
-            now_str,
-        ])
-
-    # 读取已有记录（如果存在）
-    existing_rows = []
-    if os.path.exists(xlsx_path):
-        wb_old = openpyxl.load_workbook(xlsx_path)
-        ws_old = wb_old.active
-        for row in ws_old.iter_rows(min_row=2, values_only=True):
-            if any(c is not None and str(c).strip() != "" for c in row):
-                existing_rows.append(list(row))
-        wb_old.close()
-
-    # 合并 + 按 Model 排序
-    all_rows = existing_rows + new_rows
-    all_rows.sort(key=lambda x: str(x[0] or ""))
-
-    # 写入
-    wb = openpyxl.Workbook()
-    ws = wb.active
-    ws.title = "MP变动记录"
-
-    header_font = Font(bold=True, color="FFFFFFFF", size=11)
-    header_fill = PatternFill(start_color="2F5496", end_color="2F5496", fill_type="solid")
-    header_align = Alignment(horizontal="center", vertical="center")
-
-    for i, h in enumerate(headers, 1):
-        cell = ws.cell(1, i, h)
-        cell.font = header_font
-        cell.fill = header_fill
-        cell.alignment = header_align
-
-    for row_idx, row_data in enumerate(all_rows, 2):
-        for col_idx, val in enumerate(row_data, 1):
-            ws.cell(row_idx, col_idx, val)
-
-    # 列宽
-    col_widths = [12, 35, 30, 40, 10, 10, 12, 12, 16, 50, 20]
-    for i, w in enumerate(col_widths):
-        ws.column_dimensions[get_column_letter(i + 1)].width = w
-
-    ws.freeze_panes = "A2"
-    wb.save(xlsx_path)
-    print(f"MP 变动记录已更新: {xlsx_path} (本次新增 {len(new_rows)} 条, 累计 {len(all_rows)} 条)")
-
-
 def main():
     print(f"读取 Excel: {EXCEL_PATH}")
     records = read_excel()
     print(f"共读取 {len(records)} 条记录")
 
-    # 检测 MP 日期或 stage 变动（对比 GitHub 版本）
+    # 检测 MP 日期或 stage 变动
     records = detect_mp_changes(records)
     changed = [r for r in records if r.get("mp_changed")]
     if changed:
         print(f"检测到 {len(changed)} 条 MP 变动: {', '.join(r['model']+'('+r['mkt']+')' for r in changed)}")
-        # 写入 MP 变动记录 Excel（首次新建，后续追加）
-        update_mp_change_log(changed, BASE_DIR)
     else:
         print("未检测到 MP 日期或 stage 变动")
 
@@ -962,15 +696,8 @@ def main():
     inject_html(records)
     print(f"HTML 已更新: {HTML_PATH}")
 
-    # 嵌入 npi_dashboard2.html
-    inject_html2(records)
-    print(f"HTML2 已更新: {HTML_PATH2}")
-
-    # 生成 Excel (仅包含 Dashboard 默认 Stage，与 activeStages 对齐)
-    DEFAULT_EXCEL_STAGES = {'Design','DVT','EVT','MVT','ATS'}
-    excel_records = [r for r in records if r.get('stage','') in DEFAULT_EXCEL_STAGES]
-    xlsx_path = generate_xlsx(excel_records)
-    print(f"Excel 过滤后记录数: {len(excel_records)} / 总 {len(records)}")
+    # 生成 Excel
+    xlsx_path = generate_xlsx(records)
 
     # 生成 NPI Search Dashboard
     build_search_html(records)
@@ -980,4 +707,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    input("\n按 Enter 关闭窗口...")

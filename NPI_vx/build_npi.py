@@ -8,14 +8,38 @@ import os
 import re
 import datetime
 import hashlib
-import openpyxl
-from openpyxl.styles import Font, PatternFill, Alignment
-from openpyxl.utils import get_column_letter
-import urllib.request
+import sys
+
+# 关键依赖检查：openpyxl
+print("[DEBUG] Checking imports...")
+try:
+    import openpyxl
+    from openpyxl.styles import Font, PatternFill, Alignment
+    from openpyxl.utils import get_column_letter
+except ImportError as e:
+    print("ERROR: openpyxl not installed!")
+    print("Please run: pip install openpyxl")
+    print(f"Details: {e}")
+    sys.stdout.flush()
+    input("Press Enter to exit...")
+    sys.exit(1)
+print("[DEBUG] openpyxl OK")
+
+try:
+    import urllib.request
+except ImportError:
+    pass
+
+try:
+    import subprocess
+except ImportError:
+    pass
+import sys
 
 # ── 路径配置 ──
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-EXCEL_PATH = r"C:\Users\msipm\Desktop\work\Spec總表.xlsx"
+PARENT_DIR = os.path.dirname(BASE_DIR)  # 仓库根目录 C:\npi-dashboard\
+EXCEL_PATH = os.path.join(BASE_DIR, "Spec總表.xlsx")
 HTML_PATH  = os.path.join(BASE_DIR, "npi_dashboard.html")
 HTML_PATH2 = os.path.join(BASE_DIR, "npi_dashboard2.html")
 JSON_PATH  = os.path.join(BASE_DIR, "npi_data.json")
@@ -137,21 +161,15 @@ def fetch_github_records():
 
 
 def detect_mp_changes(new_records):
-    """对比 GitHub 上的最新 JSON，检测 MP 日期或 stage 有变动的记录，标记 mp_changed"""
+    """对比 GitHub 上的最新数据，检测 MP 日期或 stage 有变动的记录，标记 mp_changed。
+    无法联网时跳过比对，直接返回原记录。"""
     # 先从 GitHub 获取最新数据
     github_records = fetch_github_records()
-    
-    # 如果 GitHub 获取失败，回退到本地 JSON
+
+    # 如果 GitHub 获取失败，跳过比对
     if not github_records:
-        print("回退到本地 JSON 对比...")
-        if not os.path.exists(JSON_PATH):
-            return new_records
-        try:
-            with open(JSON_PATH, "r", encoding="utf-8") as f:
-                old_data = json.load(f)
-            github_records = {r.get("model", "") + "|" + r.get("mkt", "") + "|" + r.get("cpu", "") + "|" + r.get("gpu", ""): r for r in old_data.get("records", [])}
-        except Exception:
-            return new_records
+        print("⚠️ 无法连接 GitHub，跳过 MP 变动比对，直接继续生成。")
+        return new_records
 
     changed_count = 0
     compare_stages = {'Design', 'DVT', 'EVT', 'MVT', 'ATS'}
@@ -851,6 +869,85 @@ renderList();
     print(f"Search HTML 已生成: {SEARCH_HTML_PATH}")
 
 
+def git_upload():
+    """Git add, commit, and push to GitHub (requires git repo in BASE_DIR)"""
+    try:
+        r = subprocess.run(['git', 'rev-parse', '--git-dir'],
+                          cwd=BASE_DIR, capture_output=True)
+    except FileNotFoundError:
+        print("\n[Git] Not installed, skipping upload")
+        return
+    except Exception:
+        print("\n[Git] Error, skipping upload")
+        return
+    if r.returncode != 0:
+        print("\n⚠️ 当前文件夹不是 Git 仓库，跳过上传")
+        return
+
+    files = [
+        # NPI_vx 子目录
+        os.path.basename(HTML_PATH),
+        os.path.basename(HTML_PATH2),
+        os.path.basename(JSON_PATH),
+        os.path.basename(SEARCH_HTML_PATH),
+        os.path.basename(HTML_PATH.replace('.html', '.xlsx')),
+        # 仓库根目录 (GitHub Pages 读取)
+        '../' + os.path.basename(HTML_PATH),
+        '../' + os.path.basename(HTML_PATH2),
+        '../' + os.path.basename(JSON_PATH),
+        '../' + os.path.basename(SEARCH_HTML_PATH),
+        '../' + os.path.basename(HTML_PATH.replace('.html', '.xlsx')),
+        # MP 变动记录
+        'MP变动记录.xlsx',
+        '../MP变动记录.xlsx',
+    ]
+    try:
+        for f in files:
+            fpath = os.path.join(BASE_DIR, f)
+            if os.path.exists(fpath):
+                subprocess.run(['git', 'add', f], cwd=BASE_DIR, capture_output=True)
+
+        # 检查是否有变更
+        r = subprocess.run(['git', 'status', '--porcelain'],
+                          cwd=BASE_DIR, capture_output=True, text=True)
+        if not r.stdout.strip():
+            print("Git: 没有需要提交的变更")
+            return
+
+        # Commit
+        msg = f"Update NPI Dashboard {datetime.datetime.now().strftime('%Y-%m-%d %H:%M')}"
+        r = subprocess.run(['git', 'commit', '-m', msg],
+                          cwd=BASE_DIR, capture_output=True, text=True)
+        if r.returncode != 0:
+            print(f"⚠️ Git commit 失败: {r.stderr or r.stdout}")
+            return
+        print(f"Git: committed — {msg}")
+
+        # Push
+        r = subprocess.run(['git', 'push'],
+                          cwd=BASE_DIR, capture_output=True, text=True)
+        if r.returncode != 0:
+            print(f"⚠️ Git push 失败: {r.stderr or r.stdout}")
+            return
+
+        # ── 验证推送是否真正到达远程 ──
+        local_head = subprocess.run(
+            ['git', 'rev-parse', 'HEAD'],
+            cwd=BASE_DIR, capture_output=True, text=True
+        ).stdout.strip()
+        remote_ref = subprocess.run(
+            ['git', 'ls-remote', 'origin', 'refs/heads/main'],
+            cwd=BASE_DIR, capture_output=True, text=True
+        ).stdout.strip()
+        remote_head = remote_ref.split('\t')[0] if remote_ref else ''
+        if local_head and remote_head and local_head == remote_head:
+            print(f"✅ Git: 已推送到 GitHub ({local_head[:7]} = origin/main)")
+        else:
+            print(f"⚠️ Git push 返回值正常但远程未确认！本地={local_head[:7] if local_head else '?'} 远程={remote_head[:7] if remote_head else '?'}")
+    except Exception as e:
+        print(f"[Git] Error during git operations: {e}")
+
+
 def update_mp_change_log(changed_records, base_dir):
     """更新 MP 变动记录 Excel。
     首次运行时新建文件，后续追加新记录。
@@ -938,6 +1035,65 @@ def update_mp_change_log(changed_records, base_dir):
     print(f"MP 变动记录已更新: {xlsx_path} (本次新增 {len(new_rows)} 条, 累计 {len(all_rows)} 条)")
 
 
+REMOTE_URL = "https://github.com/kabonka/npi-dashboard.git"
+
+
+def git_ensure_repo():
+    """确保 PARENT_DIR 存在 git 仓库。如果不存在则初始化并拉取远程历史。"""
+    import shutil
+    git_dir = os.path.join(PARENT_DIR, '.git')
+    if os.path.exists(git_dir):
+        return  # 仓库已存在，无需操作
+
+    # 检查 git 是否安装
+    try:
+        subprocess.run(['git', '--version'], capture_output=True, check=True)
+    except (FileNotFoundError, subprocess.CalledProcessError):
+        print("[Git] git 未安装，跳过仓库初始化")
+        return
+
+    print("[Git] 未检测到仓库，正在初始化...")
+    # 如果 PARENT_DIR 不存在则创建
+    os.makedirs(PARENT_DIR, exist_ok=True)
+
+    # git init
+    subprocess.run(['git', 'init'], cwd=PARENT_DIR, capture_output=True)
+    subprocess.run(['git', 'remote', 'add', 'origin', REMOTE_URL],
+                   cwd=PARENT_DIR, capture_output=True)
+
+    # 拉取远程历史
+    r = subprocess.run(['git', 'fetch', 'origin', 'main'],
+                       cwd=PARENT_DIR, capture_output=True, text=True)
+    if r.returncode == 0:
+        # 用远程最新覆盖本地
+        subprocess.run(['git', 'reset', '--hard', 'origin/main'],
+                       cwd=PARENT_DIR, capture_output=True)
+        print(f"[Git] 已同步远程仓库 ({REMOTE_URL}) → {PARENT_DIR}")
+    else:
+        print(f"[Git] 远程拉取失败: {r.stderr.strip() or 'network error'}")
+        # 即使拉取失败也继续，后续会尝试直接推送
+        print("[Git] 将以本地内容创建首次提交")
+
+
+def sync_outputs_to_root():
+    """将 NPI_vx/ 下的输出文件同步到仓库根目录（GitHub Pages 读取的位置）"""
+    import shutil
+    outputs = [
+        os.path.basename(HTML_PATH),       # npi_dashboard.html
+        os.path.basename(HTML_PATH2),      # npi_dashboard2.html
+        os.path.basename(JSON_PATH),       # npi_data.json
+        os.path.basename(SEARCH_HTML_PATH), # npi_search.html
+        os.path.basename(HTML_PATH).replace('.html', '.xlsx'),  # npi_dashboard.xlsx
+        "MP变动记录.xlsx",
+    ]
+    for f in outputs:
+        src = os.path.join(BASE_DIR, f)
+        dst = os.path.join(PARENT_DIR, f)
+        if os.path.exists(src):
+            shutil.copy2(src, dst)
+    print(f"已同步 {len(outputs)} 个文件到仓库根目录: {PARENT_DIR}")
+
+
 def main():
     print(f"读取 Excel: {EXCEL_PATH}")
     records = read_excel()
@@ -975,9 +1131,27 @@ def main():
     # 生成 NPI Search Dashboard
     build_search_html(records)
 
+    # 确保 git 仓库存在（跨 PC 首次运行时自动初始化）
+    git_ensure_repo()
+
+    # 同步到仓库根目录（GitHub Pages 读取的位置）
+    sync_outputs_to_root()
+
+    # Git 上传（如需关闭，注释下行）
+    git_upload()
+
     print("完成！双击打开 HTML 即可查看 Dashboard。")
 
 
 if __name__ == "__main__":
-    main()
-    input("\n按 Enter 关闭窗口...")
+    print("Script started...")
+    try:
+        main()
+    except Exception as e:
+        import traceback
+        print("\n" + "=" * 50)
+        print("FATAL ERROR:")
+        traceback.print_exc()
+        print("=" * 50)
+        sys.exit(1)
+    input("\nPress Enter to close...")

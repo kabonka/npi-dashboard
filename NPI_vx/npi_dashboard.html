@@ -1,4 +1,230 @@
-{
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<script>
+// 强制绕过缓存：每次访问都请求最新版本
+(function(){
+  var ts = Date.now();
+  var href = location.href.split('#')[0];
+  if(href.indexOf('_nocache_') === -1){
+    var sep = href.indexOf('?') === -1 ? '?' : '&';
+    location.replace(href + sep + '_nocache_=' + ts);
+  }
+})();
+</script>
+<script>var _pwd='msiyjb',_ok=localStorage.getItem('_npi_ok');if(_ok!==_pwd){var _p=prompt('請輸入密碼:');if(_p!==_pwd){window.location.href='about:blank';}else{localStorage.setItem('_npi_ok',_pwd);}}</script>
+<title>NPI Check Dashboard</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0f1117;--bg2:#1a1d27;--bg3:#242836;
+  --border:#2e3345;--text:#e0e0e0;--text2:#8a8fa8;
+  --kickoff:#4472C4;--design:#00B0F0;--dvt:#7030A0;--evt:#ED7D31;
+  --mvt:#FF4444;--ats:#70AD47;--study:#FFC000;--mp:#FF69B4;
+}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,-apple-system,sans-serif}
+
+.header{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;background:var(--bg2);border-bottom:1px solid var(--border)}
+.header h1{font-size:18px;font-weight:600;color:#fff}
+.header .date{font-size:12px;color:var(--text2)}
+
+.stats{display:flex;gap:10px;padding:12px 24px;flex-wrap:wrap}
+.stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:10px 16px;min-width:90px;text-align:center;cursor:pointer;transition:.2s}
+.stat-card:hover{border-color:#555}
+.stat-card .label{font-size:11px;color:var(--text2);margin-bottom:2px}
+.stat-card .value{font-size:24px;font-weight:700}
+.stat-card.active{border-color:#fff;background:var(--bg3)}
+.sc-model .value{color:#fff}
+.sc-design .value{color:var(--design)}
+.sc-dvt .value{color:var(--dvt)}.sc-evt .value{color:var(--evt)}
+.sc-mvt .value{color:var(--mvt)}.sc-ats .value{color:var(--ats)}
+.sc-study .value{color:var(--study)}
+.sc-pending .value{color:#8899aa}
+.sc-bto- .value{color:#00bcd4}
+.sc-ats- .value{color:#66bb6a}
+.sc-mp .value{color:var(--mp)}
+
+.filters{display:flex;gap:8px;padding:0 24px 10px;align-items:center;flex-wrap:wrap}
+.filters label{font-size:11px;color:var(--text2)}
+.filters input{background:var(--bg2);color:var(--text);border:1px solid var(--border);border-radius:5px;padding:5px 8px;font-size:12px;outline:none}
+.filters input:focus{border-color:#666}
+.search-input{width:180px}
+
+/* Multi-select dropdown */
+.ms-wrap{position:relative;display:inline-block;vertical-align:middle}
+.ms-btn{background:var(--bg2);color:var(--text);border:1px solid var(--border);border-radius:5px;padding:5px 8px;font-size:11px;cursor:pointer;min-width:120px;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:6px;user-select:none;transition:.15s}
+.ms-btn:hover{border-color:#666}
+.ms-btn .ms-arrow{font-size:8px;color:var(--text2);transition:transform .2s}
+.ms-btn.open .ms-arrow{transform:rotate(180deg)}
+.ms-btn .ms-count{font-size:9px;background:var(--bg3);color:var(--text2);padding:1px 5px;border-radius:8px;margin-left:auto}
+.ms-panel{position:absolute;top:100%;left:0;min-width:160px;max-height:220px;overflow-y:auto;background:var(--bg2);border:1px solid var(--border);border-radius:6px;margin-top:4px;z-index:20;display:none;box-shadow:0 6px 18px rgba(0,0,0,.4);padding:4px 0}
+.ms-panel.show{display:block}
+.ms-opt{display:flex;align-items:center;gap:7px;padding:6px 10px;font-size:11px;color:var(--text);cursor:pointer;transition:.1s}
+.ms-opt:hover{background:var(--bg3)}
+.ms-opt.all-opt{border-bottom:1px solid var(--border);margin-bottom:2px;font-weight:600}
+.ms-check{width:14px;height:14px;border:1.5px solid var(--text2);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:10px;color:transparent;flex-shrink:0;transition:.1s}
+.ms-opt.checked .ms-check{background:#555;border-color:#555;color:#fff}
+
+.sort-btn{background:var(--bg3);color:var(--text2);border:1px solid var(--border);border-radius:5px;padding:5px 10px;font-size:11px;cursor:pointer;white-space:nowrap}
+.sort-btn.active{border-color:#fff;color:#fff;background:#333}
+.reset-btn{background:var(--bg3);color:var(--text2);border:1px solid var(--border);border-radius:5px;padding:5px 10px;font-size:11px;cursor:pointer}
+
+.gantt-section{padding:0 24px 16px}
+.gantt-container{background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.gantt-header{display:flex;align-items:center;padding:8px 14px;border-bottom:1px solid var(--border)}
+.gantt-header h2{font-size:13px;font-weight:600}
+.gantt-legend{display:flex;gap:14px;padding:6px 14px;border-bottom:1px solid var(--border);flex-wrap:wrap;align-items:center}
+.gantt-legend-item{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text2)}
+.gantt-legend-dot{width:12px;height:8px;border-radius:2px;flex-shrink:0}
+.gantt-scroll{overflow-x:auto}
+
+.gantt-table{border-collapse:collapse}
+.gantt-table thead th{position:sticky;top:0;z-index:5;background:var(--bg3);font-size:10px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.4px;padding:6px 8px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap;user-select:none}
+.gantt-table thead th.sortable{cursor:pointer}
+.gantt-table thead th.sortable:hover{color:#fff}
+.gantt-table thead th .sort-arrow{margin-left:3px;font-size:9px;opacity:.5}
+.gantt-table thead th.sortable.asc .sort-arrow,.gantt-table thead th.sortable.desc .sort-arrow{opacity:1}
+
+/* Sticky fixed columns */
+.gantt-table thead th.col-model{position:sticky;left:0;z-index:10;width:80px;min-width:80px;max-width:80px}
+.gantt-table thead th.col-toggle{position:sticky;left:80px;z-index:10;width:30px;min-width:30px;max-width:30px;text-align:center;padding:0}
+.gantt-table thead th.col-stage{position:sticky;left:110px;z-index:10;width:65px;min-width:65px;max-width:65px}
+.gantt-table thead th.col-mkt{position:sticky;left:175px;z-index:10;width:200px;min-width:200px;max-width:200px}
+.gantt-table thead th.col-mp{position:sticky;left:375px;z-index:10;width:85px;min-width:85px;max-width:85px}
+
+.gantt-table tbody tr{border-bottom:1px solid rgba(255,255,255,.03);transition:.15s}
+.gantt-table tbody tr:hover{background:rgba(255,255,255,.03)}
+.gantt-table tbody tr.child-row{display:none}
+.gantt-table tbody tr.child-row.open{display:table-row}
+.gantt-table tbody tr.child-row td{color:var(--text2);font-size:11px}
+
+.gantt-table tbody td{padding:6px 8px;font-size:11px;white-space:nowrap;vertical-align:middle}
+.gantt-table tbody td.col-model{position:sticky;left:0;z-index:3;background:var(--bg2);font-weight:600;color:#fff;max-width:80px;overflow:hidden;text-overflow:ellipsis}
+.gantt-table tbody tr:hover td.col-model{background:var(--bg3)}
+.gantt-table tbody td.col-model.mp-changed{background:#4a2020;animation:mp-pulse 1.5s ease-in-out infinite}
+.gantt-table tbody tr:hover td.col-model.mp-changed{background:#5a2a2a}
+@keyframes mp-pulse{0%,100%{box-shadow:inset 3px 0 0 #FF4444}50%{box-shadow:inset 3px 0 0 #FF8888}}
+.gantt-table tbody td.col-toggle{position:sticky;left:80px;z-index:3;background:var(--bg2);text-align:center;padding:0;cursor:pointer;font-size:14px;color:var(--text2);user-select:none}
+.gantt-table tbody td.col-toggle:hover{color:#fff}
+.gantt-table tbody tr:hover td.col-toggle{background:var(--bg3)}
+.gantt-table tbody td.col-stage{position:sticky;left:110px;z-index:3;background:var(--bg2);max-width:65px;overflow:hidden;text-overflow:ellipsis}
+.gantt-table tbody tr:hover td.col-stage{background:var(--bg3)}
+.gantt-table tbody td.col-mkt{position:sticky;left:175px;z-index:3;background:var(--bg2);max-width:200px;overflow:hidden;text-overflow:ellipsis}
+.gantt-table tbody tr:hover td.col-mkt{background:var(--bg3)}
+.gantt-table tbody td.col-mp{position:sticky;left:375px;z-index:3;background:var(--bg2);font-variant-numeric:tabular-nums;max-width:85px;overflow:hidden;text-overflow:ellipsis}
+.gantt-table tbody tr:hover td.col-mp{background:var(--bg3)}
+
+.badge{display:inline-block;padding:1px 7px;border-radius:3px;font-size:10px;font-weight:600;color:#fff}
+.badge-kickoff{background:var(--kickoff)}.badge-design{background:var(--design)}
+.badge-dvt{background:var(--dvt)}.badge-evt{background:var(--evt)}
+.badge-mvt{background:var(--mvt)}.badge-ats{background:var(--ats)}.badge-study{background:var(--study)}
+
+.gantt-cell-month{text-align:center;font-size:9px;color:var(--text2);padding:6px 2px}
+.today-line{position:absolute;top:0;bottom:0;width:2px;background:#FF4444;z-index:4;pointer-events:none}
+.today-line::before{content:'Today';position:absolute;top:-16px;left:50%;transform:translateX(-50%);font-size:8px;font-weight:700;color:#FF4444;white-space:nowrap}
+
+.gantt-bar{position:absolute;border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;color:#fff;cursor:pointer;transition:filter .15s;overflow:hidden;white-space:nowrap}
+.gantt-bar:hover{filter:brightness(1.2);z-index:2}
+.bar-kickoff{background:var(--kickoff)}.bar-design{background:var(--design)}
+.bar-dvt{background:var(--dvt)}.bar-evt{background:var(--evt)}
+.bar-mvt{background:var(--mvt)}.bar-ats{background:var(--ats)}.bar-mp{background:var(--mp)}
+
+.tooltip{position:fixed;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-size:11px;z-index:100;pointer-events:none;display:none;max-width:280px;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+.tooltip .tt-model{font-size:13px;font-weight:700;color:#fff;margin-bottom:4px}
+.tooltip .tt-row{display:flex;gap:6px;margin:2px 0}
+.tooltip .tt-label{color:var(--text2);min-width:60px}
+.tooltip .tt-val{color:var(--text)}
+
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9000;justify-content:center;align-items:center;padding:16px}
+.modal-overlay.active{display:flex}
+.modal-box{background:var(--bg);border:1px solid var(--border);border-radius:10px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;position:relative;box-shadow:0 8px 32px rgba(0,0,0,.5)}
+.modal-close{position:absolute;top:12px;right:16px;background:none;border:none;color:var(--text2);font-size:24px;cursor:pointer;line-height:1;z-index:10}
+.modal-close:hover{color:#fff}
+.modal-body{padding:24px}
+.modal-body .hdr{margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.modal-body .hdr h2{color:#fff;font-size:20px;font-weight:600;margin-bottom:4px}
+.modal-body .hdr .mkt{color:var(--text2);font-size:13px}
+.modal-body .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+.modal-body .field{background:var(--bg3);padding:12px;border-radius:6px;border:1px solid var(--border)}
+.modal-body .field-label{font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.modal-body .field-value{font-size:14px;color:var(--text);font-weight:500}
+.modal-body .section{margin-bottom:16px}
+.modal-body .section-title{font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.modal-body .section-body{background:var(--bg3);padding:12px;border-radius:6px;border:1px solid var(--border);font-size:13px;line-height:1.6;word-break:break-word}
+
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#444;border-radius:3px}
+</style>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+</head>
+<body>
+
+
+<div class="header">
+  <h1>NPI Check Dashboard</h1>
+  <div class="date" id="headerDate"></div>
+</div>
+
+<div class="stats" id="statsContainer"></div>
+
+<div class="filters">
+  <label>Model:</label>
+  <div class="ms-wrap" id="msModel"></div>
+  <label>Stage:</label>
+  <div class="ms-wrap" id="msStage"></div>
+  <label>CPU:</label>
+  <div class="ms-wrap" id="msCpu"></div>
+  <label>GPU:</label>
+  <div class="ms-wrap" id="msGpu"></div>
+  <label>MP Year:</label>
+  <div class="ms-wrap" id="msYear"></div>
+  <label>MKT:</label>
+  <div class="ms-wrap" id="msMkt"></div>
+  <label>Search:</label>
+  <input type="text" class="search-input" id="filterSearch" placeholder="Model / MKT...">
+  <span style="margin-left:8px;font-size:11px;color:var(--text2)">Sort:</span>
+  <button class="sort-btn" id="sortModel" onclick="setSort('model')">Model</button>
+  <button class="sort-btn active" id="sortKickoff" onclick="setSort('kickoff')">Kickoff</button>
+  <button class="sort-btn" id="sortMP" onclick="setSort('mp')">MP Date</button>
+  <button class="sort-btn" id="sortMkt" onclick="setSort('mkt')">MKT</button>
+  <button class="reset-btn" onclick="resetFilters()">Reset</button>
+  <button class="sort-btn" style="margin-left:8px;background:#2F5496;color:#fff;border-color:#2F5496;cursor:pointer" onclick="downloadExcel()">⬇ Excel</button>
+</div>
+
+<div class="gantt-section">
+  <div class="gantt-container">
+    <div class="gantt-header">
+      <h2>Project Timeline</h2>
+      <span style="font-size:11px;color:var(--text2);margin-left:10px" id="visibleCount"></span>
+    </div>
+    <div class="gantt-legend" id="ganttLegend"></div>
+    <div class="gantt-scroll">
+      <table class="gantt-table">
+        <colgroup id="ganttColgroup"></colgroup>
+        <thead id="ganttThead"></thead>
+        <tbody id="ganttTbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="tooltip" id="tooltip"></div>
+<div class="modal-overlay" id="detailModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeDetail()">&times;</button>
+    <div class="modal-body" id="detailBody"></div>
+  </div>
+</div>
+
+<script>
+const DATA = {
   "records": [
     {
       "model": "1822",
@@ -13191,7 +13417,7 @@
     {
       "model": "13S1",
       "mkt": "Commercial 13 B1MG",
-      "cpu": "RPL-U refresh\t 15W",
+      "cpu": "RPL-U refresh	 15W",
       "gpu": "Intel® Iris® Xe graphics",
       "npm": "林耀慶",
       "stage": "Pending",
@@ -13368,7 +13594,7 @@
     {
       "model": "14S1",
       "mkt": "Commercial 14 B1MG",
-      "cpu": "RPL-U refresh\t 15W",
+      "cpu": "RPL-U refresh	 15W",
       "gpu": "Intel® Iris® Xe graphics",
       "npm": "林耀慶",
       "stage": "MP",
@@ -13406,7 +13632,7 @@
     {
       "model": "15S1",
       "mkt": "Commercial 15 B13MG",
-      "cpu": "RPL-U refresh\t 15W",
+      "cpu": "RPL-U refresh	 15W",
       "gpu": "Intel® Iris® Xe graphics",
       "npm": "林耀慶",
       "stage": "MP",
@@ -13425,7 +13651,7 @@
     {
       "model": "15S1",
       "mkt": "Commercial 15 B1MG",
-      "cpu": "RPL-U refresh\t 15W",
+      "cpu": "RPL-U refresh	 15W",
       "gpu": "Intel® Iris® Xe graphics",
       "npm": "林耀慶",
       "stage": "MP",
@@ -13601,7 +13827,7 @@
     {
       "model": "14V2",
       "mkt": "Commercial 14 C1M",
-      "cpu": "RPL-U refresh\t 25W",
+      "cpu": "RPL-U refresh	 25W",
       "gpu": "N/A",
       "npm": "杜晨光",
       "stage": "MP",
@@ -13640,7 +13866,7 @@
     {
       "model": "14V2",
       "mkt": "Modern 14 H1M",
-      "cpu": "RPL-U refresh\t 25W",
+      "cpu": "RPL-U refresh	 25W",
       "gpu": "N/A",
       "npm": "杜晨光",
       "stage": "MP",
@@ -14148,7 +14374,7 @@
     {
       "model": "13S1",
       "mkt": "Modern 13 F1MG",
-      "cpu": "RPL-U refresh\t 15W",
+      "cpu": "RPL-U refresh	 15W",
       "gpu": "N/A",
       "npm": "林耀慶",
       "stage": "MP",
@@ -14168,7 +14394,7 @@
     {
       "model": "13S1",
       "mkt": "Modern 13 F1MOG",
-      "cpu": "RPL-U refresh\t 15W",
+      "cpu": "RPL-U refresh	 15W",
       "gpu": "Intel® Iris® Xe graphics",
       "npm": "林耀慶",
       "stage": "MP",
@@ -14187,7 +14413,7 @@
     {
       "model": "13S1",
       "mkt": "Modern 13 F1MOXG",
-      "cpu": "RPL-U refresh\t 15W",
+      "cpu": "RPL-U refresh	 15W",
       "gpu": "Intel® Iris® Xe graphics",
       "npm": "林耀慶",
       "stage": "MP",
@@ -14207,7 +14433,7 @@
     {
       "model": "14J6",
       "mkt": "Modern 14 E1MG",
-      "cpu": "RPL-U refresh\t 15W",
+      "cpu": "RPL-U refresh	 15W",
       "gpu": "N/A",
       "npm": "朱芳芳",
       "stage": "Pending",
@@ -14323,7 +14549,7 @@
     {
       "model": "14S1",
       "mkt": "Modern 14 F1MG",
-      "cpu": "RPL-U refresh\t 15W",
+      "cpu": "RPL-U refresh	 15W",
       "gpu": "N/A",
       "npm": "林耀慶",
       "stage": "MP",
@@ -14344,7 +14570,7 @@
     {
       "model": "14S1",
       "mkt": "Modern 14 F1MXG",
-      "cpu": "RPL-U refresh\t 15W",
+      "cpu": "RPL-U refresh	 15W",
       "gpu": "Intel® Iris® Xe graphics",
       "npm": "林耀慶",
       "stage": "MP",
@@ -14544,7 +14770,7 @@
       "npm": "朱欣怡",
       "stage": "MP",
       "status": "-30",
-      "highlight": "touch panel DQA AVL test OK 1/2, MP 2/B, \t因等ARL CPU來料，MP follow ATS 結果，SMT@1/23",
+      "highlight": "touch panel DQA AVL test OK 1/2, MP 2/B, 	因等ARL CPU來料，MP follow ATS 結果，SMT@1/23",
       "mp_sort": "2025/01/02",
       "orig_idx": 735,
       "dates": {
@@ -14558,7 +14784,7 @@
     {
       "model": "15H6",
       "mkt": "Modern 15 E1MG",
-      "cpu": "RPL-U refresh\t 15W",
+      "cpu": "RPL-U refresh	 15W",
       "gpu": "N/A",
       "npm": "梅燕",
       "stage": "Pending",
@@ -14597,7 +14823,7 @@
     {
       "model": "15S1",
       "mkt": "Modern 15 F1MG",
-      "cpu": "RPL-U refresh\t 15W",
+      "cpu": "RPL-U refresh	 15W",
       "gpu": "N/A",
       "npm": "林耀慶",
       "stage": "MP",
@@ -14618,7 +14844,7 @@
     {
       "model": "15S1",
       "mkt": "Modern 15 F1MXG",
-      "cpu": "RPL-U refresh\t 15W",
+      "cpu": "RPL-U refresh	 15W",
       "gpu": "Intel® Iris® Xe graphics",
       "npm": "林耀慶",
       "stage": "MP",
@@ -17610,4 +17836,586 @@
     }
   ],
   "buildTime": "2026/06/16 08:44:03"
+};
+
+const STAGE_ORDER = ['Design','DVT','EVT','MVT','ATS','Study','Pending','BTO-','ATS-','MP'];
+const STAGE_COLORS = {
+  Design:'var(--design)', DVT:'var(--dvt)', EVT:'var(--evt)',
+  MVT:'var(--mvt)', ATS:'var(--ats)', Study:'var(--study)',
+  Pending:'#8899aa', 'BTO-':'#00bcd4', 'ATS-':'#66bb6a', MP:'var(--mp)'
+};
+const BAR_CLASSES = {Kickoff:'bar-kickoff',Design:'bar-design',DVT:'bar-dvt',EVT:'bar-evt',MVT:'bar-mvt',ATS:'bar-ats',MP:'bar-mp'};
+const DATE_KEYS = ['Kickoff','DVT-start','EVT-start','MVT-start','ATS-start','MP'];
+const LEGEND_ITEMS = [
+  {key:'Kickoff',color:'var(--kickoff)'},{key:'Design',color:'var(--design)'},
+  {key:'DVT',color:'var(--dvt)'},{key:'EVT',color:'var(--evt)'},
+  {key:'MVT',color:'var(--mvt)'},{key:'ATS',color:'var(--ats)'},
+  {key:'MP',color:'var(--mp)'}
+];
+
+const MONTHS = [];
+// 动态计算时间轴范围：从所有记录中找最早和最晚的日期
+let _minDate = null, _maxDate = null;
+DATA.records.forEach(r=>{
+  for(const k of Object.keys(r.dates||{})){
+    const v = r.dates[k];
+    if(!v) continue;
+    // 手动解析 YYYY/MM/DD，避免浏览器兼容性问题
+    const parts = v.split('/');
+    if(parts.length < 2) continue;
+    const d = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]||1));
+    if(isNaN(d.getTime())) continue;
+    if(!_minDate || d < _minDate) _minDate = d;
+    if(!_maxDate || d > _maxDate) _maxDate = d;
+  }
+});
+if(!_minDate) _minDate = new Date(2024,10,1);
+if(!_maxDate) _maxDate = new Date(2026,9,1);
+// 从最早日期往前多留2个月，最晚日期往后多留3个月
+const _start = new Date(_minDate.getFullYear(), _minDate.getMonth()-2, 1);
+const _end   = new Date(_maxDate.getFullYear(), _maxDate.getMonth()+3, 1);
+let dd = _start;
+while(dd <= _end){
+  MONTHS.push({y:dd.getFullYear(),m:dd.getMonth()+1});
+  dd = new Date(dd.getFullYear(),dd.getMonth()+1,1);
 }
+const TOTAL_MONTHS = MONTHS.length;
+const CELL_W = 36;
+
+// Default filter: show Design/DVT/EVT/MVT/ATS, MP Year 2026+2027
+let activeStages=new Set(['Design','DVT','EVT','MVT','ATS']), filterModelVals=new Set(), filterCpuVals=new Set(), filterGpuVals=new Set(), filterYearVals=new Set(['2026','2027']), filterMktVals=new Set(), filterSearchVal='';
+let sortKey='kickoff'; // default: kickoff earliest first
+let expandedModels = new Set();
+
+// Compute stats from all records — dynamic stages
+const stats = {Model:0};
+const modelSeen = new Set();
+DATA.records.forEach(r=>{
+  if(!modelSeen.has(r.model)){modelSeen.add(r.model);stats.Model++}
+  const s = r.stage;
+  if(s) stats[s] = (stats[s]||0) + 1;
+});
+// Build actual stage order: from STAGE_ORDER, keep only those that appear in data
+const ACTIVE_STAGES = STAGE_ORDER.filter(s => stats[s]);
+
+document.getElementById('headerDate').textContent = 'Last updated: ' + (DATA.buildTime ? new Date(DATA.buildTime).toLocaleString('en-US',{year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}) : 'N/A');
+
+function getGrouped(){
+  // Group by model, pick parent = earliest MP (if tie, smallest orig_idx)
+  const map = {};
+  DATA.records.forEach(r=>{
+    if(!map[r.model]) map[r.model] = [];
+    map[r.model].push(r);
+  });
+  // For each group, sort by mp_sort then highlight length desc then orig_idx, first = parent
+  const hlLen = r => (r.highlight && r.highlight !== '.') ? r.highlight.length : 0;
+  Object.values(map).forEach(arr=>arr.sort((a,b)=>a.mp_sort.localeCompare(b.mp_sort) || hlLen(b)-hlLen(a) || a.orig_idx-b.orig_idx));
+  return map;
+}
+
+function getFilteredGroups(){
+  const allGroups = getGrouped();
+  const result = {};
+  for(const [model, rows] of Object.entries(allGroups)){
+    // Filter: if any row matches, include the group
+    const filtered = rows.filter(r=>{
+      if(filterModelVals.size>0 && !filterModelVals.has(r.model)) return false;
+      if(activeStages.size>0 && !activeStages.has(r.stage)) return false;
+      if(filterCpuVals.size>0 && !filterCpuVals.has(r.cpu)) return false;
+      if(filterGpuVals.size>0 && !filterGpuVals.has(r.gpu)) return false;
+      if(filterYearVals.size>0 && r.mp_sort && !filterYearVals.has(r.mp_sort.substring(0,4))) return false;
+      if(filterMktVals.size>0){const seg=r.mkt.split(' ')[0];if(seg && !filterMktVals.has(seg))return false}
+      if(filterSearchVal){
+        const q=filterSearchVal.toLowerCase();
+        if(!r.model.toLowerCase().includes(q) && !r.mkt.toLowerCase().includes(q)) return false;
+      }
+      return true;
+    });
+    if(filtered.length>0) result[model]=filtered;
+  }
+  return result;
+}
+
+function getSortedGroups(groups){
+  const entries = Object.entries(groups);
+  if(sortKey==='mp'){
+    entries.sort((a,b)=>{
+      const ma=a[1][0].mp_sort, mb=b[1][0].mp_sort;
+      return ma.localeCompare(mb);
+    });
+  } else if(sortKey==='kickoff'){
+    entries.sort((a,b)=>{
+      const ka=a[1][0].dates?.['Kickoff']||'9999', kb=b[1][0].dates?.['Kickoff']||'9999';
+      return ka.localeCompare(kb);
+    });
+  } else if(sortKey==='mkt'){
+    entries.sort((a,b)=>{
+      const ma=a[1][0].mkt||'', mb=b[1][0].mkt||'';
+      return ma.localeCompare(mb);
+    });
+  } else {
+    entries.sort((a,b)=>a[0].localeCompare(b[0],undefined,{numeric:true}));
+  }
+  return entries;
+}
+
+function renderStats(){
+  // 动态计算当前筛选下的统计
+  const modelSet=new Set();
+  const stageCounts={};
+  const filteredRecords=[];
+  const groups=getFilteredGroups();
+  for(const [,rows] of Object.entries(groups)){
+    rows.forEach(r=>filteredRecords.push(r));
+    modelSet.add(rows[0].model);
+  }
+  filteredRecords.forEach(r=>{
+    if(r.stage) stageCounts[r.stage]=(stageCounts[r.stage]||0)+1;
+  });
+
+  const c=document.getElementById('statsContainer');
+  let h=`<div class="stat-card sc-model ${activeStages.size===0?'active':''}" data-stage="all" onclick="toggleStage('all')"><div class="label">Model</div><div class="value">${modelSet.size}</div></div>`;
+  for(const s of ACTIVE_STAGES){
+    const color = STAGE_COLORS[s] || '#888';
+    const cnt = stageCounts[s] || 0;
+    const cls = 'sc-'+s.toLowerCase().replace(/\s+/g,'-');
+    h+=`<div class="stat-card ${cls} ${activeStages.has(s)?'active':''}" data-stage="${s}" onclick="toggleStage('${s}')" style="--sc-color:${color}"><div class="label">${s}</div><div class="value" style="color:${color}">${cnt}</div></div>`;
+  }
+  c.innerHTML=h;
+}
+
+function renderLegend(){
+  const c=document.getElementById('ganttLegend');
+  let h='';
+  for(const item of LEGEND_ITEMS){
+    h+=`<div class="gantt-legend-item"><div class="gantt-legend-dot" style="background:${item.color}"></div>${item.key}</div>`;
+  }
+  c.innerHTML=h;
+}
+
+function toggleStage(s){
+  if(s==='all'){activeStages.clear()}
+  else{
+    if(activeStages.has(s))activeStages.delete(s);
+    else activeStages.add(s);
+  }
+  updateMsComponent('msStage');
+  syncStatCards();
+  renderGantt();
+}
+
+function syncStatCards(){
+  renderStats();
+}
+
+/* Multi-select dropdown component */
+function createMsDropdown(containerId, items, selectedSet, onChange){
+  const wrap=document.getElementById(containerId);
+  const allChecked=selectedSet.size===0;
+  let btnLabel=allChecked?'All':selectedSet.size+' selected';
+  let h=`<div class="ms-btn" onclick="toggleMsPanel('${containerId}')">${btnLabel}<span class="ms-arrow">▼</span></div>`;
+  h+=`<div class="ms-panel" id="${containerId}_panel">`;
+  h+=`<div class="ms-opt all-opt ${allChecked?'checked':''}" onclick="msToggleAll('${containerId}')"><div class="ms-check">✓</div>All</div>`;
+  for(const item of items){
+    const ck=selectedSet.has(item)?'checked':'';
+    h+=`<div class="ms-opt ${ck}" data-val="${escAttr(item)}" onclick="msToggleItem('${containerId}','${escAttr(item)}')"><div class="ms-check">✓</div>${item}</div>`;
+  }
+  h+=`</div>`;
+  wrap.innerHTML=h;
+  wrap._items=items;
+  wrap._onChange=onChange;
+}
+
+function toggleMsPanel(id){
+  const panel=document.getElementById(id+'_panel');
+  const btn=document.getElementById(id).querySelector('.ms-btn');
+  const isOpen=panel.classList.contains('show');
+  // close all
+  document.querySelectorAll('.ms-panel.show').forEach(p=>p.classList.remove('show'));
+  document.querySelectorAll('.ms-btn.open').forEach(b=>b.classList.remove('open'));
+  if(!isOpen){
+    panel.classList.add('show');
+    btn.classList.add('open');
+  }
+}
+
+function msToggleAll(id){
+  const wrap=document.getElementById(id);
+  const set=wrap._onChange();
+  set.clear();
+  updateMsComponent(id);
+  syncStatCards();
+  renderGantt();
+}
+
+function msToggleItem(id,val){
+  const wrap=document.getElementById(id);
+  const set=wrap._onChange();
+  if(set.has(val))set.delete(val);else set.add(val);
+  updateMsComponent(id);
+  syncStatCards();
+  renderGantt();
+}
+
+function updateMsComponent(id){
+  const wrap=document.getElementById(id);
+  if(!wrap||!wrap._onChange)return;
+  const set=wrap._onChange();
+  const items=wrap._items;
+  const allChecked=set.size===0;
+  const btn=wrap.querySelector('.ms-btn');
+  btn.innerHTML=(allChecked?'All':set.size+' selected')+`<span class="ms-arrow">▼</span>`;
+  const panel=document.getElementById(id+'_panel');
+  if(!panel)return;
+  const opts=panel.querySelectorAll('.ms-opt');
+  opts.forEach(o=>{
+    if(o.classList.contains('all-opt')){o.classList.toggle('checked',allChecked)}
+    else{o.classList.toggle('checked',set.has(o.dataset.val))}
+  });
+}
+
+function initFilters(){
+  const cpuItems=[...new Set(DATA.records.map(r=>r.cpu).filter(Boolean))].sort();
+
+  const gpuItems=[...new Set(DATA.records.map(r=>r.gpu).filter(Boolean))].sort();
+  const mpYears=[...new Set(DATA.records.map(r=>r.mp_sort).filter(Boolean).map(d=>d.substring(0,4)))].sort();
+  const mktItems=[...new Set(DATA.records.map(r=>r.mkt.split(' ')[0]).filter(Boolean))].sort();
+  const modelItems=[...new Set(DATA.records.map(r=>r.model).filter(Boolean))].sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
+  createMsDropdown('msModel',modelItems,filterModelVals,()=>filterModelVals);
+  createMsDropdown('msStage',ACTIVE_STAGES,activeStages,()=>activeStages);
+  createMsDropdown('msCpu',cpuItems,filterCpuVals,()=>filterCpuVals);
+  createMsDropdown('msGpu',gpuItems,filterGpuVals,()=>filterGpuVals);
+  createMsDropdown('msYear',mpYears,filterYearVals,()=>filterYearVals);
+  createMsDropdown('msMkt',mktItems,filterMktVals,()=>filterMktVals);
+  document.getElementById('filterSearch').oninput=e=>{filterSearchVal=e.target.value;renderStats();renderGantt()};
+  // Close dropdowns when clicking outside
+  document.addEventListener('click',e=>{
+    if(!e.target.closest('.ms-wrap')){
+      document.querySelectorAll('.ms-panel.show').forEach(p=>p.classList.remove('show'));
+      document.querySelectorAll('.ms-btn.open').forEach(b=>b.classList.remove('open'));
+    }
+  });
+}
+
+function resetFilters(){
+  activeStages=new Set(['Design','DVT','EVT','MVT','ATS']);filterModelVals.clear();filterCpuVals.clear();filterGpuVals.clear();filterYearVals=new Set(['2026','2027']);filterMktVals.clear();filterSearchVal='';sortKey='kickoff';
+  updateMsComponent('msModel');updateMsComponent('msStage');updateMsComponent('msCpu');updateMsComponent('msGpu');updateMsComponent('msYear');updateMsComponent('msMkt');
+  document.getElementById('filterSearch').value='';
+  document.getElementById('sortKickoff').classList.add('active');
+  document.getElementById('sortModel').classList.remove('active');
+  document.getElementById('sortMkt').classList.remove('active');
+  expandedModels.clear();
+  renderStats();
+  renderGantt();
+}
+
+function setSort(key){
+  sortKey=key;
+  document.getElementById('sortModel').classList.toggle('active',key==='model');
+  document.getElementById('sortKickoff').classList.toggle('active',key==='kickoff');
+  document.getElementById('sortMP').classList.toggle('active',key==='mp');
+  document.getElementById('sortMkt').classList.toggle('active',key==='mkt');
+  renderGantt();
+}
+
+function parseDate(s){if(!s)return null;const p=s.split('/');return new Date(+p[0],+p[1]-1,+p[2])}
+function getMonthIndex(dt){const y=dt.getFullYear(),m=dt.getMonth()+1;for(let i=0;i<TOTAL_MONTHS;i++){if(MONTHS[i].y===y&&MONTHS[i].m===m)return i}return -1}
+
+function getStageSegments(r){
+  const dates=r.dates,segs=[];
+  const chain=[
+    {key:'Kickoff',dk:'Kickoff'},
+    {key:'DVT',dk:'DVT-start'},
+    {key:'EVT',dk:'EVT-start'},
+    {key:'MVT',dk:'MVT-start'},
+    {key:'ATS',dk:'ATS-start'},
+    {key:'MP',dk:'MP'}
+  ];
+  for(let i=0;i<chain.length;i++){
+    const s=dates[chain[i].dk];if(!s)continue;
+    const si=getMonthIndex(parseDate(s));if(si<0)continue;
+    let ei=null;
+    for(let j=i+1;j<chain.length;j++){
+      const ns=dates[chain[j].dk];
+      if(ns){ei=getMonthIndex(parseDate(ns));break}
+    }
+    if(ei===null)ei=si+1;
+    segs.push({name:chain[i].key,cls:BAR_CLASSES[chain[i].key],start:si,end:ei});
+  }
+  return segs;
+}
+
+function toggleExpand(model){
+  if(expandedModels.has(model))expandedModels.delete(model);
+  else expandedModels.add(model);
+  renderGantt();
+}
+
+function escAttr(s){return String(s).replace(/'/g,'&#39;').replace(/"/g,'&quot;')}
+
+function renderBarsHtml(r){
+  const segs=getStageSegments(r);
+  const BAR_H=20;
+  let h='';
+  for(let i=0;i<TOTAL_MONTHS;i++){
+    const left=i*CELL_W;
+    const bg=MONTHS[i].y%2===0?'rgba(68,114,196,.06)':'rgba(112,173,71,.06)';
+    h+=`<div style="position:absolute;left:${left}px;top:0;width:${CELL_W}px;height:100%;border-right:1px solid rgba(255,255,255,.03);background:${bg}"></div>`;
+  }
+  // Build month->segments map for horizontal splitting
+  const monthSegs={};
+  for(const seg of segs){
+    const end=Math.max(seg.end, seg.start+1); // ensure at least 1 month
+    for(let m=seg.start;m<end;m++){
+      if(!monthSegs[m])monthSegs[m]=[];
+      monthSegs[m].push(seg);
+    }
+  }
+  // Draw segments with horizontal splitting within same month
+  for(const seg of segs){
+    const end=Math.max(seg.end, seg.start+1); // ensure at least 1 month
+    // For each month this segment spans, calculate horizontal position
+    for(let m=seg.start;m<end;m++){
+      const ms=monthSegs[m]||[];
+      const idx=ms.indexOf(seg);
+      const count=ms.length;
+      const segW=CELL_W/count;
+      const left=m*CELL_W+idx*segW+1;
+      const segWidth=segW-2;
+      const label=segWidth>12?seg.name.substring(0,1):'';
+      h+=`<div class="gantt-bar ${seg.cls}" style="left:${left}px;top:4px;width:${segWidth}px;height:${BAR_H}px" onmouseenter="showTooltip(event,'${escAttr(r.model)}',${r.orig_idx})" onmouseleave="hideTooltip()" onclick="showDetailByIdx(${r.orig_idx})">${label}</div>`;
+    }
+  }
+  const today=new Date();
+  const ti=getMonthIndex(today);
+  if(ti>=0){
+    const tl=(ti+today.getDate()/30)*CELL_W;
+    if(tl>=0&&tl<TOTAL_MONTHS*CELL_W) h+=`<div class="today-line" style="left:${tl}px"></div>`;
+  }
+  return h;
+}
+
+// 将 status/highlight 按序号"数字."换行（Excel用\n）
+function fmtCellText(text){
+  if(!text) return '';
+  if(!/\d+[)）]/.test(text)) return text;
+  const formatted = text.replace(/([^\n])(\s*)(\d+[)）])/g, '$1\n$3');
+  const parts = formatted.split('\n').map(s=>s.trim()).filter(s=>s);
+  return parts.length > 1 ? parts.join('\n') : text;
+}
+
+function renderGantt(){
+  const groups=getFilteredGroups();
+  const sorted=getSortedGroups(groups);
+  const thead=document.getElementById('ganttThead');
+  const tbody=document.getElementById('ganttTbody');
+
+  let totalVisible=0;
+  sorted.forEach(([,rows])=>totalVisible++);
+  document.getElementById('visibleCount').textContent=totalVisible+' / '+stats.Model+' models';
+
+  // Year spans
+  const yearSpans={};
+  MONTHS.forEach((m,i)=>{if(!yearSpans[m.y])yearSpans[m.y]={count:0};yearSpans[m.y].count++});
+
+  // Colgroup: 固定左侧列宽度
+  let colH='';
+  colH+='<col style="width:80px;min-width:80px;max-width:80px">';  // Model
+  colH+='<col style="width:30px;min-width:30px;max-width:30px">';  // Toggle
+  colH+='<col style="width:65px;min-width:65px;max-width:65px">';  // Stage
+  colH+='<col style="width:200px;min-width:200px;max-width:200px">'; // MKT
+  colH+='<col style="width:85px;min-width:85px;max-width:85px">';  // MP
+  for(let i=0;i<MONTHS.length;i++) colH+=`<col style="width:${CELL_W}px;min-width:${CELL_W}px">`;
+  document.getElementById('ganttColgroup').innerHTML=colH;
+
+  // 动态计算表格最小宽度：固定列(460) + 月份列(月份数*CELL_W)
+  const tableMinW = 460 + MONTHS.length * CELL_W;
+  const ganttTable = document.querySelector('.gantt-table');
+  ganttTable.style.minWidth = Math.max(tableMinW, 1200) + 'px';
+
+  let thH='<tr>';
+  thH+='<th class="col-model">Model</th>';
+  thH+='<th class="col-toggle"></th>';
+  thH+='<th class="col-stage">Stage</th>';
+  thH+='<th class="col-mkt">MKT Name</th>';
+  thH+='<th class="col-mp">MP</th>';
+  for(const[y,info]of Object.entries(yearSpans)){
+    thH+=`<th colspan="${info.count}" style="text-align:center;padding:3px 2px;font-size:12px;font-weight:700;color:#bbb;background:#181b25">${y}</th>`;
+  }
+  thH+='</tr><tr>';
+  thH+='<th class="col-model" style="visibility:hidden"></th>';
+  thH+='<th class="col-toggle" style="visibility:hidden"></th>';
+  thH+='<th class="col-stage" style="visibility:hidden"></th>';
+  thH+='<th class="col-mkt" style="visibility:hidden"></th>';
+  thH+='<th class="col-mp" style="visibility:hidden"></th>';
+  for(const m of MONTHS) thH+=`<th class="gantt-cell-month" style="width:${CELL_W}px;min-width:${CELL_W}px">${m.m}</th>`;
+  thH+='</tr>';
+  thead.innerHTML=thH;
+
+  let tbH='';
+  for(const[model,rows]of sorted){
+    const parent=rows[0];
+    const hasChildren=rows.length>1;
+    const isExpanded=expandedModels.has(model);
+
+    // Parent highlight: parent itself changed, OR any child changed (MP date/stage)
+    const anyChildChanged=rows.some(r=>r.mp_changed);
+    const parentCls=anyChildChanged?' mp-changed':'';
+
+    // Parent row
+    tbH+='<tr>';
+    tbH+=`<td class="col-model${parentCls}" style="cursor:pointer" onclick="showDetailByIdx(${parent.orig_idx})">${model}</td>`;
+    tbH+=`<td class="col-toggle" onclick="toggleExpand('${escAttr(model)}')">${hasChildren?(isExpanded?'−':'+'):''}</td>`;
+    tbH+=`<td class="col-stage" style="cursor:pointer" onclick="showDetailByIdx(${parent.orig_idx})"><span class="badge badge-${parent.stage.toLowerCase()}">${parent.stage}</span></td>`;
+    tbH+=`<td class="col-mkt" style="cursor:pointer" onclick="showDetailByIdx(${parent.orig_idx})" title="${escAttr(parent.mkt)}">${parent.mkt}</td>`;
+    tbH+=`<td class="col-mp" style="cursor:pointer" onclick="showDetailByIdx(${parent.orig_idx})">${parent.dates.MP||'-'}</td>`;
+    tbH+=`<td colspan="${TOTAL_MONTHS}" style="position:relative;padding:0;height:28px">${renderBarsHtml(parent)}</td>`;
+    tbH+='</tr>';
+
+    // Child rows
+    if(hasChildren){
+      for(let i=1;i<rows.length;i++){
+        const r=rows[i];
+        const show=isExpanded;
+        const childCls=r.mp_changed?' mp-changed':'';
+        tbH+=`<tr class="child-row${show?' open':''}">`;
+        tbH+=`<td class="col-model${childCls}" style="color:var(--text2);font-weight:400;padding-left:16px;cursor:pointer" onclick="showDetailByIdx(${r.orig_idx})">${model}</td>`;
+        tbH+=`<td class="col-toggle"></td>`;
+        tbH+=`<td class="col-stage" style="cursor:pointer" onclick="showDetailByIdx(${r.orig_idx})"><span class="badge badge-${r.stage.toLowerCase()}">${r.stage}</span></td>`;
+        tbH+=`<td class="col-mkt" style="cursor:pointer" onclick="showDetailByIdx(${r.orig_idx})" title="${escAttr(r.mkt)}">${r.mkt}</td>`;
+        tbH+=`<td class="col-mp" style="cursor:pointer" onclick="showDetailByIdx(${r.orig_idx})">${r.dates.MP||'-'}</td>`;
+        tbH+=`<td colspan="${TOTAL_MONTHS}" style="position:relative;padding:0;height:28px">${renderBarsHtml(r)}</td>`;
+        tbH+='</tr>';
+      }
+    }
+  }
+  tbody.innerHTML=tbH;
+}
+
+function showTooltip(e,model,idx){
+  const r=DATA.records.find(x=>x.orig_idx===idx);
+  if(!r)return;
+  const tt=document.getElementById('tooltip');
+  let h=`<div class="tt-model">${r.model}</div>`;
+  h+=`<div class="tt-row"><span class="tt-label">Stage:</span><span class="tt-val">${r.stage}</span></div>`;
+  h+=`<div class="tt-row"><span class="tt-label">NPM:</span><span class="tt-val">${r.npm||'-'}</span></div>`;
+  for(const k of DATE_KEYS){
+    if(r.dates[k]) h+=`<div class="tt-row"><span class="tt-label">${k}:</span><span class="tt-val">${r.dates[k]}</span></div>`;
+  }
+  tt.innerHTML=h;
+  tt.style.display='block';
+  tt.style.left=Math.min(e.clientX+10,window.innerWidth-300)+'px';
+  tt.style.top=Math.min(e.clientY+10,window.innerHeight-200)+'px';
+}
+function hideTooltip(){document.getElementById('tooltip').style.display='none'}
+
+function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function formatSectionText(text){
+  if(!text)return 'N/A';
+  if(!/\d+[)）]/.test(text))return escHtml(text);
+  // 在每個非開頭的「數字)」或「數字）」前斷行
+  const formatted=text.replace(/([^\n])(\s*)(\d+[)）])/g,'$1\n$3');
+  const parts=formatted.split('\n').map(s=>s.trim()).filter(s=>s);
+  if(parts.length<=1)return escHtml(text);
+  return parts.map(p=>'<div style="margin-bottom:6px">'+escHtml(p)+'</div>').join('');
+}
+function showDetailByIdx(idx){
+  const r=DATA.records.find(x=>x.orig_idx===idx);
+  if(!r)return;
+  const stage=r.stage||'';
+  const stageColors={Kickoff:'#4472C4',Design:'#00B0F0',DVT:'#7030A0',EVT:'#ED7D31',MVT:'#FF4444',ATS:'#70AD47',Study:'#FFC000',MP:'#FF69B4',m:'#FF4444',M:'#FF69B4'};
+  const stageColor=stageColors[stage]||'#888';
+  let timelineH='';
+  const dk=['Kickoff','DVT-start','EVT-start','MVT-start','BTO ready','ATS-start','MP'];
+  dk.forEach(k=>{
+    if(r.dates&&r.dates[k])timelineH+='<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #2e3345"><span style="color:#8a8fa8;font-size:12px">'+escHtml(k)+'</span><span style="color:#e0e0e0;font-size:12px">'+escHtml(r.dates[k])+'</span></div>';
+  });
+  let h=`<div class="hdr"><h2>${escHtml(r.model)}</h2><div class="mkt">${escHtml(r.mkt)}</div></div>`;
+  h+=`<div class="grid">`;
+  h+=`<div class="field"><div class="field-label">Stage</div><div class="field-value"><span class="badge" style="background:${stageColor}">${escHtml(stage)}</span></div></div>`;
+  h+=`<div class="field"><div class="field-label">NPM</div><div class="field-value">${escHtml(r.npm||'-')}</div></div>`;
+  h+=`<div class="field"><div class="field-label">CPU</div><div class="field-value">${escHtml(r.cpu||'-')}</div></div>`;
+  h+=`<div class="field"><div class="field-label">GPU</div><div class="field-value">${escHtml(r.gpu||'-')}</div></div>`;
+  h+='</div>';
+  if(r.status)h+=`<div class="section"><div class="section-title">Current Status</div><div class="section-body">${formatSectionText(r.status)}</div></div>`;
+  if(r.highlight&&r.highlight!=='.')h+=`<div class="section"><div class="section-title">Highlight</div><div class="section-body">${formatSectionText(r.highlight)}</div></div>`;
+  if(timelineH)h+=`<div class="section"><div class="section-title">Timeline</div><div class="section-body" style="padding:8px 12px">${timelineH}</div></div>`;
+  document.getElementById('detailBody').innerHTML=h;
+  document.getElementById('detailModal').classList.add('active');
+}
+function closeDetail(){
+  document.getElementById('detailModal').classList.remove('active');
+  document.body.style.overflow='';
+}
+document.getElementById('detailModal').addEventListener('click',function(e){
+  if(e.target===this)closeDetail();
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDetail()});
+
+// ── Excel 导出（×lsx 含列分组，内容=当前筛选+排序）──
+async function downloadExcel(){
+  var groups=getFilteredGroups();
+  var sorted=getSortedGroups(groups);
+  var dk=['Kickoff','DVT-start','EVT-start','MVT-start','BTO ready','ATS-start','MP'];
+  var headers=['No.','Model','MKT Name','Stage','CPU','GPU','NPM'].concat(dk).concat(['Status','Highlight']);
+  var data=[headers];
+  var rowInfo=[null];
+  var no=1;
+  function wrapText(t){
+    if(!t||!/\d+[)）]/.test(t))return t||'';
+    return t.replace(/([^\n])(\s*)(\d+[)）])/g,'$1\n$3');
+  }
+  for(var si=0;si<sorted.length;si++){
+    var rows=sorted[si][1];
+    for(var ri=0;ri<rows.length;ri++){
+      var r=rows[ri];
+      var d=r.dates||{};
+      var row=[no, r.model||'', r.mkt||'', r.stage||'', r.cpu||'', r.gpu||'', r.npm||''];
+      for(var ki=0;ki<dk.length;ki++)row.push(d[dk[ki]]||'');
+      row.push(wrapText(r.status||''));
+      row.push(wrapText(r.highlight||''));
+      data.push(row);
+      rowInfo.push(ri===0 ? {level:0,hidden:false} : {level:1,hidden:true});
+      no++;
+    }
+  }
+  var ws=XLSX.utils.aoa_to_sheet(data);
+  var wList=[5,12,38,8,30,40,10,12,12,12,12,12,12,12,50,50];
+  var cols=[];
+  for(var ci=0;ci<16;ci++){
+    var col={wch:wList[ci],outlineLevel:0};
+    if(ci>=8 && ci<=12){col.outlineLevel=1;col.hidden=true;}
+    cols.push(col);
+  }
+  ws['!cols']=cols;
+  ws['!rows']=rowInfo;
+  ws['!outline']={above:true};
+  var wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,'NPI Dashboard');
+  var buf=XLSX.write(wb,{type:'array',bookType:'xlsx'});
+
+  // JSZip 补丁：注入 showOutlineSymbols + outlineLevel + summaryBelow
+  var zip=await JSZip.loadAsync(new Uint8Array(buf));
+  var xml=await zip.file('xl/worksheets/sheet1.xml').async('string');
+  xml=xml.replace('<sheetView ','<sheetView showOutlineSymbols="1" ');
+  xml=xml.replace(/(<col [^>]*hidden="true")/g,'$1 outlineLevel="1"');
+  xml=xml.replace(/ summaryBelow="[^"]*"/g,'');
+  if(xml.includes('<outlinePr')){xml=xml.replace('<outlinePr','<outlinePr summaryBelow="0"');}
+  else if(xml.includes('<sheetPr')){
+    xml=xml.replace(/<sheetPr\s*\/>/,'<sheetPr><outlinePr summaryBelow="0"/></sheetPr>');
+    if(!xml.includes('summaryBelow')){xml=xml.replace(/(<sheetPr[^>]*)>/,'$1><outlinePr summaryBelow="0"/>');}
+  }
+  else{xml=xml.replace('<sheetViews','<sheetPr><outlinePr summaryBelow="0"/></sheetPr><sheetViews');}
+  zip.file('xl/worksheets/sheet1.xml',xml);
+  var blob=await zip.generateAsync({type:'blob'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');
+  a.href=url;a.download='npi_dashboard.xlsx';
+  document.body.appendChild(a);a.click();a.remove();
+  setTimeout(function(){URL.revokeObjectURL(url);},1000);
+}
+
+renderStats();renderLegend();initFilters();renderGantt();
+</script>
+</body>
+</html>

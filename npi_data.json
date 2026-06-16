@@ -7893,8 +7893,8 @@
       "cpu": "DRG-HX 55W",
       "gpu": "RTX 5070",
       "npm": "蔡東宏",
-      "stage": "BTO-",
-      "status": "BTO未開",
+      "stage": "MP",
+      "status": "0",
       "highlight": "NA",
       "mp_sort": "2026/02/14",
       "orig_idx": 399,
@@ -10540,7 +10540,7 @@
       "npm": "許婕",
       "stage": "MP",
       "status": "+26",
-      "highlight": "特仕版使用新包材，等待包材入料",
+      "highlight": "特仕版使用新包材，等待包材入料;first lot 1K",
       "mp_sort": "2026/05/26",
       "orig_idx": 533,
       "dates": {
@@ -17609,5 +17609,5 @@
       }
     }
   ],
-  "buildTime": "2026/06/16 08:47:56"
+  "buildTime": "2026/06/16 17:05:49"
 }

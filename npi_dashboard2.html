@@ -102,8 +102,8 @@ body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,-ap
 .list-table tbody td{padding:6px 8px;font-size:11px;vertical-align:top}
 .list-table tbody td.col-model{position:sticky;left:0;z-index:3;background:var(--bg2);font-weight:600;color:#333;max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle}
 .list-table tbody tr:hover td.col-model{background:var(--bg3)}
-.list-table tbody td.col-model.mp-changed{background:#4a2020;animation:mp-pulse 1.5s ease-in-out infinite}
-.list-table tbody tr:hover td.col-model.mp-changed{background:#5a2a2a}
+.list-table tbody td.col-model.mp-changed{background:#dc2626;color:#fff;animation:mp-pulse 1.5s ease-in-out infinite}
+.list-table tbody tr:hover td.col-model.mp-changed{background:#b91c1c;color:#fff}
 .list-table tbody td.col-toggle{position:sticky;left:80px;z-index:3;background:var(--bg2);text-align:center;padding:0;cursor:pointer;font-size:14px;color:var(--text2);user-select:none;vertical-align:middle}
 .list-table tbody td.col-toggle:hover{color:#333}
 .list-table tbody tr:hover td.col-toggle{background:var(--bg3)}
@@ -9583,10 +9583,7 @@ const DATA = {
         "BTO ready": "2026/05/26",
         "ATS-start": "2026/07/03",
         "MP": "2026/07/10"
-      },
-      "mp_changed": true,
-      "old_mp": "2026/07/08",
-      "old_stage": "MVT"
+      }
     },
     {
       "model": "265L",
@@ -9605,10 +9602,7 @@ const DATA = {
         "BTO ready": "2026/05/26",
         "ATS-start": "2026/07/03",
         "MP": "2026/07/10"
-      },
-      "mp_changed": true,
-      "old_mp": "2026/07/08",
-      "old_stage": "MVT"
+      }
     },
     {
       "model": "265L",
@@ -9627,10 +9621,7 @@ const DATA = {
         "BTO ready": "2026/05/26",
         "ATS-start": "2026/07/03",
         "MP": "2026/07/10"
-      },
-      "mp_changed": true,
-      "old_mp": "2026/07/08",
-      "old_stage": "MVT"
+      }
     },
     {
       "model": "265L",
@@ -14973,10 +14964,7 @@ const DATA = {
         "BTO ready": "2026/05/15",
         "ATS-start": "2026/07/04",
         "MP": "2026/07/13"
-      },
-      "mp_changed": true,
-      "old_mp": "2026/07/08",
-      "old_stage": "MVT"
+      }
     },
     {
       "model": "13SK",
@@ -17891,7 +17879,7 @@ const DATA = {
       }
     }
   ],
-  "buildTime": "2026/06/26 13:22:28"
+  "buildTime": "2026/06/26 13:58:47"
 };
 
 const STAGE_ORDER = ['Design','DVT','EVT','MVT','ATS','Study','Pending','BTO-','ATS-','MP'];

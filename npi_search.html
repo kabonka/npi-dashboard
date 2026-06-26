@@ -69,8 +69,8 @@ body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,san
 .badge-Study{background:var(--study);color:#333}.badge-MP{background:var(--mp)}
 .badge-m{background:var(--mvt)}.badge-M{background:var(--mp)}
 /* MP 变动行高亮 */
-.list-table tbody tr.mp-changed{background:rgba(255,0,0,0.2)!important;border-left:3px solid #ff4444}
-.list-table tbody tr.mp-changed:hover{background:rgba(255,0,0,0.3)!important}
+.list-table tbody tr.mp-changed{background:#dc2626!important;color:#fff;border-left:3px solid #dc2626}
+.list-table tbody tr.mp-changed:hover{background:#b91c1c!important;color:#fff}
 /* 空状态 */
 .empty{text-align:center;padding:60px 20px;color:var(--text2);font-size:14px}
 /* ── 统计栏 ── */
@@ -9546,10 +9546,7 @@ const DATA = {
         "BTO ready": "2026/05/26",
         "ATS-start": "2026/07/03",
         "MP": "2026/07/10"
-      },
-      "mp_changed": true,
-      "old_mp": "2026/07/08",
-      "old_stage": "MVT"
+      }
     },
     {
       "model": "265L",
@@ -9568,10 +9565,7 @@ const DATA = {
         "BTO ready": "2026/05/26",
         "ATS-start": "2026/07/03",
         "MP": "2026/07/10"
-      },
-      "mp_changed": true,
-      "old_mp": "2026/07/08",
-      "old_stage": "MVT"
+      }
     },
     {
       "model": "265L",
@@ -9590,10 +9584,7 @@ const DATA = {
         "BTO ready": "2026/05/26",
         "ATS-start": "2026/07/03",
         "MP": "2026/07/10"
-      },
-      "mp_changed": true,
-      "old_mp": "2026/07/08",
-      "old_stage": "MVT"
+      }
     },
     {
       "model": "265L",
@@ -14936,10 +14927,7 @@ const DATA = {
         "BTO ready": "2026/05/15",
         "ATS-start": "2026/07/04",
         "MP": "2026/07/13"
-      },
-      "mp_changed": true,
-      "old_mp": "2026/07/08",
-      "old_stage": "MVT"
+      }
     },
     {
       "model": "13SK",
@@ -17854,7 +17842,7 @@ const DATA = {
       }
     }
   ],
-  "buildTime": "2026/06/26 13:22:28"
+  "buildTime": "2026/06/26 13:58:47"
 };
 
 // ── 筛选状态 ──

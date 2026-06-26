@@ -9371,10 +9371,7 @@
         "BTO ready": "2026/05/26",
         "ATS-start": "2026/07/03",
         "MP": "2026/07/10"
-      },
-      "mp_changed": true,
-      "old_mp": "2026/07/08",
-      "old_stage": "MVT"
+      }
     },
     {
       "model": "265L",
@@ -9393,10 +9390,7 @@
         "BTO ready": "2026/05/26",
         "ATS-start": "2026/07/03",
         "MP": "2026/07/10"
-      },
-      "mp_changed": true,
-      "old_mp": "2026/07/08",
-      "old_stage": "MVT"
+      }
     },
     {
       "model": "265L",
@@ -9415,10 +9409,7 @@
         "BTO ready": "2026/05/26",
         "ATS-start": "2026/07/03",
         "MP": "2026/07/10"
-      },
-      "mp_changed": true,
-      "old_mp": "2026/07/08",
-      "old_stage": "MVT"
+      }
     },
     {
       "model": "265L",
@@ -14761,10 +14752,7 @@
         "BTO ready": "2026/05/15",
         "ATS-start": "2026/07/04",
         "MP": "2026/07/13"
-      },
-      "mp_changed": true,
-      "old_mp": "2026/07/08",
-      "old_stage": "MVT"
+      }
     },
     {
       "model": "13SK",
@@ -17679,5 +17667,5 @@
       }
     }
   ],
-  "buildTime": "2026/06/26 13:22:28"
+  "buildTime": "2026/06/26 13:58:47"
 }

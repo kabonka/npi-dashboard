@@ -11197,8 +11197,8 @@
       "cpu": "RPL-HX refresh 55W",
       "gpu": "RTX 5070",
       "npm": "蔡東宏",
-      "stage": "DVT",
-      "status": "DDR5 sku, DVT測試中,預計7/2 PCB 10 gerberout",
+      "stage": "Pending",
+      "status": "RTX 5070 VRAM 將以 8GB 為主要出貨配置",
       "highlight": "NA",
       "mp_sort": "2026/08/30",
       "orig_idx": 567,
@@ -11217,8 +11217,8 @@
       "cpu": "RPL-HX refresh 55W",
       "gpu": "RTX 5070",
       "npm": "蔡東宏",
-      "stage": "DVT",
-      "status": "DDR4 sku, DVT測試中",
+      "stage": "Pending",
+      "status": "RTX 5070 VRAM 將以 8GB 為主要出貨配置",
       "highlight": "NA",
       "mp_sort": "2026/08/31",
       "orig_idx": 568,
@@ -13635,10 +13635,7 @@
         "BTO ready": "2026/03/16",
         "ATS-start": "2026/07/06",
         "MP": "2026/07/10"
-      },
-      "mp_changed": true,
-      "old_mp": "2026/05/30",
-      "old_stage": "ATS"
+      }
     },
     {
       "model": "14V2",
@@ -13677,10 +13674,7 @@
         "BTO ready": "2026/03/16",
         "ATS-start": "2026/07/06",
         "MP": "2026/07/10"
-      },
-      "mp_changed": true,
-      "old_mp": "2026/05/30",
-      "old_stage": "ATS"
+      }
     },
     {
       "model": "14V2",
@@ -15310,7 +15304,7 @@
       "cpu": "ARL-H 45W",
       "gpu": "RTX 4050 (35W+10W)/ GDDR6 6GB",
       "npm": "李文欽",
-      "stage": "Design",
+      "stage": "MVT",
       "status": "（清白光鍵盤庫存）預計下周提供樣機給DQA驗證,測試預計２周時間",
       "highlight": "NA",
       "mp_sort": "2026/07/31",
@@ -17694,5 +17688,5 @@
       }
     }
   ],
-  "buildTime": "2026/06/26 16:46:31"
+  "buildTime": "2026/06/30 08:15:45"
 }

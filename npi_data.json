@@ -5884,18 +5884,21 @@
       "gpu": "RTX 5050",
       "npm": "蔡東宏",
       "stage": "DVT",
-      "status": "請BIOS RD儘速release PI 1200i RC3給EE/SW進行測試",
-      "highlight": "1).Schedule:APU 155優先ATS,採購已下單6.5k,以 8 月底 MP為目標,其餘APU sku在9月進行ATS C/R,但AMD PI 1200i NDA release延至6/30與APU 155 PR樣品ETD 延至7/11,已影響 MP 時程,待收到PI code與PR樣品後將依實際測試情況確認是否調整MP時程  2).Material:Thermal module依現有設計圖面take risk讓廠商去進行修模同時備料MVT & ATS, 若實測結果未達預期,物料需報廢,schedule也可能因此造成影響",
-      "mp_sort": "2026/08/31",
+      "status": "HPT sku: 目前測試有AMD Graphics驅動無法安裝/TP沒功能/LAN 設備丢失等問題, 麻煩RD盡快釐清",
+      "highlight": "1).Schedule: AMD 將PI 1200I NDA Release 延至7/10(Delay 3W),因專案僅有一個MVT stage,工廠& DQA需完整驗證,若測試順利,MP 預計僅延後 1 週至 9/7 (先前已由9 月底提前至8/31,現又延至9/7),後續將依實際測試結果滾動式調整時程。 2).Material: Thermal module依現有設計圖面take risk讓廠商去進行修模同時備料MVT & ATS, 若實測結果未達預期,物料需報廢,schedule也可能因此造成影響",
+      "mp_sort": "2026/09/07",
       "orig_idx": 297,
       "dates": {
         "Kickoff": "2026/05/28",
         "DVT-start": "2026/06/26",
-        "MVT-start": "2026/07/17",
-        "BTO ready": "2026/07/31",
-        "ATS-start": "2026/08/21",
-        "MP": "2026/08/31"
-      }
+        "MVT-start": "2026/07/22",
+        "BTO ready": "2026/08/07",
+        "ATS-start": "2026/08/28",
+        "MP": "2026/09/07"
+      },
+      "mp_changed": true,
+      "old_mp": "2026/08/31",
+      "old_stage": "DVT"
     },
     {
       "model": "15TK",
@@ -5904,18 +5907,21 @@
       "gpu": "RTX 5060",
       "npm": "蔡東宏",
       "stage": "DVT",
-      "status": "請BIOS RD儘速release PI 1200i RC3給EE/SW進行測試",
-      "highlight": "1).Schedule:APU 155優先ATS,採購已下單6.5k,以 8 月底 MP為目標,其餘APU sku在9月進行ATS C/R,但AMD PI 1200i NDA release延至6/30與APU 155 PR樣品ETD 延至7/11,已影響 MP 時程,待收到PI code與PR樣品後將依實際測試情況確認是否調整MP時程  2).Material:Thermal module依現有設計圖面take risk讓廠商去進行修模同時備料MVT & ATS, 若實測結果未達預期,物料需報廢,schedule也可能因此造成影響",
-      "mp_sort": "2026/08/31",
+      "status": "HPT sku: 目前測試有AMD Graphics驅動無法安裝/TP沒功能/LAN 設備丢失等問題, 麻煩RD盡快釐清",
+      "highlight": "1).Schedule: AMD 將PI 1200I NDA Release 延至7/10(Delay 3W),因專案僅有一個MVT stage,工廠& DQA需完整驗證,若測試順利,MP 預計僅延後 1 週至 9/7 (先前已由9 月底提前至8/31,現又延至9/7),後續將依實際測試結果滾動式調整時程。 2).Material: Thermal module依現有設計圖面take risk讓廠商去進行修模同時備料MVT & ATS, 若實測結果未達預期,物料需報廢,schedule也可能因此造成影響",
+      "mp_sort": "2026/09/07",
       "orig_idx": 298,
       "dates": {
         "Kickoff": "2026/05/28",
         "DVT-start": "2026/06/26",
-        "MVT-start": "2026/07/17",
-        "BTO ready": "2026/07/31",
-        "ATS-start": "2026/08/21",
-        "MP": "2026/08/31"
-      }
+        "MVT-start": "2026/07/22",
+        "BTO ready": "2026/08/07",
+        "ATS-start": "2026/08/28",
+        "MP": "2026/09/07"
+      },
+      "mp_changed": true,
+      "old_mp": "2026/08/31",
+      "old_stage": "DVT"
     },
     {
       "model": "15TK",
@@ -5924,18 +5930,21 @@
       "gpu": "RTX 5070",
       "npm": "蔡東宏",
       "stage": "DVT",
-      "status": "請BIOS RD儘速release PI 1200i RC3給EE/SW進行測試",
-      "highlight": "1).Schedule:APU 155優先ATS,採購已下單6.5k,以 8 月底 MP為目標,其餘APU sku在9月進行ATS C/R,但AMD PI 1200i NDA release延至6/30與APU 155 PR樣品ETD 延至7/11,已影響 MP 時程,待收到PI code與PR樣品後將依實際測試情況確認是否調整MP時程  2).Material:Thermal module依現有設計圖面take risk讓廠商去進行修模同時備料MVT & ATS, 若實測結果未達預期,物料需報廢,schedule也可能因此造成影響",
-      "mp_sort": "2026/08/31",
+      "status": "HPT sku: 目前測試有AMD Graphics驅動無法安裝/TP沒功能/LAN 設備丢失等問題, 麻煩RD盡快釐清",
+      "highlight": "1).Schedule: AMD 將PI 1200I NDA Release 延至7/10(Delay 3W),因專案僅有一個MVT stage,工廠& DQA需完整驗證,若測試順利,MP 預計僅延後 1 週至 9/7 (先前已由9 月底提前至8/31,現又延至9/7),後續將依實際測試結果滾動式調整時程。 2).Material: Thermal module依現有設計圖面take risk讓廠商去進行修模同時備料MVT & ATS, 若實測結果未達預期,物料需報廢,schedule也可能因此造成影響",
+      "mp_sort": "2026/09/07",
       "orig_idx": 299,
       "dates": {
         "Kickoff": "2026/05/28",
         "DVT-start": "2026/06/26",
-        "MVT-start": "2026/07/17",
-        "BTO ready": "2026/07/31",
-        "ATS-start": "2026/08/21",
-        "MP": "2026/08/31"
-      }
+        "MVT-start": "2026/07/22",
+        "BTO ready": "2026/08/07",
+        "ATS-start": "2026/08/28",
+        "MP": "2026/09/07"
+      },
+      "mp_changed": true,
+      "old_mp": "2026/08/31",
+      "old_stage": "DVT"
     },
     {
       "model": "15TK",
@@ -10892,18 +10901,21 @@
       "gpu": "RTX 5050",
       "npm": "蔡東宏",
       "stage": "DVT",
-      "status": "HPT sku:RD已重工3台成APU 180,AMI release PI 1200i RC3@6/29,BIOS RD需儘速提供MSI版本BIOSi進行測試",
-      "highlight": "1).Schedule:APU 155優先ATS,採購已下單6.5k,以 8 月底 MP為目標,其餘APU sku在9月進行ATS C/R,但AMD PI 1200i NDA release延至6/30與APU 155 PR樣品ETD 延至7/11,已影響 MP 時程,待收到PI code與PR樣品後將依實際測試情況確認是否調整MP時程  2).Material:Thermal module依現有設計圖面take risk讓廠商去進行修模同時備料MVT & ATS, 若實測結果未達預期,物料需報廢,schedule也可能因此造成影響",
-      "mp_sort": "2026/08/31",
+      "status": "HPT sku: 目前測試有AMD Graphics驅動無法安裝/TP沒功能/LAN 設備丢失等問題, 麻煩RD盡快釐清",
+      "highlight": "1).Schedule: AMD 將PI 1200I NDA Release 延至7/10(Delay 3W),因專案僅有一個MVT stage,工廠& DQA需完整驗證,若測試順利,MP 預計僅延後 1 週至 9/7 (先前已由9 月底提前至8/31,現又延至9/7),後續將依實際測試結果滾動式調整時程。 2).Material: Thermal module依現有設計圖面take risk讓廠商去進行修模同時備料MVT & ATS, 若實測結果未達預期,物料需報廢,schedule也可能因此造成影響",
+      "mp_sort": "2026/09/07",
       "orig_idx": 552,
       "dates": {
         "Kickoff": "2026/05/28",
         "DVT-start": "2026/06/26",
-        "MVT-start": "2026/07/17",
-        "BTO ready": "2026/07/31",
-        "ATS-start": "2026/08/21",
-        "MP": "2026/08/31"
-      }
+        "MVT-start": "2026/07/22",
+        "BTO ready": "2026/08/07",
+        "ATS-start": "2026/08/28",
+        "MP": "2026/09/07"
+      },
+      "mp_changed": true,
+      "old_mp": "2026/08/31",
+      "old_stage": "DVT"
     },
     {
       "model": "15TK",
@@ -11078,7 +11090,7 @@
       "gpu": "RTX 5050",
       "npm": "蔡東宏",
       "stage": "DVT",
-      "status": "DDR5 sku, DVT測試中,預計7/2 PCB 10 gerberout",
+      "status": "DDR5 sku, MVT備料中,預計7/14 MVT SMT",
       "highlight": "NA",
       "mp_sort": "2026/08/30",
       "orig_idx": 561,
@@ -11098,7 +11110,7 @@
       "gpu": "RTX 5050",
       "npm": "蔡東宏",
       "stage": "DVT",
-      "status": "DDR4 sku, DVT測試中",
+      "status": "DDR4 sku, DVT測試中,預計7/14 gerberout PCB 3.1",
       "highlight": "NA",
       "mp_sort": "2026/08/31",
       "orig_idx": 562,
@@ -11118,7 +11130,7 @@
       "gpu": "RTX 5060",
       "npm": "蔡東宏",
       "stage": "DVT",
-      "status": "DDR5 sku, DVT測試中,預計7/2 PCB 10 gerberout",
+      "status": "DDR5 sku, MVT備料中,預計7/14 MVT SMT",
       "highlight": "NA",
       "mp_sort": "2026/08/30",
       "orig_idx": 563,
@@ -11138,7 +11150,7 @@
       "gpu": "RTX 5060",
       "npm": "蔡東宏",
       "stage": "DVT",
-      "status": "DDR4 sku, DVT測試中",
+      "status": "DDR4 sku, DVT測試中,預計7/14 gerberout PCB 3.1",
       "highlight": "NA",
       "mp_sort": "2026/08/31",
       "orig_idx": 564,
@@ -11158,7 +11170,7 @@
       "gpu": "RTX 5070",
       "npm": "蔡東宏",
       "stage": "DVT",
-      "status": "DDR5 sku, DVT測試中,預計7/2 PCB 10 gerberout",
+      "status": "DDR5 sku, MVT備料中,預計7/14 MVT SMT",
       "highlight": "NA",
       "mp_sort": "2026/08/30",
       "orig_idx": 565,
@@ -11178,7 +11190,7 @@
       "gpu": "RTX 5070",
       "npm": "蔡東宏",
       "stage": "DVT",
-      "status": "DDR4 sku, DVT測試中",
+      "status": "DDR4 sku, DVT測試中,預計7/14 gerberout PCB 3.1",
       "highlight": "NA",
       "mp_sort": "2026/08/31",
       "orig_idx": 566,
@@ -12600,8 +12612,8 @@
       "gpu": "Intel® Arc™ Graphics",
       "npm": "顏春梅",
       "stage": "Design",
-      "status": "",
-      "highlight": "",
+      "status": "0A layout 中 0A G/O@8/7",
+      "highlight": "NA",
       "mp_sort": "2026/12/31",
       "orig_idx": 638,
       "dates": {
@@ -13693,6 +13705,26 @@
       }
     },
     {
+      "model": "24VL",
+      "mkt": "Modern A14 LE J1M",
+      "cpu": "RMB 100 35W",
+      "gpu": "N/A",
+      "npm": "杜晨光",
+      "stage": "ATS",
+      "status": "ATS 預計7/1 ASSY，客驗安排7/4 ，7/10 機台入庫",
+      "highlight": "1)\tMVT Issue，Free DOS下，secure boor enable,不能從U盤啟動&UCSI功能未導入 需微步協調人力加速，確保在7/8前導入對策，",
+      "mp_sort": "2026/07/10",
+      "orig_idx": 693,
+      "dates": {
+        "Kickoff": "2026/01/05",
+        "DVT-start": "2026/03/30",
+        "MVT-start": "2026/04/17",
+        "BTO ready": "2026/05/15",
+        "ATS-start": "2026/07/01",
+        "MP": "2026/07/10"
+      }
+    },
+    {
       "model": "26U3",
       "mkt": "Modern 16S G3MG",
       "cpu": "WCL 25W",
@@ -13702,7 +13734,7 @@
       "status": "+8",
       "highlight": "BIOS issue, advancing build from 103 to 104.",
       "mp_sort": "2026/05/13",
-      "orig_idx": 693,
+      "orig_idx": 694,
       "dates": {
         "Kickoff": "2025/10/01",
         "DVT-start": "2025/11/17",
@@ -13711,6 +13743,26 @@
         "BTO ready": "2026/02/26",
         "ATS-start": "2026/04/08",
         "MP": "2026/05/13"
+      }
+    },
+    {
+      "model": "26VL",
+      "mkt": "Modern A16 LE J1M",
+      "cpu": "RMB 100 35W",
+      "gpu": "N/A",
+      "npm": "杜晨光",
+      "stage": "ATS",
+      "status": "因26VL 機構物料7/3 ready，預計7/4 ATS ASSY ，7/13 機台入庫",
+      "highlight": "1)\tMVT Issue，Free DOS下，secure boor enable,不能從U盤啟動&UCSI功能未導入 需微步協調人力加速，確保在7/8前導入對策，",
+      "mp_sort": "2026/07/13",
+      "orig_idx": 695,
+      "dates": {
+        "Kickoff": "2026/01/05",
+        "DVT-start": "2026/03/30",
+        "MVT-start": "2026/04/17",
+        "BTO ready": "2026/05/15",
+        "ATS-start": "2026/07/04",
+        "MP": "2026/07/13"
       }
     },
     {
@@ -13723,7 +13775,7 @@
       "status": "-9",
       "highlight": "2/25已入庫,delay 9 day, ATS issue MODS燈不滅",
       "mp_sort": "2025/02/25",
-      "orig_idx": 694,
+      "orig_idx": 696,
       "dates": {
         "Kickoff": "2024/05/31",
         "MVT-start": "2024/10/23",
@@ -13742,7 +13794,7 @@
       "status": "40",
       "highlight": "機構件簽樣和備料時間提前",
       "mp_sort": "2024/02/06",
-      "orig_idx": 695,
+      "orig_idx": 697,
       "dates": {
         "Kickoff": "2023/06/30",
         "DVT-start": "2023/08/10",
@@ -13763,7 +13815,7 @@
       "status": "0",
       "highlight": "",
       "mp_sort": "2024/09/30",
-      "orig_idx": 696,
+      "orig_idx": 698,
       "dates": {
         "Kickoff": "2023/12/21",
         "DVT-start": "2024/05/08",
@@ -13784,7 +13836,7 @@
       "status": "無訂單，BTO未開放",
       "highlight": "na",
       "mp_sort": "2024/11/29",
-      "orig_idx": 697,
+      "orig_idx": 699,
       "dates": {
         "Kickoff": "2023/12/21",
         "DVT-start": "2024/05/08",
@@ -13805,7 +13857,7 @@
       "status": "+5",
       "highlight": "計劃12/26入庫，實際時間12/31，touch 失效和ALS Fail  debug delay 5天",
       "mp_sort": "2025/12/31",
-      "orig_idx": 698,
+      "orig_idx": 700,
       "dates": {
         "Kickoff": "2025/03/27",
         "DVT-start": "2025/04/15",
@@ -13826,7 +13878,7 @@
       "status": "-32",
       "highlight": "delay:因EVO取證延誤(機構沿用影響WIFI)",
       "mp_sort": "2025/02/21",
-      "orig_idx": 699,
+      "orig_idx": 701,
       "dates": {
         "Kickoff": "2024/07/02",
         "EVT-start": "2024/08/05",
@@ -13846,7 +13898,7 @@
       "status": "-3",
       "highlight": "delay:主要因ADP匹配性問題,因應改版後的供貨時間安排ATS上線",
       "mp_sort": "2024/01/19",
-      "orig_idx": 700,
+      "orig_idx": 702,
       "dates": {
         "Kickoff": "2023/05/05",
         "DVT-start": "2023/08/11",
@@ -13867,7 +13919,7 @@
       "status": "-17",
       "highlight": "delay 原因 1. DVT:I32-290011C-M03因code燒錄錯誤,庫存隔離無法使用 2. EVT:因應CPU QS到貨時間 3. MVT:工廠產能無法ˊˊ安排如期上線",
       "mp_sort": "2024/01/17",
-      "orig_idx": 701,
+      "orig_idx": 703,
       "dates": {
         "Kickoff": "2023/05/05",
         "DVT-start": "2023/07/25",
@@ -13888,7 +13940,7 @@
       "status": "-17",
       "highlight": "delay 原因 1. DVT:I32-290011C-M03因code燒錄錯誤,庫存隔離無法使用 2. EVT:因應CPU QS到貨時間 3. MVT:工廠產能無法ˊˊ安排如期上線",
       "mp_sort": "2024/01/17",
-      "orig_idx": 702,
+      "orig_idx": 704,
       "dates": {
         "Kickoff": "2023/05/05",
         "DVT-start": "2023/07/25",
@@ -13909,7 +13961,7 @@
       "status": "-51",
       "highlight": "delay:1.因EVO取證延誤(機構沿用影響WIFI) 2.等待ATS訂單",
       "mp_sort": "2025/03/13",
-      "orig_idx": 703,
+      "orig_idx": 705,
       "dates": {
         "Kickoff": "2024/07/02",
         "EVT-start": "2024/08/12",
@@ -13929,7 +13981,7 @@
       "status": "-51",
       "highlight": "delay:1.因EVO取證延誤(機構沿用影響WIFI) 2.等待ATS訂單",
       "mp_sort": "2025/03/21",
-      "orig_idx": 704,
+      "orig_idx": 706,
       "dates": {
         "Kickoff": "2024/07/02",
         "EVT-start": "2024/08/12",
@@ -13949,7 +14001,7 @@
       "status": "0",
       "highlight": "2nd MP@9/22",
       "mp_sort": "2024/09/25",
-      "orig_idx": 705,
+      "orig_idx": 707,
       "dates": {
         "Kickoff": "2024/01/04",
         "DVT-start": "2024/03/18",
@@ -13970,7 +14022,7 @@
       "status": "BTO只專案開放過, 目前只有2台訂單, 無法安排ATS C/R",
       "highlight": "NA",
       "mp_sort": "2025/02/28",
-      "orig_idx": 706,
+      "orig_idx": 708,
       "dates": {
         "Kickoff": "2024/12/20",
         "MVT-start": "2024/12/31",
@@ -13989,7 +14041,7 @@
       "status": "BTO待有業務需求後開放",
       "highlight": "NA",
       "mp_sort": "2025/02/28",
-      "orig_idx": 707,
+      "orig_idx": 709,
       "dates": {
         "Kickoff": "2024/12/20",
         "MVT-start": "2024/12/31",
@@ -14006,9 +14058,9 @@
       "npm": "倪嬌嬌",
       "stage": "MVT",
       "status": "MVT SMT@7/20--depend on Material ready date作調整",
-      "highlight": "1) Color plan change: a. 顏色變更至炭黑色 b. D件改噴漆製程 2)備料：量產交料HQ23, 十一月份交料(MSI wish 10/B交料, 待Samsung確認回復）Leading customers量產交料時間 具體九月份ETD日期還在追蹤中. b. Others order: 需轉型號至HQxx, 十一月份交料",
+      "highlight": "1) Schedule: 因color plan變更, MVT機構件備料ready日期還待ID&ME確認中, 待評估完成更新MVT ASSY date 2）Color plan change: a. 顏色變更至炭黑色 b. D件改噴漆製程 3)備料：量產交料HQ23, 十一月份交料(MSI wish 10/B交料, 待Samsung確認回復）",
       "mp_sort": "2026/10/26",
-      "orig_idx": 708,
+      "orig_idx": 710,
       "dates": {
         "Kickoff": "2025/04/30",
         "DVT-start": "2025/09/01",
@@ -14029,7 +14081,7 @@
       "status": "BTO",
       "highlight": "暫無業務需求,BTO 未開放",
       "mp_sort": "2026/02/09",
-      "orig_idx": 709,
+      "orig_idx": 711,
       "dates": {
         "Kickoff": "2025/06/26",
         "DVT-start": "2025/08/29",
@@ -14050,7 +14102,7 @@
       "status": "BTO",
       "highlight": "暫無業務需求,BTO 未開放",
       "mp_sort": "2026/02/09",
-      "orig_idx": 710,
+      "orig_idx": 712,
       "dates": {
         "Kickoff": "2025/06/26",
         "DVT-start": "2025/08/29",
@@ -14071,7 +14123,7 @@
       "status": "Wait GN22-X6-R Sample schedule",
       "highlight": "Pending first due to Nvidia plan change",
       "mp_sort": "2026/02/16",
-      "orig_idx": 711,
+      "orig_idx": 713,
       "dates": {
         "Kickoff": "2025/06/26",
         "DVT-start": "2025/08/29",
@@ -14092,7 +14144,7 @@
       "status": "BTO",
       "highlight": "暫無業務需求,BTO 未開放",
       "mp_sort": "2026/02/09",
-      "orig_idx": 712,
+      "orig_idx": 714,
       "dates": {
         "Kickoff": "2025/06/26",
         "DVT-start": "2025/08/29",
@@ -14111,9 +14163,9 @@
       "npm": "林晉弘",
       "stage": "MVT",
       "status": "MVT測試中",
-      "highlight": "1)MSFT 6/24 release power report，report中power consumption數據與battery life跟廠內DQA及RD有落差，待與MSFT比對測試環境差異，釐清測試結果。 2)DQA/RD/工廠切換到BSP FD Rev.B與BIOS 049測試中。NV 6/23 release BSP FD ver.C，待BIOS與preload更新後，會再切換新版測試。 3)6/10 通知A-side需增加龍盾+小標，ME評估6/E前須完成打樣讓老闆確認，才能趕上7/31 ATS start。已請Ronald push務必於本周確認完成。",
+      "highlight": "1)MSFT對於battery life定義的測試條件與MSI/NV不同，MSFT要求測試需基於出貨image的預設模式，目前DQA提供的數據皆用Best efficiency。NV要求本周提供balance mode的測試結果，以供比較。 2)NV解Abnormal shut down 的solution，目前會影響battery life仍在fine tune，尚未確認導入哪一版本BSP，MSFT會議中婉轉要求出貨前要解。 3)A-side需增加龍盾+小標，ID 7/3提供更新color plan，ME更新預計7/30入料。 4)NV/MSFT三方會議中，NV窗口提及for MP的BSP release schedule有變，專案schedule目前基於7/3 release MP BSP所排，將影響ATS的時間多久，須待NV官方宣布後，重新規劃。",
       "mp_sort": "2026/08/14",
-      "orig_idx": 713,
+      "orig_idx": 715,
       "dates": {
         "Kickoff": "2024/11/25",
         "DVT-start": "2025/01/20",
@@ -14134,7 +14186,7 @@
       "status": "1)EVT 更新BSP6.2.1  持續驗證中, 對應NV schedule 更新 MVT延到7/20. 2) NV 更新BSP 時間 Factory Drop Final ETA 10/6 ,需要1周時間完成 HDI+BIOS 更新ATS strat 10/13",
       "highlight": "備料: Samsung 2.8K panel 可先出HR14*1K for N1 9月ATS 用, 另外要再驗證HR16 for後續出貨需求",
       "mp_sort": "2026/10/26",
-      "orig_idx": 714,
+      "orig_idx": 716,
       "dates": {
         "Kickoff": "2025/04/30",
         "DVT-start": "2025/09/01",
@@ -14155,7 +14207,7 @@
       "status": "0",
       "highlight": "On schedule.",
       "mp_sort": "2025/06/20",
-      "orig_idx": 715,
+      "orig_idx": 717,
       "dates": {
         "Kickoff": "2025/03/21",
         "MVT-start": "2025/03/31",
@@ -14174,7 +14226,7 @@
       "status": "-1",
       "highlight": "None",
       "mp_sort": "2025/09/30",
-      "orig_idx": 716,
+      "orig_idx": 718,
       "dates": {
         "Kickoff": "2025/07/01",
         "DVT-start": "2025/08/04",
@@ -14194,7 +14246,7 @@
       "status": "0.",
       "highlight": "",
       "mp_sort": "2024/09/13",
-      "orig_idx": 717,
+      "orig_idx": 719,
       "dates": {
         "Kickoff": "2024/02/29",
         "EVT-start": "2024/06/05",
@@ -14214,7 +14266,7 @@
       "status": "0",
       "highlight": "On schedule.",
       "mp_sort": "2025/06/20",
-      "orig_idx": 718,
+      "orig_idx": 720,
       "dates": {
         "Kickoff": "2025/03/21",
         "MVT-start": "2025/03/31",
@@ -14233,7 +14285,7 @@
       "status": "-1",
       "highlight": "None",
       "mp_sort": "2025/09/30",
-      "orig_idx": 719,
+      "orig_idx": 721,
       "dates": {
         "Kickoff": "2025/07/01",
         "DVT-start": "2025/08/04",
@@ -14253,7 +14305,7 @@
       "status": "14J6  MVT 測試完成，pending ,NPI stage ready for MP, 不需要備料, 也不用進量產.",
       "highlight": "",
       "mp_sort": "2024/06/20",
-      "orig_idx": 720,
+      "orig_idx": 722,
       "dates": {
         "Kickoff": "2023/12/21",
         "DVT-start": "2024/02/26",
@@ -14273,7 +14325,7 @@
       "status": "0",
       "highlight": "BTO未開",
       "mp_sort": "2024/02/27",
-      "orig_idx": 721,
+      "orig_idx": 723,
       "dates": {
         "Kickoff": "2023/11/28",
         "MVT-start": "2024/01/03",
@@ -14292,7 +14344,7 @@
       "status": "0",
       "highlight": "暫無業務需求, 未開放BTO",
       "mp_sort": "2023/11/30",
-      "orig_idx": 722,
+      "orig_idx": 724,
       "dates": {
         "Kickoff": "2023/09/08",
         "MVT-start": "2023/09/25",
@@ -14311,7 +14363,7 @@
       "status": "0",
       "highlight": "",
       "mp_sort": "2023/11/30",
-      "orig_idx": 723,
+      "orig_idx": 725,
       "dates": {
         "Kickoff": "2023/09/08",
         "MVT-start": "2023/09/25",
@@ -14330,7 +14382,7 @@
       "status": "2",
       "highlight": "",
       "mp_sort": "2025/01/23",
-      "orig_idx": 724,
+      "orig_idx": 726,
       "dates": {
         "Kickoff": "2024/08/02",
         "MVT-start": "2024/08/21",
@@ -14349,7 +14401,7 @@
       "status": "-1",
       "highlight": "None",
       "mp_sort": "2025/09/30",
-      "orig_idx": 725,
+      "orig_idx": 727,
       "dates": {
         "Kickoff": "2025/07/01",
         "DVT-start": "2025/08/04",
@@ -14369,7 +14421,7 @@
       "status": "-12.",
       "highlight": "8/2, 8/5, 8/6與8/9客驗Fail, 延長後續客驗時間.",
       "mp_sort": "2024/08/13",
-      "orig_idx": 726,
+      "orig_idx": 728,
       "dates": {
         "Kickoff": "2024/01/19",
         "DVT-start": "2024/02/29",
@@ -14390,7 +14442,7 @@
       "status": "-1",
       "highlight": "None",
       "mp_sort": "2025/09/30",
-      "orig_idx": 727,
+      "orig_idx": 729,
       "dates": {
         "Kickoff": "2025/07/01",
         "DVT-start": "2025/08/04",
@@ -14410,7 +14462,7 @@
       "status": "-5",
       "highlight": "CPU  交期延後，1/9 SMT ，1/21幾台入庫，delay 5 天",
       "mp_sort": "2025/01/16",
-      "orig_idx": 728,
+      "orig_idx": 730,
       "dates": {
         "Kickoff": "2024/08/07",
         "MVT-start": "2024/08/13",
@@ -14429,7 +14481,7 @@
       "status": "0",
       "highlight": "",
       "mp_sort": "2023/05/29",
-      "orig_idx": 729,
+      "orig_idx": 731,
       "dates": {
         "Kickoff": "2023/01/13",
         "DVT-start": "2023/03/10",
@@ -14449,7 +14501,7 @@
       "status": "0",
       "highlight": "",
       "mp_sort": "2023/05/29",
-      "orig_idx": 730,
+      "orig_idx": 732,
       "dates": {
         "Kickoff": "2023/01/13",
         "DVT-start": "2023/03/10",
@@ -14469,7 +14521,7 @@
       "status": "0",
       "highlight": "BTO暫未開放，待業務訂單",
       "mp_sort": "2023/11/30",
-      "orig_idx": 731,
+      "orig_idx": 733,
       "dates": {
         "Kickoff": "2023/03/29",
         "MVT-start": "2023/07/10",
@@ -14488,7 +14540,7 @@
       "status": "-15",
       "highlight": "幾台12/29 入庫：1).10/5 通知暫緩備料，10/18 通知備5K， 2)A 件水滴角導入原因，機構料交期Delay，",
       "mp_sort": "2023/11/30",
-      "orig_idx": 732,
+      "orig_idx": 734,
       "dates": {
         "Kickoff": "2023/03/29",
         "MVT-start": "2023/07/10",
@@ -14507,7 +14559,7 @@
       "status": "-15",
       "highlight": "目標達成狀況回報: (pull-in 28天,差目標15天) 1.未達成目標原因: 春節假期，廠商缺原材料I-PEX連接器且產能不足， Camera Cable首批交期 @2/29, 2. 3/1進 ATS，按生管排程 3/14 已入庫",
       "mp_sort": "2024/03/15",
-      "orig_idx": 733,
+      "orig_idx": 735,
       "dates": {
         "Kickoff": "2023/10/20",
         "DVT-start": "2023/11/30",
@@ -14528,7 +14580,7 @@
       "status": "0",
       "highlight": "NA",
       "mp_sort": "2025/01/02",
-      "orig_idx": 734,
+      "orig_idx": 736,
       "dates": {
         "Kickoff": "2024/10/30",
         "MVT-start": "2024/11/05",
@@ -14547,7 +14599,7 @@
       "status": "0",
       "highlight": "NA",
       "mp_sort": "2025/02/28",
-      "orig_idx": 735,
+      "orig_idx": 737,
       "dates": {
         "Kickoff": "2025/01/24",
         "MVT-start": "2025/02/03",
@@ -14566,7 +14618,7 @@
       "status": "-25",
       "highlight": "因等ARL CPU來料，ATS SMT@1/13",
       "mp_sort": "2025/01/02",
-      "orig_idx": 736,
+      "orig_idx": 738,
       "dates": {
         "Kickoff": "2024/09/19",
         "MVT-start": "2024/11/05",
@@ -14585,7 +14637,7 @@
       "status": "-30",
       "highlight": "touch panel DQA AVL test OK 1/2, MP 2/B, \t因等ARL CPU來料，MP follow ATS 結果，SMT@1/23",
       "mp_sort": "2025/01/02",
-      "orig_idx": 737,
+      "orig_idx": 739,
       "dates": {
         "Kickoff": "2024/09/19",
         "MVT-start": "2024/11/05",
@@ -14604,7 +14656,7 @@
       "status": "15H6 MVT 測試完成, pending ,NPI stage ready for MP, 不需要備料, 也不用進量產.",
       "highlight": "",
       "mp_sort": "2024/06/20",
-      "orig_idx": 738,
+      "orig_idx": 740,
       "dates": {
         "Kickoff": "2023/12/21",
         "MVT-start": "2024/04/16",
@@ -14623,7 +14675,7 @@
       "status": "-1",
       "highlight": "None",
       "mp_sort": "2025/09/30",
-      "orig_idx": 739,
+      "orig_idx": 741,
       "dates": {
         "Kickoff": "2025/07/01",
         "DVT-start": "2025/08/04",
@@ -14643,7 +14695,7 @@
       "status": "-12.",
       "highlight": "8/2, 8/5, 8/6與8/9客驗Fail, 延長後續客驗時間.",
       "mp_sort": "2024/08/13",
-      "orig_idx": 740,
+      "orig_idx": 742,
       "dates": {
         "Kickoff": "2024/01/19",
         "DVT-start": "2024/02/29",
@@ -14664,7 +14716,7 @@
       "status": "-1",
       "highlight": "None",
       "mp_sort": "2025/09/30",
-      "orig_idx": 741,
+      "orig_idx": 743,
       "dates": {
         "Kickoff": "2025/07/01",
         "DVT-start": "2025/08/04",
@@ -14684,34 +14736,14 @@
       "status": "Weibu update 7/6 ASSY--受新料交期和盤點影響",
       "highlight": "1)Schedule: 考量新料備料時程, 調整試產和ATS時間@8/17 start  2)認證: 參考Weibu認證Schedule, 有四個國家無法同步於8/E TTM, 持續追蹤中 MX: 11/28 ready；AR:10/3 ready；CO: 9/5 ready；RU: 9/12 ready",
       "mp_sort": "2026/08/31",
-      "orig_idx": 742,
+      "orig_idx": 744,
       "dates": {
         "Kickoff": "2026/06/02",
         "DVT-start": "2026/06/29",
         "MVT-start": "2026/07/29",
-        "BTO ready": "2026/07/06",
+        "BTO ready": "2026/07/08",
         "ATS-start": "2026/08/17",
         "MP": "2026/08/31"
-      }
-    },
-    {
-      "model": "24VL",
-      "mkt": "Modern A14 LE J1M",
-      "cpu": "RMB 100 35W",
-      "gpu": "N/A",
-      "npm": "杜晨光",
-      "stage": "ATS",
-      "status": "ATS 預計7/1 ASSY，客驗安排7/4 ，7/10 機台入庫",
-      "highlight": "1)\tMVT Issue，Free DOS下，secure boor enable,不能從U盤啟動&UCSI功能未導入 需微步協調人力加速，確保在7/8前導入對策，",
-      "mp_sort": "2026/07/10",
-      "orig_idx": 743,
-      "dates": {
-        "Kickoff": "2026/01/05",
-        "DVT-start": "2026/03/30",
-        "MVT-start": "2026/04/17",
-        "BTO ready": "2026/05/15",
-        "ATS-start": "2026/07/01",
-        "MP": "2026/07/10"
       }
     },
     {
@@ -14724,34 +14756,14 @@
       "status": "Weibu update 7/6 ASSY--受新料交期和盤點影響",
       "highlight": "1)Schedule: 考量新料備料時程, 調整試產和ATS時間@8/17 start  2)認證: 參考Weibu認證Schedule, 有四個國家無法同步於8/E TTM, 持續追蹤中 MX: 11/28 ready；AR:10/3 ready；CO: 9/5 ready；RU: 9/12 ready",
       "mp_sort": "2026/08/31",
-      "orig_idx": 744,
+      "orig_idx": 745,
       "dates": {
         "Kickoff": "2026/06/02",
         "DVT-start": "2026/06/29",
         "MVT-start": "2026/07/29",
-        "BTO ready": "2026/07/06",
+        "BTO ready": "2026/07/08",
         "ATS-start": "2026/08/17",
         "MP": "2026/08/31"
-      }
-    },
-    {
-      "model": "26VL",
-      "mkt": "Modern A16 LE J1M",
-      "cpu": "RMB 100 35W",
-      "gpu": "N/A",
-      "npm": "杜晨光",
-      "stage": "ATS",
-      "status": "因26VL 機構物料7/3 ready，預計7/4 ATS ASSY ，7/13 機台入庫",
-      "highlight": "1)\tMVT Issue，Free DOS下，secure boor enable,不能從U盤啟動&UCSI功能未導入 需微步協調人力加速，確保在7/8前導入對策，",
-      "mp_sort": "2026/07/13",
-      "orig_idx": 745,
-      "dates": {
-        "Kickoff": "2026/01/05",
-        "DVT-start": "2026/03/30",
-        "MVT-start": "2026/04/17",
-        "BTO ready": "2026/05/15",
-        "ATS-start": "2026/07/04",
-        "MP": "2026/07/13"
       }
     },
     {
@@ -15158,18 +15170,16 @@
     {
       "model": "14QL",
       "mkt": "VenturePro A14 AI+ A3HWEG",
-      "cpu": "KRK-H 45W",
+      "cpu": "STX-H 45W",
       "gpu": "RTX 5050",
       "npm": "杜晨光",
-      "stage": "MP",
+      "stage": "BTO-",
       "status": "0",
-      "highlight": "幾台5/30入庫",
+      "highlight": "BTO未開，待業務訂單安排ATS",
       "mp_sort": "2025/05/30",
       "orig_idx": 767,
       "dates": {
         "Kickoff": "2024/08/19",
-        "DVT-start": "2024/12/21",
-        "EVT-start": "2025/02/27",
         "MVT-start": "2025/04/17",
         "BTO ready": "2025/04/10",
         "ATS-start": "2025/05/20",
@@ -15179,33 +15189,14 @@
     {
       "model": "14QL",
       "mkt": "VenturePro A14 AI+ A3HWEG",
-      "cpu": "STX-H 45W",
-      "gpu": "RTX 5050",
-      "npm": "杜晨光",
-      "stage": "BTO-",
-      "status": "0",
-      "highlight": "BTO未開，待業務訂單安排ATS",
-      "mp_sort": "2025/05/30",
-      "orig_idx": 768,
-      "dates": {
-        "Kickoff": "2024/08/19",
-        "MVT-start": "2025/04/17",
-        "BTO ready": "2025/04/10",
-        "ATS-start": "2025/05/20",
-        "MP": "2025/05/30"
-      }
-    },
-    {
-      "model": "14QL",
-      "mkt": "VenturePro A14 AI+ A3HWFG",
       "cpu": "KRK-H 45W",
-      "gpu": "RTX 5060",
+      "gpu": "RTX 5050",
       "npm": "杜晨光",
       "stage": "MP",
       "status": "0",
       "highlight": "幾台5/30入庫",
       "mp_sort": "2025/05/30",
-      "orig_idx": 769,
+      "orig_idx": 768,
       "dates": {
         "Kickoff": "2024/08/19",
         "DVT-start": "2024/12/21",
@@ -15226,9 +15217,30 @@
       "status": "0",
       "highlight": "BTO未開，待業務訂單安排ATS",
       "mp_sort": "2025/05/30",
+      "orig_idx": 769,
+      "dates": {
+        "Kickoff": "2024/08/19",
+        "MVT-start": "2025/04/17",
+        "BTO ready": "2025/04/10",
+        "ATS-start": "2025/05/20",
+        "MP": "2025/05/30"
+      }
+    },
+    {
+      "model": "14QL",
+      "mkt": "VenturePro A14 AI+ A3HWFG",
+      "cpu": "KRK-H 45W",
+      "gpu": "RTX 5060",
+      "npm": "杜晨光",
+      "stage": "MP",
+      "status": "0",
+      "highlight": "幾台5/30入庫",
+      "mp_sort": "2025/05/30",
       "orig_idx": 770,
       "dates": {
         "Kickoff": "2024/08/19",
+        "DVT-start": "2024/12/21",
+        "EVT-start": "2025/02/27",
         "MVT-start": "2025/04/17",
         "BTO ready": "2025/04/10",
         "ATS-start": "2025/05/20",
@@ -17409,9 +17421,9 @@
       "cpu": "PTL-H 30W",
       "gpu": "Intel® Arc™ Graphics",
       "npm": "朱芳芳",
-      "stage": "ATS",
+      "stage": "MP",
       "status": "0",
-      "highlight": "1. ALS sensor NG  HDI 進版 6/27重工， 2.A件成品LOGO不良較高，交料瓶頸 請ID&Buyer持續pull in。",
+      "highlight": "NA",
       "mp_sort": "2026/06/30",
       "orig_idx": 881,
       "dates": {
@@ -17471,7 +17483,7 @@
       "npm": "林晉弘",
       "stage": "MVT",
       "status": "MVT測試中",
-      "highlight": "1)MSFT 6/24 release power report，report中power consumption數據與battery life跟廠內DQA及RD有落差，待與MSFT比對測試環境差異，釐清測試結果。 2)DQA/RD/工廠切換到BSP FD Rev.B與BIOS 049測試中。NV 6/23 release BSP FD ver.C，待BIOS與preload更新後，會再切換新版測試。 3)6/10 通知A-side需增加龍盾+小標，ME評估6/E前須完成打樣讓老闆確認，才能趕上7/31 ATS start。已請Ronald push務必於本周確認完成。",
+      "highlight": "1)MSFT對於battery life定義的測試條件與MSI/NV不同，MSFT要求測試需基於出貨image的預設模式，目前DQA提供的數據皆用Best efficiency。NV要求本周提供balance mode的測試結果，以供比較。 2)NV解Abnormal shut down 的solution，目前會影響battery life仍在fine tune，尚未確認導入哪一版本BSP，MSFT會議中婉轉要求出貨前要解。 3)A-side需增加龍盾+小標，ID 7/3提供更新color plan，ME更新預計7/30入料。 4)NV/MSFT三方會議中，NV窗口提及for MP的BSP release schedule有變，專案schedule目前基於7/3 release MP BSP所排，將影響ATS的時間多久，須待NV官方宣布後，重新規劃。",
       "mp_sort": "2026/08/14",
       "orig_idx": 884,
       "dates": {
@@ -17706,5 +17718,5 @@
       }
     }
   ],
-  "buildTime": "2026/07/02 13:54:39"
+  "buildTime": "2026/07/03 08:16:45"
 }

@@ -5884,7 +5884,7 @@
       "gpu": "RTX 5050",
       "npm": "蔡東宏",
       "stage": "DVT",
-      "status": "HPT sku: 目前測試有AMD Graphics驅動無法安裝/TP沒功能/LAN 設備丢失等問題, 麻煩RD盡快釐清",
+      "status": "HPT sku: 目前AMD Graphics驅動無法安裝/TP沒功能, 請RD儘速釐清",
       "highlight": "1).Schedule: AMD 將PI 1200I NDA Release 延至7/10(Delay 3W),因專案僅有一個MVT stage,工廠& DQA需完整驗證,若測試順利,MP 預計僅延後 1 週至 9/7 (先前已由9 月底提前至8/31,現又延至9/7),後續將依實際測試結果滾動式調整時程。 2).Material: Thermal module依現有設計圖面take risk讓廠商去進行修模同時備料MVT & ATS, 若實測結果未達預期,物料需報廢,schedule也可能因此造成影響",
       "mp_sort": "2026/09/07",
       "orig_idx": 297,
@@ -5895,10 +5895,7 @@
         "BTO ready": "2026/08/07",
         "ATS-start": "2026/08/28",
         "MP": "2026/09/07"
-      },
-      "mp_changed": true,
-      "old_mp": "2026/08/31",
-      "old_stage": "DVT"
+      }
     },
     {
       "model": "15TK",
@@ -5907,7 +5904,7 @@
       "gpu": "RTX 5060",
       "npm": "蔡東宏",
       "stage": "DVT",
-      "status": "HPT sku: 目前測試有AMD Graphics驅動無法安裝/TP沒功能/LAN 設備丢失等問題, 麻煩RD盡快釐清",
+      "status": "HPT sku: 目前AMD Graphics驅動無法安裝/TP沒功能, 請RD儘速釐清",
       "highlight": "1).Schedule: AMD 將PI 1200I NDA Release 延至7/10(Delay 3W),因專案僅有一個MVT stage,工廠& DQA需完整驗證,若測試順利,MP 預計僅延後 1 週至 9/7 (先前已由9 月底提前至8/31,現又延至9/7),後續將依實際測試結果滾動式調整時程。 2).Material: Thermal module依現有設計圖面take risk讓廠商去進行修模同時備料MVT & ATS, 若實測結果未達預期,物料需報廢,schedule也可能因此造成影響",
       "mp_sort": "2026/09/07",
       "orig_idx": 298,
@@ -5918,10 +5915,7 @@
         "BTO ready": "2026/08/07",
         "ATS-start": "2026/08/28",
         "MP": "2026/09/07"
-      },
-      "mp_changed": true,
-      "old_mp": "2026/08/31",
-      "old_stage": "DVT"
+      }
     },
     {
       "model": "15TK",
@@ -5930,7 +5924,7 @@
       "gpu": "RTX 5070",
       "npm": "蔡東宏",
       "stage": "DVT",
-      "status": "HPT sku: 目前測試有AMD Graphics驅動無法安裝/TP沒功能/LAN 設備丢失等問題, 麻煩RD盡快釐清",
+      "status": "HPT sku: 目前AMD Graphics驅動無法安裝/TP沒功能, 請RD儘速釐清",
       "highlight": "1).Schedule: AMD 將PI 1200I NDA Release 延至7/10(Delay 3W),因專案僅有一個MVT stage,工廠& DQA需完整驗證,若測試順利,MP 預計僅延後 1 週至 9/7 (先前已由9 月底提前至8/31,現又延至9/7),後續將依實際測試結果滾動式調整時程。 2).Material: Thermal module依現有設計圖面take risk讓廠商去進行修模同時備料MVT & ATS, 若實測結果未達預期,物料需報廢,schedule也可能因此造成影響",
       "mp_sort": "2026/09/07",
       "orig_idx": 299,
@@ -5941,10 +5935,7 @@
         "BTO ready": "2026/08/07",
         "ATS-start": "2026/08/28",
         "MP": "2026/09/07"
-      },
-      "mp_changed": true,
-      "old_mp": "2026/08/31",
-      "old_stage": "DVT"
+      }
     },
     {
       "model": "15TK",
@@ -10901,7 +10892,7 @@
       "gpu": "RTX 5050",
       "npm": "蔡東宏",
       "stage": "DVT",
-      "status": "HPT sku: 目前測試有AMD Graphics驅動無法安裝/TP沒功能/LAN 設備丢失等問題, 麻煩RD盡快釐清",
+      "status": "HPT sku: 目前AMD Graphics驅動無法安裝/TP沒功能, 請RD儘速釐清",
       "highlight": "1).Schedule: AMD 將PI 1200I NDA Release 延至7/10(Delay 3W),因專案僅有一個MVT stage,工廠& DQA需完整驗證,若測試順利,MP 預計僅延後 1 週至 9/7 (先前已由9 月底提前至8/31,現又延至9/7),後續將依實際測試結果滾動式調整時程。 2).Material: Thermal module依現有設計圖面take risk讓廠商去進行修模同時備料MVT & ATS, 若實測結果未達預期,物料需報廢,schedule也可能因此造成影響",
       "mp_sort": "2026/09/07",
       "orig_idx": 552,
@@ -10912,10 +10903,7 @@
         "BTO ready": "2026/08/07",
         "ATS-start": "2026/08/28",
         "MP": "2026/09/07"
-      },
-      "mp_changed": true,
-      "old_mp": "2026/08/31",
-      "old_stage": "DVT"
+      }
     },
     {
       "model": "15TK",
@@ -11615,7 +11603,7 @@
       "cpu": "NVL-HX 55W",
       "gpu": "RTX 5050",
       "npm": "鮑佩佩",
-      "stage": "Design",
+      "stage": "DVT",
       "status": "0A 7/3 gerber out",
       "highlight": "na",
       "mp_sort": "2027/03/18",
@@ -11636,7 +11624,7 @@
       "cpu": "NVL-HX 55W",
       "gpu": "RTX 5060",
       "npm": "鮑佩佩",
-      "stage": "Design",
+      "stage": "DVT",
       "status": "0A 7/3 gerber out",
       "highlight": "na",
       "mp_sort": "2027/03/18",
@@ -11657,7 +11645,7 @@
       "cpu": "NVL-HX 55W",
       "gpu": "RTX 5070",
       "npm": "鮑佩佩",
-      "stage": "Design",
+      "stage": "DVT",
       "status": "GN22-X6 8GB SKU,0A 7/3 gerber out",
       "highlight": "na",
       "mp_sort": "2027/03/18",
@@ -11678,7 +11666,7 @@
       "cpu": "NVL-HX 55W",
       "gpu": "RTX 5070",
       "npm": "鮑佩佩",
-      "stage": "Design",
+      "stage": "DVT",
       "status": "GN22-X6 12GB SKU,0A 7/3 gerber out",
       "highlight": "na",
       "mp_sort": "2027/03/18",
@@ -15314,7 +15302,7 @@
       "cpu": "ARL-H 45W",
       "gpu": "RTX 4050 (35W+10W)/ GDDR6 6GB",
       "npm": "李文欽",
-      "stage": "Design",
+      "stage": "MVT",
       "status": "（清日文4區RGB鍵盤庫存）預計7/6 試組機台, DQA預計測試2周時間",
       "highlight": "NA",
       "mp_sort": "2026/07/31",
@@ -17461,8 +17449,8 @@
       "cpu": "NVL-H 30W",
       "gpu": "Intel® Arc™ Graphics",
       "npm": "朱芳芳",
-      "stage": "Design",
-      "status": "0A gerberout ：6/26,DVT SMT@7/22",
+      "stage": "DVT",
+      "status": "DVT SMT@7/22",
       "highlight": "NA",
       "mp_sort": "2026/12/25",
       "orig_idx": 883,
@@ -17718,5 +17706,5 @@
       }
     }
   ],
-  "buildTime": "2026/07/03 08:16:45"
+  "buildTime": "2026/07/06 08:59:59"
 }

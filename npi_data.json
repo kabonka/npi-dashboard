@@ -5884,18 +5884,21 @@
       "gpu": "RTX 5050",
       "npm": "蔡東宏",
       "stage": "DVT",
-      "status": "HPT sku: 目前AMD Graphics驅動無法安裝/TP沒功能, 請RD儘速釐清",
-      "highlight": "1).Schedule: AMD 將PI 1200I NDA Release 延至7/10(Delay 3W),因專案僅有一個MVT stage,工廠& DQA需完整驗證,若測試順利,MP 預計僅延後 1 週至 9/7 (先前已由9 月底提前至8/31,現又延至9/7),後續將依實際測試結果滾動式調整時程。 2).Material: Thermal module依現有設計圖面take risk讓廠商去進行修模同時備料MVT & ATS, 若實測結果未達預期,物料需報廢,schedule也可能因此造成影響",
-      "mp_sort": "2026/09/07",
+      "status": "HPT sku: MODS無法測試,請BIOS RD儘速釐清",
+      "highlight": "1).Schedule: AMD 將PI 1200I NDA Release 再延至7/17(Delay 4W),因專案僅有一個MVT stage,工廠& DQA需完整驗證,若測試順利,MP 預計延後 2週至 9/14 (先前已由9 月底提前至8/31,現又延至9/14),後續將依實際測試結果滾動式調整時程。 2).Material: Thermal module依現有設計圖面take risk讓廠商去進行修模同時備料MVT & ATS, 若實測結果未達預期,物料需報廢,schedule也可能因此造成影響",
+      "mp_sort": "2026/09/14",
       "orig_idx": 297,
       "dates": {
         "Kickoff": "2026/05/28",
         "DVT-start": "2026/06/26",
-        "MVT-start": "2026/07/22",
-        "BTO ready": "2026/08/07",
-        "ATS-start": "2026/08/28",
-        "MP": "2026/09/07"
-      }
+        "MVT-start": "2026/07/29",
+        "BTO ready": "2026/08/14",
+        "ATS-start": "2026/09/04",
+        "MP": "2026/09/14"
+      },
+      "mp_changed": true,
+      "old_mp": "2026/09/07",
+      "old_stage": "DVT"
     },
     {
       "model": "15TK",
@@ -5904,18 +5907,21 @@
       "gpu": "RTX 5060",
       "npm": "蔡東宏",
       "stage": "DVT",
-      "status": "HPT sku: 目前AMD Graphics驅動無法安裝/TP沒功能, 請RD儘速釐清",
-      "highlight": "1).Schedule: AMD 將PI 1200I NDA Release 延至7/10(Delay 3W),因專案僅有一個MVT stage,工廠& DQA需完整驗證,若測試順利,MP 預計僅延後 1 週至 9/7 (先前已由9 月底提前至8/31,現又延至9/7),後續將依實際測試結果滾動式調整時程。 2).Material: Thermal module依現有設計圖面take risk讓廠商去進行修模同時備料MVT & ATS, 若實測結果未達預期,物料需報廢,schedule也可能因此造成影響",
-      "mp_sort": "2026/09/07",
+      "status": "HPT sku: MODS無法測試,請BIOS RD儘速釐清",
+      "highlight": "1).Schedule: AMD 將PI 1200I NDA Release 再延至7/17(Delay 4W),因專案僅有一個MVT stage,工廠& DQA需完整驗證,若測試順利,MP 預計延後 2週至 9/14 (先前已由9 月底提前至8/31,現又延至9/14),後續將依實際測試結果滾動式調整時程。 2).Material: Thermal module依現有設計圖面take risk讓廠商去進行修模同時備料MVT & ATS, 若實測結果未達預期,物料需報廢,schedule也可能因此造成影響",
+      "mp_sort": "2026/09/14",
       "orig_idx": 298,
       "dates": {
         "Kickoff": "2026/05/28",
         "DVT-start": "2026/06/26",
-        "MVT-start": "2026/07/22",
-        "BTO ready": "2026/08/07",
-        "ATS-start": "2026/08/28",
-        "MP": "2026/09/07"
-      }
+        "MVT-start": "2026/07/29",
+        "BTO ready": "2026/08/14",
+        "ATS-start": "2026/09/04",
+        "MP": "2026/09/14"
+      },
+      "mp_changed": true,
+      "old_mp": "2026/09/07",
+      "old_stage": "DVT"
     },
     {
       "model": "15TK",
@@ -5924,18 +5930,21 @@
       "gpu": "RTX 5070",
       "npm": "蔡東宏",
       "stage": "DVT",
-      "status": "HPT sku: 目前AMD Graphics驅動無法安裝/TP沒功能, 請RD儘速釐清",
-      "highlight": "1).Schedule: AMD 將PI 1200I NDA Release 延至7/10(Delay 3W),因專案僅有一個MVT stage,工廠& DQA需完整驗證,若測試順利,MP 預計僅延後 1 週至 9/7 (先前已由9 月底提前至8/31,現又延至9/7),後續將依實際測試結果滾動式調整時程。 2).Material: Thermal module依現有設計圖面take risk讓廠商去進行修模同時備料MVT & ATS, 若實測結果未達預期,物料需報廢,schedule也可能因此造成影響",
-      "mp_sort": "2026/09/07",
+      "status": "HPT sku: MODS無法測試,請BIOS RD儘速釐清",
+      "highlight": "1).Schedule: AMD 將PI 1200I NDA Release 再延至7/17(Delay 4W),因專案僅有一個MVT stage,工廠& DQA需完整驗證,若測試順利,MP 預計延後 2週至 9/14 (先前已由9 月底提前至8/31,現又延至9/14),後續將依實際測試結果滾動式調整時程。 2).Material: Thermal module依現有設計圖面take risk讓廠商去進行修模同時備料MVT & ATS, 若實測結果未達預期,物料需報廢,schedule也可能因此造成影響",
+      "mp_sort": "2026/09/14",
       "orig_idx": 299,
       "dates": {
         "Kickoff": "2026/05/28",
         "DVT-start": "2026/06/26",
-        "MVT-start": "2026/07/22",
-        "BTO ready": "2026/08/07",
-        "ATS-start": "2026/08/28",
-        "MP": "2026/09/07"
-      }
+        "MVT-start": "2026/07/29",
+        "BTO ready": "2026/08/14",
+        "ATS-start": "2026/09/04",
+        "MP": "2026/09/14"
+      },
+      "mp_changed": true,
+      "old_mp": "2026/09/07",
+      "old_stage": "DVT"
     },
     {
       "model": "15TK",
@@ -9444,8 +9453,8 @@
       "cpu": "DRG-HX 55W",
       "gpu": "RTX 5050",
       "npm": "朱欣怡",
-      "stage": "MVT",
-      "status": "MLG(魔龍姬)ID:ATS @7/3",
+      "stage": "ATS-",
+      "status": "MLG(魔龍姬)ID:0",
       "highlight": "NA",
       "mp_sort": "2026/07/10",
       "orig_idx": 477,
@@ -9463,9 +9472,9 @@
       "cpu": "DRG-HX 55W",
       "gpu": "RTX 5060",
       "npm": "朱欣怡",
-      "stage": "MVT",
-      "status": "MLG(魔龍姬)ID: ATS @7/3",
-      "highlight": "1) 認證：SRRC認證中, 影響中國區出貨（可清關出貨，但上架售賣有風險）需在7/10前完成；2) Packing: WW版本設計確認中;",
+      "stage": "MP",
+      "status": "MLG(魔龍姬)ID: 0",
+      "highlight": "1) 認證：SRRC認證中, 影響中國區出貨（可清關出貨，但上架售賣有風險）需在7/10前完成；",
       "mp_sort": "2026/07/10",
       "orig_idx": 478,
       "dates": {
@@ -9482,8 +9491,8 @@
       "cpu": "DRG-HX 55W",
       "gpu": "RTX 5070",
       "npm": "朱欣怡",
-      "stage": "MVT",
-      "status": "MLG(魔龍姬)ID:  ATS @7/3",
+      "stage": "MP",
+      "status": "MLG(魔龍姬)ID: 0",
       "highlight": "NA",
       "mp_sort": "2026/07/10",
       "orig_idx": 479,
@@ -9501,8 +9510,8 @@
       "cpu": "DRG-HX 55W",
       "gpu": "RTX 5070",
       "npm": "朱欣怡",
-      "stage": "MVT",
-      "status": "MLG(魔龍姬)ID:  ATS @7/3",
+      "stage": "MP",
+      "status": "MLG(魔龍姬)ID:  0",
       "highlight": "NA",
       "mp_sort": "2026/07/10",
       "orig_idx": 480,
@@ -10955,18 +10964,21 @@
       "gpu": "RTX 5050",
       "npm": "蔡東宏",
       "stage": "DVT",
-      "status": "HPT sku: 目前AMD Graphics驅動無法安裝/TP沒功能, 請RD儘速釐清",
-      "highlight": "1).Schedule: AMD 將PI 1200I NDA Release 延至7/10(Delay 3W),因專案僅有一個MVT stage,工廠& DQA需完整驗證,若測試順利,MP 預計僅延後 1 週至 9/7 (先前已由9 月底提前至8/31,現又延至9/7),後續將依實際測試結果滾動式調整時程。 2).Material: Thermal module依現有設計圖面take risk讓廠商去進行修模同時備料MVT & ATS, 若實測結果未達預期,物料需報廢,schedule也可能因此造成影響",
-      "mp_sort": "2026/09/07",
+      "status": "HPT sku: MODS無法測試,請BIOS RD儘速釐清",
+      "highlight": "1).Schedule: AMD 將PI 1200I NDA Release 再延至7/17(Delay 4W),因專案僅有一個MVT stage,工廠& DQA需完整驗證,若測試順利,MP 預計延後 2週至 9/14 (先前已由9 月底提前至8/31,現又延至9/14),後續將依實際測試結果滾動式調整時程。 2).Material: Thermal module依現有設計圖面take risk讓廠商去進行修模同時備料MVT & ATS, 若實測結果未達預期,物料需報廢,schedule也可能因此造成影響",
+      "mp_sort": "2026/09/14",
       "orig_idx": 555,
       "dates": {
         "Kickoff": "2026/05/28",
         "DVT-start": "2026/06/26",
-        "MVT-start": "2026/07/22",
-        "BTO ready": "2026/08/07",
-        "ATS-start": "2026/08/28",
-        "MP": "2026/09/07"
-      }
+        "MVT-start": "2026/07/29",
+        "BTO ready": "2026/08/14",
+        "ATS-start": "2026/09/04",
+        "MP": "2026/09/14"
+      },
+      "mp_changed": true,
+      "old_mp": "2026/09/07",
+      "old_stage": "DVT"
     },
     {
       "model": "15TK",
@@ -11140,7 +11152,7 @@
       "cpu": "RPL-HX refresh 55W",
       "gpu": "RTX 5050",
       "npm": "蔡東宏",
-      "stage": "DVT",
+      "stage": "MVT",
       "status": "DDR5 sku, MVT備料中,預計7/14 MVT SMT",
       "highlight": "NA",
       "mp_sort": "2026/08/30",
@@ -11180,7 +11192,7 @@
       "cpu": "RPL-HX refresh 55W",
       "gpu": "RTX 5060",
       "npm": "蔡東宏",
-      "stage": "DVT",
+      "stage": "MVT",
       "status": "DDR5 sku, MVT備料中,預計7/14 MVT SMT",
       "highlight": "NA",
       "mp_sort": "2026/08/30",
@@ -11220,7 +11232,7 @@
       "cpu": "RPL-HX refresh 55W",
       "gpu": "RTX 5070",
       "npm": "蔡東宏",
-      "stage": "DVT",
+      "stage": "MVT",
       "status": "DDR5 sku, MVT備料中,預計7/14 MVT SMT",
       "highlight": "NA",
       "mp_sort": "2026/08/30",
@@ -12727,7 +12739,7 @@
       "npm": "顏春梅",
       "stage": "Design",
       "status": "0A layout 中 0A G/O@8/7",
-      "highlight": "NA",
+      "highlight": "Audio Codec由原來的Reltek更換為TI，線路設計，placement變更",
       "mp_sort": "2026/12/31",
       "orig_idx": 644,
       "dates": {
@@ -13708,9 +13720,9 @@
       "cpu": "RPL-U 25W",
       "gpu": "Intel® graphics",
       "npm": "杜晨光",
-      "stage": "ATS",
-      "status": "因首批安排RPL-U Refresh 優先投產，第二波投產因PCB 最快交期落在6/29,加上微步盤點，預計最快7/10 TTM",
-      "highlight": "N/A",
+      "stage": "MP",
+      "status": "-1",
+      "highlight": "因首批安排RPL-U Refresh 優先投產，第二波投產因PCB 最快交期落在6/29,加上微步盤點，預計最快7/10 TTM",
       "mp_sort": "2026/07/10",
       "orig_idx": 693,
       "dates": {
@@ -14277,8 +14289,8 @@
       "npm": "林晉弘",
       "stage": "MVT",
       "status": "MVT測試中",
-      "highlight": "1)MSFT對於battery life定義的測試條件與MSI/NV不同，MSFT要求測試需基於出貨image的預設模式，目前DQA提供的數據皆用Best efficiency。NV要求本周提供balance mode的測試結果，以供比較。 2)NV解Abnormal shut down 的solution，目前會影響battery life仍在fine tune，尚未確認導入哪一版本BSP，MSFT會議中婉轉要求出貨前要解。 3)A-side需增加龍盾+小標，ID 7/3提供更新color plan，ME更新預計7/30入料。 4)NV/MSFT三方會議中，NV窗口提及for MP的BSP release schedule有變，專案schedule目前基於7/3 release MP BSP所排，將影響ATS的時間多久，須待NV官方宣布後，重新規劃。",
-      "mp_sort": "2026/08/14",
+      "highlight": "1)battery life測試條件的定義，NV與MSFT討論中，根據7/9會議，DQA會基於BSP Day0 rev.B + balance mode測試，確認是否合乎MSFT要求。 2)NV Abnormal shut down 的solution，預計會於7/17 BSP Day0 rev.B導入，待SW release後，DQA會驗證確認。  3)NV 7/7 release新版BSP schedule，軟體預計改版new branch for後續驗證出貨。依據此schedule，在軟體驗證皆無重大issue影響量產的狀況下，ATS預計延後到8/17，入庫時間要到8/31。 a)7/10 Day0 rev.A，DQA基於此版本進行full test驗證 b)7/17 Day0 rev.B，導入ABS solution，DQA會驗證battery life c)7/24 Day0 rev.C，BSP lock down可製作for工廠驗證image，計畫依此版本進行ATS。 d)8/21 Day0 rev.F，可供出貨GPU driver release，請工廠/DQA置換image中 GPU driver驗證 4)三星 3.8K panel因leading customer改版無法準時出貨，除廠內161pcs外，後續物料到10月中才能到，已先通知業務，確認是否以2.8K panel先上ATS。",
+      "mp_sort": "2026/08/31",
       "orig_idx": 721,
       "dates": {
         "Kickoff": "2024/11/25",
@@ -14286,9 +14298,12 @@
         "EVT-start": "2025/06/25",
         "MVT-start": "2026/03/12",
         "BTO ready": "2026/06/30",
-        "ATS-start": "2026/07/31",
-        "MP": "2026/08/14"
-      }
+        "ATS-start": "2026/08/17",
+        "MP": "2026/08/31"
+      },
+      "mp_changed": true,
+      "old_mp": "2026/08/14",
+      "old_stage": "MVT"
     },
     {
       "model": "2623",
@@ -17597,8 +17612,8 @@
       "npm": "林晉弘",
       "stage": "MVT",
       "status": "MVT測試中",
-      "highlight": "1)MSFT對於battery life定義的測試條件與MSI/NV不同，MSFT要求測試需基於出貨image的預設模式，目前DQA提供的數據皆用Best efficiency。NV要求本周提供balance mode的測試結果，以供比較。 2)NV解Abnormal shut down 的solution，目前會影響battery life仍在fine tune，尚未確認導入哪一版本BSP，MSFT會議中婉轉要求出貨前要解。 3)A-side需增加龍盾+小標，ID 7/3提供更新color plan，ME更新預計7/30入料。 4)NV/MSFT三方會議中，NV窗口提及for MP的BSP release schedule有變，專案schedule目前基於7/3 release MP BSP所排，將影響ATS的時間多久，須待NV官方宣布後，重新規劃。",
-      "mp_sort": "2026/08/14",
+      "highlight": "1)battery life測試條件的定義，NV與MSFT討論中，根據7/9會議，DQA會基於BSP Day0 rev.B + balance mode測試，確認是否合乎MSFT要求。 2)NV Abnormal shut down 的solution，預計會於7/17 BSP Day0 rev.B導入，待SW release後，DQA會驗證確認。  3)NV 7/7 release新版BSP schedule，軟體預計改版new branch for後續驗證出貨。依據此schedule，在軟體驗證皆無重大issue影響量產的狀況下，ATS預計延後到8/17，入庫時間要到8/31。 a)7/10 Day0 rev.A，DQA基於此版本進行full test驗證 b)7/17 Day0 rev.B，導入ABS solution，DQA會驗證battery life c)7/24 Day0 rev.C，BSP lock down可製作for工廠驗證image，計畫依此版本進行ATS。 d)8/21 Day0 rev.F，可供出貨GPU driver release，請工廠/DQA置換image中 GPU driver驗證 4)三星 3.8K panel因leading customer改版無法準時出貨，除廠內161pcs外，後續物料到10月中才能到，已先通知業務，確認是否以2.8K panel先上ATS。",
+      "mp_sort": "2026/08/31",
       "orig_idx": 890,
       "dates": {
         "Kickoff": "2024/11/25",
@@ -17606,9 +17621,12 @@
         "EVT-start": "2025/06/25",
         "MVT-start": "2026/03/12",
         "BTO ready": "2026/06/30",
-        "ATS-start": "2026/07/31",
-        "MP": "2026/08/14"
-      }
+        "ATS-start": "2026/08/17",
+        "MP": "2026/08/31"
+      },
+      "mp_changed": true,
+      "old_mp": "2026/08/14",
+      "old_stage": "MVT"
     },
     {
       "model": "NDB2",
@@ -17832,5 +17850,5 @@
       }
     }
   ],
-  "buildTime": "2026/07/09 14:08:50"
+  "buildTime": "2026/07/10 08:18:13"
 }

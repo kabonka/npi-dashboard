@@ -9427,7 +9427,7 @@
       "npm": "朱欣怡",
       "stage": "MVT",
       "status": "FRG (5/4通知resume）: DQA 測試中",
-      "highlight": "NA",
+      "highlight": "1）暫無業務報價，BTO 未開",
       "mp_sort": "2026/07/26",
       "orig_idx": 476,
       "dates": {
@@ -9445,7 +9445,7 @@
       "gpu": "RTX 5050",
       "npm": "朱欣怡",
       "stage": "ATS-",
-      "status": "MLG(魔龍姬)ID:0",
+      "status": "MLG(魔龍姬)ID:4",
       "highlight": "NA",
       "mp_sort": "2026/07/10",
       "orig_idx": 477,
@@ -9464,8 +9464,8 @@
       "gpu": "RTX 5060",
       "npm": "朱欣怡",
       "stage": "MP",
-      "status": "MLG(魔龍姬)ID: 0",
-      "highlight": "1) 認證：SRRC認證中, 影響中國區出貨（可清關出貨，但上架售賣有風險）需在7/10前完成；",
+      "status": "MLG(魔龍姬)ID: 4",
+      "highlight": "Delay 原因: 1) 機構件共用2653 MLG, 因ID更換油漆廠商+生管排程, ATS 由6/26更新為7/3,MP 由7/6更新為7/10.",
       "mp_sort": "2026/07/10",
       "orig_idx": 478,
       "dates": {
@@ -9483,7 +9483,7 @@
       "gpu": "RTX 5070",
       "npm": "朱欣怡",
       "stage": "MP",
-      "status": "MLG(魔龍姬)ID: 0",
+      "status": "MLG(魔龍姬)ID: 4",
       "highlight": "NA",
       "mp_sort": "2026/07/10",
       "orig_idx": 479,
@@ -9502,7 +9502,7 @@
       "gpu": "RTX 5070",
       "npm": "朱欣怡",
       "stage": "MP",
-      "status": "MLG(魔龍姬)ID:  0",
+      "status": "MLG(魔龍姬)ID:  4",
       "highlight": "NA",
       "mp_sort": "2026/07/10",
       "orig_idx": 480,
@@ -13710,7 +13710,7 @@
       "npm": "杜晨光",
       "stage": "MP",
       "status": "-1",
-      "highlight": "因首批安排RPL-U Refresh 優先投產，第二波投產因PCB 最快交期落在6/29,加上微步盤點，預計最快7/10 TTM",
+      "highlight": "因首批安排RPL-U Refresh 優先投產，第二波投產因PCB 最快交期落在6/29,加上微步盤點，機台7/9 入庫",
       "mp_sort": "2026/07/10",
       "orig_idx": 693,
       "dates": {
@@ -13748,8 +13748,8 @@
       "gpu": "Intel® graphics",
       "npm": "杜晨光",
       "stage": "ATS",
-      "status": "因首批安排RPL-U Refresh 優先投產，第二波投產因PCB 最快交期落在6/29,加上微步盤點，預計最快7/10 TTM",
-      "highlight": "N/A",
+      "status": "-1",
+      "highlight": "因首批安排RPL-U Refresh 優先投產，第二波投產因PCB 最快交期落在6/29,加上微步盤點，機台7/9 入庫",
       "mp_sort": "2026/07/10",
       "orig_idx": 695,
       "dates": {
@@ -14172,7 +14172,7 @@
       "npm": "倪嬌嬌",
       "stage": "MVT",
       "status": "MVT SMT@8/3--depend on Material ready date作調整",
-      "highlight": "1) Schedule: MVT機構件備料ready日期預計8/7完成備料 2）Color plan change: a. 顏色變更至炭黑色 b. D件改噴漆製程 3)備料：量產交料HQ23, 十一月份交料(MSI wish 10/B交料, 待Samsung確認回復）",
+      "highlight": "1) Schedule: MVT D件備料ready日期待採購/ME確認中 2）Color plan: 維持開案版本 3)備料：量產交料HQ23, 十月份交料, 待Samsung確認具體日期",
       "mp_sort": "2026/10/26",
       "orig_idx": 716,
       "dates": {
@@ -17832,5 +17832,5 @@
       }
     }
   ],
-  "buildTime": "2026/07/10 09:22:25"
+  "buildTime": "2026/07/13 08:25:14"
 }

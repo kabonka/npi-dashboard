@@ -18140,7 +18140,7 @@ const DATA = {
       }
     }
   ],
-  "buildTime": "2026/07/20 10:57:02"
+  "buildTime": "2026/07/20 13:23:10"
 };
 
 const STAGE_ORDER = ['Design','DVT','EVT','MVT','ATS','Study','Pending','BTO-','ATS-','MP'];
@@ -18635,12 +18635,30 @@ async function downloadExcelProject(){
   var ws=XLSX.utils.aoa_to_sheet(data);
   var wList=[5,12,38,8,30,40,10,12,12,12,12,12,12,12,50,50];
   var cols=[];
-  for(var ci=0;ci<16;ci++){cols.push({wch:wList[ci]});}
+  for(var ci=0;ci<16;ci++){
+    var col={wch:wList[ci]};
+    if(ci>=8 && ci<=12){col.outlineLevel=1;col.hidden=true;} // 折叠中间日期列，仅保留 Kickoff 与 MP
+    cols.push(col);
+  }
   ws['!cols']=cols;
   var wb=XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb,ws,'NPI Project');
   var buf=XLSX.write(wb,{type:'array',bookType:'xlsx'});
-  var blob=new Blob([buf],{type:'application/octet-stream'});
+
+  // JSZip 补丁：注入 showOutlineSymbols + 列 outlineLevel（保持原折叠方式，仅显示 Kickoff/MP）
+  var zip=await JSZip.loadAsync(new Uint8Array(buf));
+  var xml=await zip.file('xl/worksheets/sheet1.xml').async('string');
+  xml=xml.replace('<sheetView ','<sheetView showOutlineSymbols="1" ');
+  xml=xml.replace(/(<col [^>]*hidden="true")/g,'$1 outlineLevel="1"');
+  xml=xml.replace(/ summaryBelow="[^"]*"/g,'');
+  if(xml.includes('<outlinePr')){xml=xml.replace('<outlinePr','<outlinePr summaryBelow="0"');}
+  else if(xml.includes('<sheetPr')){
+    xml=xml.replace(/<sheetPr\s*\/>/,'<sheetPr><outlinePr summaryBelow="0"/></sheetPr>');
+    if(!xml.includes('summaryBelow')){xml=xml.replace(/(<sheetPr[^>]*)>/,'$1><outlinePr summaryBelow="0"/>');}
+  }
+  else{xml=xml.replace('<sheetViews','<sheetPr><outlinePr summaryBelow="0"/></sheetPr><sheetViews');}
+  zip.file('xl/worksheets/sheet1.xml',xml);
+  var blob=await zip.generateAsync({type:'blob'});
   var url=URL.createObjectURL(blob);
   var a=document.createElement('a');
   a.href=url;a.download='npi_dashboard_project.xlsx';

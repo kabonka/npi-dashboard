@@ -184,6 +184,7 @@ body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,-ap
   <button class="sort-btn" id="sortMkt" onclick="setSort('mkt')">MKT</button>
   <button class="reset-btn" onclick="resetFilters()">Reset</button>
   <button class="sort-btn" style="margin-left:8px;background:#2F5496;color:#fff;border-color:#2F5496;cursor:pointer" onclick="downloadExcel()">⬇ Excel</button>
+  <button class="sort-btn" style="margin-left:8px;background:#548235;color:#fff;border-color:#548235;cursor:pointer" onclick="downloadExcelProject()">⬇ Excel Project</button>
 </div>
 
 <div class="list-section">
@@ -6145,10 +6146,7 @@ const DATA = {
         "BTO ready": "2026/08/18",
         "ATS-start": "2026/09/09",
         "MP": "2026/09/19"
-      },
-      "mp_changed": true,
-      "old_mp": "2026/09/14",
-      "old_stage": "DVT"
+      }
     },
     {
       "model": "15TK",
@@ -6168,10 +6166,7 @@ const DATA = {
         "BTO ready": "2026/08/18",
         "ATS-start": "2026/09/09",
         "MP": "2026/09/19"
-      },
-      "mp_changed": true,
-      "old_mp": "2026/09/14",
-      "old_stage": "DVT"
+      }
     },
     {
       "model": "15TK",
@@ -6191,10 +6186,7 @@ const DATA = {
         "BTO ready": "2026/08/18",
         "ATS-start": "2026/09/09",
         "MP": "2026/09/19"
-      },
-      "mp_changed": true,
-      "old_mp": "2026/09/14",
-      "old_stage": "DVT"
+      }
     },
     {
       "model": "15TK",
@@ -8406,7 +8398,7 @@ const DATA = {
       "cpu": "NVL-H 45W",
       "gpu": "RTX 5070Ti",
       "npm": "朱欣怡",
-      "stage": "Design",
+      "stage": "DVT",
       "status": "產線排程 DVT SMT@7/23",
       "highlight": "NA",
       "mp_sort": "2027/01/11",
@@ -8427,7 +8419,7 @@ const DATA = {
       "cpu": "NVL-H 45W",
       "gpu": "RTX 5080",
       "npm": "朱欣怡",
-      "stage": "Design",
+      "stage": "DVT",
       "status": "產線排程 DVT SMT@7/23",
       "highlight": "1) DVT 試產缺料I9B-221100C-T07，交期待定; 2) Schedule:NV VBIOS @1/6, gating 8天,預計12/E 拿到WHQL，可能影響到最終TTM 時間",
       "mp_sort": "2027/01/11",
@@ -8448,7 +8440,7 @@ const DATA = {
       "cpu": "NVL-H 45W",
       "gpu": "RTX 5090",
       "npm": "朱欣怡",
-      "stage": "Design",
+      "stage": "DVT",
       "status": "產線排程 DVT SMT@7/23",
       "highlight": "NA",
       "mp_sort": "2027/01/11",
@@ -9281,7 +9273,7 @@ const DATA = {
       "mkt": "Raider 16 Max HX B4WH",
       "cpu": "NVL-HX 55W",
       "gpu": "RTX 5070Ti",
-      "npm": "鮑佩佩",
+      "npm": "吳美芳",
       "stage": "DVT",
       "status": "6/29 gerber out，预计7/27 DVT打板",
       "highlight": "NA",
@@ -9302,7 +9294,7 @@ const DATA = {
       "mkt": "Raider 16 Max HX B4WI",
       "cpu": "NVL-HX 55W",
       "gpu": "RTX 5080",
-      "npm": "鮑佩佩",
+      "npm": "吳美芳",
       "stage": "DVT",
       "status": "6/29 gerber out，预计7/27 DVT打板",
       "highlight": "NA",
@@ -9323,7 +9315,7 @@ const DATA = {
       "mkt": "Raider 16 Max HX B4WJ",
       "cpu": "NVL-HX 55W",
       "gpu": "RTX 5090",
-      "npm": "鮑佩佩",
+      "npm": "吳美芳",
       "stage": "DVT",
       "status": "6/29 gerber out，预计7/27 DVT打板",
       "highlight": "NA",
@@ -9346,7 +9338,7 @@ const DATA = {
       "gpu": "RTX 5070Ti",
       "npm": "吳美芳",
       "stage": "DVT",
-      "status": "6/29 gerber out，预计7/27 DVT打板",
+      "status": "原预计7/27 DVT打板，其中一颗D03-636BA0C-N03最快27號進，打板delay一天，不影響后續schedule",
       "highlight": "NA",
       "mp_sort": "2027/03/18",
       "orig_idx": 461,
@@ -9367,7 +9359,7 @@ const DATA = {
       "gpu": "RTX 5080",
       "npm": "吳美芳",
       "stage": "DVT",
-      "status": "6/29 gerber out，预计7/27 DVT打板",
+      "status": "原预计7/27 DVT打板，其中一颗D03-636BA0C-N03最快27號進，打板delay一天，不影響后續schedule",
       "highlight": "NA",
       "mp_sort": "2027/03/18",
       "orig_idx": 462,
@@ -9665,8 +9657,8 @@ const DATA = {
       "cpu": "FRG-HX 55W",
       "gpu": "RTX 5050",
       "npm": "朱欣怡",
-      "stage": "MVT",
-      "status": "FRG (5/4通知resume）: DQA 測試中",
+      "stage": "BTO-",
+      "status": "FRG (5/4通知resume)",
       "highlight": "NA",
       "mp_sort": "2026/07/26",
       "orig_idx": 477,
@@ -9684,8 +9676,8 @@ const DATA = {
       "cpu": "FRG-HX 55W",
       "gpu": "RTX 5060",
       "npm": "朱欣怡",
-      "stage": "MVT",
-      "status": "FRG (5/4通知resume）: DQA 測試中",
+      "stage": "BTO-",
+      "status": "FRG (5/4通知resume)",
       "highlight": "NA",
       "mp_sort": "2026/07/26",
       "orig_idx": 478,
@@ -9741,8 +9733,8 @@ const DATA = {
       "cpu": "FRG-HX3D 55W",
       "gpu": "RTX 5070",
       "npm": "朱欣怡",
-      "stage": "MVT",
-      "status": "FRG (5/4通知resume）: DQA 測試中",
+      "stage": "BTO-",
+      "status": "FRG (5/4通知resume）",
       "highlight": "1）暫無業務報價，BTO 未開",
       "mp_sort": "2026/07/26",
       "orig_idx": 481,
@@ -11282,10 +11274,7 @@ const DATA = {
         "BTO ready": "2026/08/18",
         "ATS-start": "2026/09/09",
         "MP": "2026/09/19"
-      },
-      "mp_changed": true,
-      "old_mp": "2026/09/14",
-      "old_stage": "DVT"
+      }
     },
     {
       "model": "15TK",
@@ -12049,7 +12038,7 @@ const DATA = {
       "gpu": "RTX 5050",
       "npm": "鮑佩佩",
       "stage": "DVT",
-      "status": "0A 7/3 gerber out.plan 7/27 DVT SMT1，Ti usb repeater BW9871缺料待pull in 交期",
+      "status": "原预计7/27 DVT打板，其中一颗D03-636BA0C-N03最快27號進，打板delay一天，不影響后續schedule",
       "highlight": "1)Spec變更,2655 計畫升規為Raider 16,RD 評估中,為了達到 Raider 等級的效能，由雙風扇升級為三風扇(3F5P)，現有的 DVT 樣品（8mm 風扇）無法用於驗證 230W/200W 的效能目標，必須重新製作手工樣品（10mm 散熱模組），影響Schedule TBD,預計下週會更新，同步重新 review 板端空間及高度干涉問題",
       "mp_sort": "2027/03/18",
       "orig_idx": 598,
@@ -12070,7 +12059,7 @@ const DATA = {
       "gpu": "RTX 5060",
       "npm": "鮑佩佩",
       "stage": "DVT",
-      "status": "0A 7/3 gerber out.plan 7/27 DVT SMT1，Ti usb repeater BW9871缺料待pull in 交期",
+      "status": "原预计7/27 DVT打板，其中一颗D03-636BA0C-N03最快27號進，打板delay一天，不影響后續schedule",
       "highlight": "1)Spec變更,2655 計畫升規為Raider 16,RD 評估中,為了達到 Raider 等級的效能，由雙風扇升級為三風扇(3F5P)，現有的 DVT 樣品（8mm 風扇）無法用於驗證 230W/200W 的效能目標，必須重新製作手工樣品（10mm 散熱模組），影響Schedule TBD,預計下週會更新，同步重新 review 板端空間及高度干涉問題",
       "mp_sort": "2027/03/18",
       "orig_idx": 599,
@@ -12091,7 +12080,7 @@ const DATA = {
       "gpu": "RTX 5070",
       "npm": "鮑佩佩",
       "stage": "DVT",
-      "status": "0A 7/3 gerber out.plan 7/27 DVT SMT1，Ti usb repeater BW9871缺料待pull in 交期",
+      "status": "原预计7/27 DVT打板，其中一颗D03-636BA0C-N03最快27號進，打板delay一天，不影響后續schedule",
       "highlight": "1)Spec變更,2655 計畫升規為Raider 16,RD 評估中,為了達到 Raider 等級的效能，由雙風扇升級為三風扇(3F5P)，現有的 DVT 樣品（8mm 風扇）無法用於驗證 230W/200W 的效能目標，必須重新製作手工樣品（10mm 散熱模組），影響Schedule TBD,預計下週會更新，同步重新 review 板端空間及高度干涉問題",
       "mp_sort": "2027/03/18",
       "orig_idx": 600,
@@ -12112,7 +12101,7 @@ const DATA = {
       "gpu": "RTX 5070",
       "npm": "鮑佩佩",
       "stage": "DVT",
-      "status": "0A 7/3 gerber out.plan 7/27 DVT SMT1，Ti usb repeater BW9871缺料待pull in 交期",
+      "status": "原预计7/27 DVT打板，其中一颗D03-636BA0C-N03最快27號進，打板delay一天，不影響后續schedule",
       "highlight": "1)Spec變更,2655 計畫升規為Raider 16,RD 評估中,為了達到 Raider 等級的效能，由雙風扇升級為三風扇(3F5P)，現有的 DVT 樣品（8mm 風扇）無法用於驗證 230W/200W 的效能目標，必須重新製作手工樣品（10mm 散熱模組），影響Schedule TBD,預計下週會更新，同步重新 review 板端空間及高度干涉問題",
       "mp_sort": "2027/03/18",
       "orig_idx": 601,
@@ -14185,8 +14174,8 @@ const DATA = {
       "gpu": "N/A",
       "npm": "杜晨光",
       "stage": "ATS",
-      "status": "因Camera 丟失ISSUE，待確認執行方案",
-      "highlight": "Schedule  ：（TTM原計劃7/15 先預抓延後到7/20）：7/16 會議請微步放量200台驗證以及全掃功能，待微步提供具體數據，請示執行方案後，追蹤最快機台入庫時間",
+      "status": "因Camera 丟失ISSUE，7/17 確認重工更新BIOS ，待客驗結果確認入庫&出貨",
+      "highlight": "1)Schedule  ：Camerr Issue  ,重工BIOS ，TTM原計劃7/15 預計延後到7/20 delay  5天.2）2nd MP Gating 瓶頸Adapter物料尾數100pcs 待weibu 廠商回復交期，目標7/27 機台入庫",
       "mp_sort": "2026/07/20",
       "orig_idx": 706,
       "dates": {
@@ -15167,7 +15156,7 @@ const DATA = {
       "npm": "倪嬌嬌",
       "stage": "DVT",
       "status": "MSIK: 7/14 DQA test start MSIT: 7/16收到機器",
-      "highlight": "1)認證: 參考Weibu認證Schedule, a. 美洲US FCC 9/8 b.歐洲CE NB &澳洲RCM 8/28 ready, 認證時間有風險, 已經highlight給微步team作認證評估",
+      "highlight": "1)認證：8/E ready可出貨地區:  DE/UK/TR/BNX/NEU/SEE/FR/ES/PL/CZ/CIS/IT/JP/AU 2）認證 8/E無法同步ready地區:  9/8 ready: LA/CA/ AR/CL  9/18 ready: UA 10/2 ready: CO/RU 12/18 ready: MX",
       "mp_sort": "2026/08/31",
       "orig_idx": 755,
       "dates": {
@@ -15187,7 +15176,7 @@ const DATA = {
       "npm": "倪嬌嬌",
       "stage": "DVT",
       "status": "MSIK: 7/14 DQA test start MSIT: 7/16收到機器",
-      "highlight": "1)認證: 參考Weibu認證Schedule, a. 美洲US FCC 9/8 b.歐洲CE NB &澳洲RCM 8/28 ready, 認證時間有風險, 已經highlight給微步team作認證評估",
+      "highlight": "1)認證: 1. 8/E ready可出貨地區:  DE/UK/TR/BNX/NEU/SEE/FR/ES/PL/CZ/CIS/IT/JP/AU 2)認證 8/E無法同步ready地區:  9/8 ready: LA/CA/ AR/CL  9/18 ready: UA 10/2 ready: CO/RU 12/18 ready: MX",
       "mp_sort": "2026/08/31",
       "orig_idx": 756,
       "dates": {
@@ -18151,7 +18140,7 @@ const DATA = {
       }
     }
   ],
-  "buildTime": "2026/07/17 11:04:53"
+  "buildTime": "2026/07/20 10:49:21"
 };
 
 const STAGE_ORDER = ['Design','DVT','EVT','MVT','ATS','Study','Pending','BTO-','ATS-','MP'];
@@ -18615,6 +18604,46 @@ async function downloadExcel(){
   var url=URL.createObjectURL(blob);
   var a=document.createElement('a');
   a.href=url;a.download='npi_dashboard.xlsx';
+  document.body.appendChild(a);a.click();a.remove();
+  setTimeout(function(){URL.revokeObjectURL(url);},1000);
+}
+
+// ── Excel 导出（Project 版：仅每个 model 的 leading SKU，不折叠）──
+async function downloadExcelProject(){
+  var groups=getFilteredGroups();
+  var sorted=getSortedGroups(groups);
+  var dk=['Kickoff','DVT-start','EVT-start','MVT-start','BTO ready','ATS-start','MP'];
+  var headers=['No.','Model','MKT Name','Stage','CPU','GPU','NPM'].concat(dk).concat(['Status','Highlight']);
+  var data=[headers];
+  var no=1;
+  function wrapText(t){
+    if(!t||!/\d+[)）]/.test(t))return t||'';
+    return t.replace(/([^\n])(\s*)(\d+[)）])/g,'$1\n$3');
+  }
+  for(var si=0;si<sorted.length;si++){
+    var rows=sorted[si][1];
+    if(!rows||rows.length===0)continue;
+    var r=rows[0]; // 仅取 leading SKU（父行），不导出子 SKU，不做折叠
+    var d=r.dates||{};
+    var row=[no, r.model||'', r.mkt||'', r.stage||'', r.cpu||'', r.gpu||'', r.npm||''];
+    for(var ki=0;ki<dk.length;ki++)row.push(d[dk[ki]]||'');
+    row.push(wrapText(r.status||''));
+    row.push(wrapText(r.highlight||''));
+    data.push(row);
+    no++;
+  }
+  var ws=XLSX.utils.aoa_to_sheet(data);
+  var wList=[5,12,38,8,30,40,10,12,12,12,12,12,12,12,50,50];
+  var cols=[];
+  for(var ci=0;ci<16;ci++){cols.push({wch:wList[ci]});}
+  ws['!cols']=cols;
+  var wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,'NPI Project');
+  var buf=XLSX.write(wb,{type:'array',bookType:'xlsx'});
+  var blob=new Blob([buf],{type:'application/octet-stream'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');
+  a.href=url;a.download='npi_dashboard_project.xlsx';
   document.body.appendChild(a);a.click();a.remove();
   setTimeout(function(){URL.revokeObjectURL(url);},1000);
 }

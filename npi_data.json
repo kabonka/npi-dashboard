@@ -5933,10 +5933,7 @@
         "BTO ready": "2026/08/18",
         "ATS-start": "2026/09/09",
         "MP": "2026/09/19"
-      },
-      "mp_changed": true,
-      "old_mp": "2026/09/14",
-      "old_stage": "DVT"
+      }
     },
     {
       "model": "15TK",
@@ -5956,10 +5953,7 @@
         "BTO ready": "2026/08/18",
         "ATS-start": "2026/09/09",
         "MP": "2026/09/19"
-      },
-      "mp_changed": true,
-      "old_mp": "2026/09/14",
-      "old_stage": "DVT"
+      }
     },
     {
       "model": "15TK",
@@ -5979,10 +5973,7 @@
         "BTO ready": "2026/08/18",
         "ATS-start": "2026/09/09",
         "MP": "2026/09/19"
-      },
-      "mp_changed": true,
-      "old_mp": "2026/09/14",
-      "old_stage": "DVT"
+      }
     },
     {
       "model": "15TK",
@@ -8194,7 +8185,7 @@
       "cpu": "NVL-H 45W",
       "gpu": "RTX 5070Ti",
       "npm": "朱欣怡",
-      "stage": "Design",
+      "stage": "DVT",
       "status": "產線排程 DVT SMT@7/23",
       "highlight": "NA",
       "mp_sort": "2027/01/11",
@@ -8215,7 +8206,7 @@
       "cpu": "NVL-H 45W",
       "gpu": "RTX 5080",
       "npm": "朱欣怡",
-      "stage": "Design",
+      "stage": "DVT",
       "status": "產線排程 DVT SMT@7/23",
       "highlight": "1) DVT 試產缺料I9B-221100C-T07，交期待定; 2) Schedule:NV VBIOS @1/6, gating 8天,預計12/E 拿到WHQL，可能影響到最終TTM 時間",
       "mp_sort": "2027/01/11",
@@ -8236,7 +8227,7 @@
       "cpu": "NVL-H 45W",
       "gpu": "RTX 5090",
       "npm": "朱欣怡",
-      "stage": "Design",
+      "stage": "DVT",
       "status": "產線排程 DVT SMT@7/23",
       "highlight": "NA",
       "mp_sort": "2027/01/11",
@@ -9069,7 +9060,7 @@
       "mkt": "Raider 16 Max HX B4WH",
       "cpu": "NVL-HX 55W",
       "gpu": "RTX 5070Ti",
-      "npm": "鮑佩佩",
+      "npm": "吳美芳",
       "stage": "DVT",
       "status": "6/29 gerber out，预计7/27 DVT打板",
       "highlight": "NA",
@@ -9090,7 +9081,7 @@
       "mkt": "Raider 16 Max HX B4WI",
       "cpu": "NVL-HX 55W",
       "gpu": "RTX 5080",
-      "npm": "鮑佩佩",
+      "npm": "吳美芳",
       "stage": "DVT",
       "status": "6/29 gerber out，预计7/27 DVT打板",
       "highlight": "NA",
@@ -9111,7 +9102,7 @@
       "mkt": "Raider 16 Max HX B4WJ",
       "cpu": "NVL-HX 55W",
       "gpu": "RTX 5090",
-      "npm": "鮑佩佩",
+      "npm": "吳美芳",
       "stage": "DVT",
       "status": "6/29 gerber out，预计7/27 DVT打板",
       "highlight": "NA",
@@ -9134,7 +9125,7 @@
       "gpu": "RTX 5070Ti",
       "npm": "吳美芳",
       "stage": "DVT",
-      "status": "6/29 gerber out，预计7/27 DVT打板",
+      "status": "原预计7/27 DVT打板，其中一颗D03-636BA0C-N03最快27號進，打板delay一天，不影響后續schedule",
       "highlight": "NA",
       "mp_sort": "2027/03/18",
       "orig_idx": 461,
@@ -9155,7 +9146,7 @@
       "gpu": "RTX 5080",
       "npm": "吳美芳",
       "stage": "DVT",
-      "status": "6/29 gerber out，预计7/27 DVT打板",
+      "status": "原预计7/27 DVT打板，其中一颗D03-636BA0C-N03最快27號進，打板delay一天，不影響后續schedule",
       "highlight": "NA",
       "mp_sort": "2027/03/18",
       "orig_idx": 462,
@@ -9453,8 +9444,8 @@
       "cpu": "FRG-HX 55W",
       "gpu": "RTX 5050",
       "npm": "朱欣怡",
-      "stage": "MVT",
-      "status": "FRG (5/4通知resume）: DQA 測試中",
+      "stage": "BTO-",
+      "status": "FRG (5/4通知resume)",
       "highlight": "NA",
       "mp_sort": "2026/07/26",
       "orig_idx": 477,
@@ -9472,8 +9463,8 @@
       "cpu": "FRG-HX 55W",
       "gpu": "RTX 5060",
       "npm": "朱欣怡",
-      "stage": "MVT",
-      "status": "FRG (5/4通知resume）: DQA 測試中",
+      "stage": "BTO-",
+      "status": "FRG (5/4通知resume)",
       "highlight": "NA",
       "mp_sort": "2026/07/26",
       "orig_idx": 478,
@@ -9529,8 +9520,8 @@
       "cpu": "FRG-HX3D 55W",
       "gpu": "RTX 5070",
       "npm": "朱欣怡",
-      "stage": "MVT",
-      "status": "FRG (5/4通知resume）: DQA 測試中",
+      "stage": "BTO-",
+      "status": "FRG (5/4通知resume）",
       "highlight": "1）暫無業務報價，BTO 未開",
       "mp_sort": "2026/07/26",
       "orig_idx": 481,
@@ -11070,10 +11061,7 @@
         "BTO ready": "2026/08/18",
         "ATS-start": "2026/09/09",
         "MP": "2026/09/19"
-      },
-      "mp_changed": true,
-      "old_mp": "2026/09/14",
-      "old_stage": "DVT"
+      }
     },
     {
       "model": "15TK",
@@ -11837,7 +11825,7 @@
       "gpu": "RTX 5050",
       "npm": "鮑佩佩",
       "stage": "DVT",
-      "status": "0A 7/3 gerber out.plan 7/27 DVT SMT1，Ti usb repeater BW9871缺料待pull in 交期",
+      "status": "原预计7/27 DVT打板，其中一颗D03-636BA0C-N03最快27號進，打板delay一天，不影響后續schedule",
       "highlight": "1)Spec變更,2655 計畫升規為Raider 16,RD 評估中,為了達到 Raider 等級的效能，由雙風扇升級為三風扇(3F5P)，現有的 DVT 樣品（8mm 風扇）無法用於驗證 230W/200W 的效能目標，必須重新製作手工樣品（10mm 散熱模組），影響Schedule TBD,預計下週會更新，同步重新 review 板端空間及高度干涉問題",
       "mp_sort": "2027/03/18",
       "orig_idx": 598,
@@ -11858,7 +11846,7 @@
       "gpu": "RTX 5060",
       "npm": "鮑佩佩",
       "stage": "DVT",
-      "status": "0A 7/3 gerber out.plan 7/27 DVT SMT1，Ti usb repeater BW9871缺料待pull in 交期",
+      "status": "原预计7/27 DVT打板，其中一颗D03-636BA0C-N03最快27號進，打板delay一天，不影響后續schedule",
       "highlight": "1)Spec變更,2655 計畫升規為Raider 16,RD 評估中,為了達到 Raider 等級的效能，由雙風扇升級為三風扇(3F5P)，現有的 DVT 樣品（8mm 風扇）無法用於驗證 230W/200W 的效能目標，必須重新製作手工樣品（10mm 散熱模組），影響Schedule TBD,預計下週會更新，同步重新 review 板端空間及高度干涉問題",
       "mp_sort": "2027/03/18",
       "orig_idx": 599,
@@ -11879,7 +11867,7 @@
       "gpu": "RTX 5070",
       "npm": "鮑佩佩",
       "stage": "DVT",
-      "status": "0A 7/3 gerber out.plan 7/27 DVT SMT1，Ti usb repeater BW9871缺料待pull in 交期",
+      "status": "原预计7/27 DVT打板，其中一颗D03-636BA0C-N03最快27號進，打板delay一天，不影響后續schedule",
       "highlight": "1)Spec變更,2655 計畫升規為Raider 16,RD 評估中,為了達到 Raider 等級的效能，由雙風扇升級為三風扇(3F5P)，現有的 DVT 樣品（8mm 風扇）無法用於驗證 230W/200W 的效能目標，必須重新製作手工樣品（10mm 散熱模組），影響Schedule TBD,預計下週會更新，同步重新 review 板端空間及高度干涉問題",
       "mp_sort": "2027/03/18",
       "orig_idx": 600,
@@ -11900,7 +11888,7 @@
       "gpu": "RTX 5070",
       "npm": "鮑佩佩",
       "stage": "DVT",
-      "status": "0A 7/3 gerber out.plan 7/27 DVT SMT1，Ti usb repeater BW9871缺料待pull in 交期",
+      "status": "原预计7/27 DVT打板，其中一颗D03-636BA0C-N03最快27號進，打板delay一天，不影響后續schedule",
       "highlight": "1)Spec變更,2655 計畫升規為Raider 16,RD 評估中,為了達到 Raider 等級的效能，由雙風扇升級為三風扇(3F5P)，現有的 DVT 樣品（8mm 風扇）無法用於驗證 230W/200W 的效能目標，必須重新製作手工樣品（10mm 散熱模組），影響Schedule TBD,預計下週會更新，同步重新 review 板端空間及高度干涉問題",
       "mp_sort": "2027/03/18",
       "orig_idx": 601,
@@ -13973,8 +13961,8 @@
       "gpu": "N/A",
       "npm": "杜晨光",
       "stage": "ATS",
-      "status": "因Camera 丟失ISSUE，待確認執行方案",
-      "highlight": "Schedule  ：（TTM原計劃7/15 先預抓延後到7/20）：7/16 會議請微步放量200台驗證以及全掃功能，待微步提供具體數據，請示執行方案後，追蹤最快機台入庫時間",
+      "status": "因Camera 丟失ISSUE，7/17 確認重工更新BIOS ，待客驗結果確認入庫&出貨",
+      "highlight": "1)Schedule  ：Camerr Issue  ,重工BIOS ，TTM原計劃7/15 預計延後到7/20 delay  5天.2）2nd MP Gating 瓶頸Adapter物料尾數100pcs 待weibu 廠商回復交期，目標7/27 機台入庫",
       "mp_sort": "2026/07/20",
       "orig_idx": 706,
       "dates": {
@@ -14955,7 +14943,7 @@
       "npm": "倪嬌嬌",
       "stage": "DVT",
       "status": "MSIK: 7/14 DQA test start MSIT: 7/16收到機器",
-      "highlight": "1)認證: 參考Weibu認證Schedule, a. 美洲US FCC 9/8 b.歐洲CE NB &澳洲RCM 8/28 ready, 認證時間有風險, 已經highlight給微步team作認證評估",
+      "highlight": "1)認證：8/E ready可出貨地區:  DE/UK/TR/BNX/NEU/SEE/FR/ES/PL/CZ/CIS/IT/JP/AU 2）認證 8/E無法同步ready地區:  9/8 ready: LA/CA/ AR/CL  9/18 ready: UA 10/2 ready: CO/RU 12/18 ready: MX",
       "mp_sort": "2026/08/31",
       "orig_idx": 755,
       "dates": {
@@ -14975,7 +14963,7 @@
       "npm": "倪嬌嬌",
       "stage": "DVT",
       "status": "MSIK: 7/14 DQA test start MSIT: 7/16收到機器",
-      "highlight": "1)認證: 參考Weibu認證Schedule, a. 美洲US FCC 9/8 b.歐洲CE NB &澳洲RCM 8/28 ready, 認證時間有風險, 已經highlight給微步team作認證評估",
+      "highlight": "1)認證: 1. 8/E ready可出貨地區:  DE/UK/TR/BNX/NEU/SEE/FR/ES/PL/CZ/CIS/IT/JP/AU 2)認證 8/E無法同步ready地區:  9/8 ready: LA/CA/ AR/CL  9/18 ready: UA 10/2 ready: CO/RU 12/18 ready: MX",
       "mp_sort": "2026/08/31",
       "orig_idx": 756,
       "dates": {
@@ -17939,5 +17927,5 @@
       }
     }
   ],
-  "buildTime": "2026/07/17 11:04:53"
+  "buildTime": "2026/07/20 10:49:21"
 }

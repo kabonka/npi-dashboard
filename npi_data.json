@@ -5496,18 +5496,21 @@
       "cpu": "RPL-H 45W",
       "gpu": "RTX 5060",
       "npm": "楊淑賢",
-      "stage": "MVT",
-      "status": "ATS C/R工單： 9S7-15Q373-1258* 50 pcs 預排8/7 ASSY",
+      "stage": "ATS",
+      "status": "ATS C/R工單： 9S7-15Q373-1258* 50 pcs 預排8/10 ASSY",
       "highlight": "1) Cyborg Black Edition SKU: Cyborg A+Venture B/C/D機構件+白光鍵盤",
-      "mp_sort": "2026/08/12",
+      "mp_sort": "2026/08/13",
       "orig_idx": 277,
       "dates": {
         "Kickoff": "2026/06/24",
         "MVT-start": "2026/07/01",
         "BTO ready": "2026/07/14",
-        "ATS-start": "2026/08/07",
-        "MP": "2026/08/12"
-      }
+        "ATS-start": "2026/08/10",
+        "MP": "2026/08/13"
+      },
+      "mp_changed": true,
+      "old_mp": "2026/08/12",
+      "old_stage": "MVT"
     },
     {
       "model": "15QL",
@@ -5922,7 +5925,7 @@
       "gpu": "RTX 5050",
       "npm": "蔡東宏",
       "stage": "MVT",
-      "status": "HPT sku:預計8/7 MVT SMT,請BIOS RD儘速提供PI 1200i NDA版本的MSI BIOS",
+      "status": "HPT sku:預計8/7 MVT SMT,8/10試組,8/12組裝",
       "highlight": "1).Schedule:AMD PI 1200i NDA release@7/28 USA time(original 6/19,delay 39天)與工廠將MVT排程延至8/7 (original 8/4,delay 3天),因要和量產工單一起生產,因應上述時程變更,MP預計延至9/22(先前已由 9 /17提前至 8/31, 現又延至9/22),後續將依實際測試結果滾動式調整專案時程。  2).Material:Thermal module依現有設計圖面take risk讓廠商去進行修模同時備料MVT & ATS,若實測結果未達預期,物料需報廢,schedule也可能因此造成影響",
       "mp_sort": "2026/09/22",
       "orig_idx": 299,
@@ -5933,10 +5936,7 @@
         "BTO ready": "2026/08/21",
         "ATS-start": "2026/09/12",
         "MP": "2026/09/22"
-      },
-      "mp_changed": true,
-      "old_mp": "2026/09/19",
-      "old_stage": "DVT"
+      }
     },
     {
       "model": "15TK",
@@ -5945,7 +5945,7 @@
       "gpu": "RTX 5060",
       "npm": "蔡東宏",
       "stage": "MVT",
-      "status": "HPT sku:預計8/7 MVT SMT,請BIOS RD儘速提供PI 1200i NDA版本的MSI BIOS",
+      "status": "HPT sku:預計8/7 MVT SMT,8/10試組,8/12組裝",
       "highlight": "\"1).Schedule:AMD PI 1200i NDA release@7/28 USA time(original 6/19,delay 39天)與工廠將MVT排程延至8/7 (original 8/4,delay 3天),因要和量產工單一起生產,因應上述時程變更,MP預計延至9/22(先前已由 9 /17提前至 8/31, 現又延至9/22),後續將依實際測試結果滾動式調整專案時程。  2).Material:Thermal module依現有設計圖面take risk讓廠商去進行修模同時備料MVT & ATS,若實測結果未達預期,物料需報廢,schedule也可能因此造成影響\"",
       "mp_sort": "2026/09/22",
       "orig_idx": 300,
@@ -5956,10 +5956,7 @@
         "BTO ready": "2026/08/21",
         "ATS-start": "2026/09/12",
         "MP": "2026/09/22"
-      },
-      "mp_changed": true,
-      "old_mp": "2026/09/19",
-      "old_stage": "DVT"
+      }
     },
     {
       "model": "15TK",
@@ -5968,7 +5965,7 @@
       "gpu": "RTX 5070",
       "npm": "蔡東宏",
       "stage": "MVT",
-      "status": "HPT sku:預計8/7 MVT SMT,請BIOS RD儘速提供PI 1200i NDA版本的MSI BIOS",
+      "status": "HPT sku:預計8/7 MVT SMT,8/10試組,8/12組裝",
       "highlight": "\"1).Schedule:AMD PI 1200i NDA release@7/28 USA time(original 6/19,delay 39天)與工廠將MVT排程延至8/7 (original 8/4,delay 3天),因要和量產工單一起生產,因應上述時程變更,MP預計延至9/22(先前已由 9 /17提前至 8/31, 現又延至9/22),後續將依實際測試結果滾動式調整專案時程。  2).Material:Thermal module依現有設計圖面take risk讓廠商去進行修模同時備料MVT & ATS,若實測結果未達預期,物料需報廢,schedule也可能因此造成影響\"",
       "mp_sort": "2026/09/22",
       "orig_idx": 301,
@@ -5979,10 +5976,7 @@
         "BTO ready": "2026/08/21",
         "ATS-start": "2026/09/12",
         "MP": "2026/09/22"
-      },
-      "mp_changed": true,
-      "old_mp": "2026/09/19",
-      "old_stage": "DVT"
+      }
     },
     {
       "model": "15TK",
@@ -6863,17 +6857,20 @@
       "gpu": "RTX 5060",
       "npm": "楊淑賢",
       "stage": "MVT",
-      "status": "ATS C/R工單： 9S7-17U344-449 * 50 pcs 預排8/7 ASSY",
+      "status": "ATS C/R工單： 9S7-17U344-449 * 50 pcs 預排8/10 ASSY",
       "highlight": "1) Cyborg Black Edition SKU: Cyborg A+Venture B/C/D機構件+白光鍵盤",
-      "mp_sort": "2026/08/12",
+      "mp_sort": "2026/08/14",
       "orig_idx": 346,
       "dates": {
         "Kickoff": "2026/06/24",
         "MVT-start": "2026/07/01",
         "BTO ready": "2026/07/14",
-        "ATS-start": "2026/08/07",
-        "MP": "2026/08/12"
-      }
+        "ATS-start": "2026/08/10",
+        "MP": "2026/08/14"
+      },
+      "mp_changed": true,
+      "old_mp": "2026/08/12",
+      "old_stage": "MVT"
     },
     {
       "model": "17U3",
@@ -6882,17 +6879,20 @@
       "gpu": "RTX 5060",
       "npm": "楊淑賢",
       "stage": "MVT",
-      "status": "9S7-17U344-441 * 300pcs ASSY @ 8/8",
+      "status": "9S7-17U344-441 * 300pcs ASSY @ 8/12",
       "highlight": "1) Cyborg Black Edition SKU: Cyborg A+Venture B/C/D機構件+白光鍵盤",
-      "mp_sort": "2026/08/12",
+      "mp_sort": "2026/08/14",
       "orig_idx": 347,
       "dates": {
         "Kickoff": "2026/06/24",
         "MVT-start": "2026/07/01",
         "BTO ready": "2026/07/14",
-        "ATS-start": "2026/08/08",
-        "MP": "2026/08/12"
-      }
+        "ATS-start": "2026/08/12",
+        "MP": "2026/08/14"
+      },
+      "mp_changed": true,
+      "old_mp": "2026/08/12",
+      "old_stage": "MVT"
     },
     {
       "model": "17UL",
@@ -8195,7 +8195,7 @@
       "gpu": "RTX 5070Ti",
       "npm": "朱欣怡",
       "stage": "DVT",
-      "status": "RD debug中 (PCBA僅HDMI會顯示)",
+      "status": "RD 測試中",
       "highlight": "NA",
       "mp_sort": "2027/01/11",
       "orig_idx": 414,
@@ -8216,8 +8216,8 @@
       "gpu": "RTX 5080",
       "npm": "朱欣怡",
       "stage": "DVT",
-      "status": "RD debug中 (PCBA僅HDMI會顯示)",
-      "highlight": "1)目前0M PCBA開機,但目前僅HDMI會顯示，0N geberout@8/25，請RD幫忙盡快debug; 2) B07-669945C-T07，FW 燒錄不上，待治具更新軟體; 3) Schedule:NV VBIOS @1/6, gating 8天,預計12/E 拿到WHQL，可能影響到最終TTM 時間",
+      "status": "RD 測試中",
+      "highlight": "1）B07-669945C-T07，FW 燒錄在2654上驗證; 2) Schedule:NV VBIOS @1/6, gating 8天,預計12/E 拿到WHQL，可能影響到最終TTM 時間",
       "mp_sort": "2027/01/11",
       "orig_idx": 415,
       "dates": {
@@ -8237,7 +8237,7 @@
       "gpu": "RTX 5090",
       "npm": "朱欣怡",
       "stage": "DVT",
-      "status": "RD debug中 (PCBA僅HDMI會顯示)",
+      "status": "RD 測試中",
       "highlight": "NA",
       "mp_sort": "2027/01/11",
       "orig_idx": 416,
@@ -8257,8 +8257,8 @@
       "cpu": "NVL-H 45W",
       "gpu": "RTX 5050",
       "npm": "賴雪鳳",
-      "stage": "Design",
-      "status": "0A 7/31 SMT",
+      "stage": "DVT",
+      "status": "0A PCBA DVT 驗證中,預計9/2 0B 出圖",
       "highlight": "1)NV VBIOS 驗證時間6周 2)Intel WHQL :12/E 拿到 可能影響到最終TTM 時間",
       "mp_sort": "2027/01/11",
       "orig_idx": 417,
@@ -8278,8 +8278,8 @@
       "cpu": "NVL-H 45W",
       "gpu": "RTX 5060",
       "npm": "賴雪鳳",
-      "stage": "Design",
-      "status": "0A 7/31 SMT",
+      "stage": "DVT",
+      "status": "0A PCBA DVT 驗證中,預計9/2 0B 出圖",
       "highlight": "1)NV VBIOS 驗證時間6周 2)Intel WHQL :12/E 拿到 可能影響到最終TTM 時間",
       "mp_sort": "2027/01/11",
       "orig_idx": 418,
@@ -8299,8 +8299,8 @@
       "cpu": "NVL-H 45W",
       "gpu": "RTX 5070",
       "npm": "賴雪鳳",
-      "stage": "Design",
-      "status": "0A 7/31 SMT",
+      "stage": "DVT",
+      "status": "0A PCBA DVT 驗證中,預計9/2 0B 出圖",
       "highlight": "1)NV VBIOS 驗證時間6周 2)Intel WHQL :12/E 拿到 可能影響到最終TTM 時間",
       "mp_sort": "2027/01/11",
       "orig_idx": 419,
@@ -8320,8 +8320,8 @@
       "cpu": "NVL-H 45W",
       "gpu": "RTX 5070",
       "npm": "賴雪鳳",
-      "stage": "Design",
-      "status": "0A 7/31 SMT",
+      "stage": "DVT",
+      "status": "0A PCBA DVT 驗證中,預計9/2 0B 出圖",
       "highlight": "1)NV VBIOS 驗證時間6周 2)Intel WHQL :12/E 拿到 可能影響到最終TTM 時間",
       "mp_sort": "2027/01/11",
       "orig_idx": 420,
@@ -9071,7 +9071,7 @@
       "gpu": "RTX 5070Ti",
       "npm": "吳美芳",
       "stage": "DVT",
-      "status": "预计8/5 DVT打板",
+      "status": "8/5 DVT打板已入库, 下周一调拨回台for RD test",
       "highlight": "NA",
       "mp_sort": "2027/03/18",
       "orig_idx": 458,
@@ -9092,7 +9092,7 @@
       "gpu": "RTX 5080",
       "npm": "吳美芳",
       "stage": "DVT",
-      "status": "预计8/5 DVT打板",
+      "status": "8/5 DVT打板已入库, 下周一调拨回台for RD test",
       "highlight": "NA",
       "mp_sort": "2027/03/18",
       "orig_idx": 459,
@@ -9113,7 +9113,7 @@
       "gpu": "RTX 5090",
       "npm": "吳美芳",
       "stage": "DVT",
-      "status": "预计8/5 DVT打板",
+      "status": "8/5 DVT打板已入库, 下周一调拨回台for RD test",
       "highlight": "NA",
       "mp_sort": "2027/03/18",
       "orig_idx": 460,
@@ -9754,90 +9754,6 @@
       }
     },
     {
-      "model": "2655",
-      "mkt": "Raider 16 HX B4WE",
-      "cpu": "NVL-HX 55W",
-      "gpu": "RTX 5050",
-      "npm": "鮑佩佩",
-      "stage": "DVT",
-      "status": "8/6  DVT SMT",
-      "highlight": "由raider改回crosshair，待確認 final SPEC&ID color plan，對schedule 影響TBD",
-      "mp_sort": "2027/03/18",
-      "orig_idx": 493,
-      "dates": {
-        "Kickoff": "2026/05/19",
-        "DVT-start": "2026/08/06",
-        "EVT-start": "2026/09/29",
-        "MVT-start": "2027/01/11",
-        "BTO ready": "2027/02/02",
-        "ATS-start": "2027/03/08",
-        "MP": "2027/03/18"
-      }
-    },
-    {
-      "model": "2655",
-      "mkt": "Raider 16 HX B4WF",
-      "cpu": "NVL-HX 55W",
-      "gpu": "RTX 5060",
-      "npm": "鮑佩佩",
-      "stage": "DVT",
-      "status": "8/6  DVT SMT",
-      "highlight": "由raider改回crosshair，待確認 final SPEC&ID color plan，對schedule 影響TBD",
-      "mp_sort": "2027/03/18",
-      "orig_idx": 494,
-      "dates": {
-        "Kickoff": "2026/05/19",
-        "DVT-start": "2026/08/06",
-        "EVT-start": "2026/09/29",
-        "MVT-start": "2027/01/11",
-        "BTO ready": "2027/02/02",
-        "ATS-start": "2027/03/08",
-        "MP": "2027/03/18"
-      }
-    },
-    {
-      "model": "2655",
-      "mkt": "Raider 16 HX B4WG",
-      "cpu": "NVL-HX 55W",
-      "gpu": "RTX 5070",
-      "npm": "鮑佩佩",
-      "stage": "DVT",
-      "status": "8/6  DVT SMT",
-      "highlight": "由raider改回crosshair，待確認 final SPEC&ID color plan，對schedule 影響TBD",
-      "mp_sort": "2027/03/18",
-      "orig_idx": 495,
-      "dates": {
-        "Kickoff": "2026/05/19",
-        "DVT-start": "2026/08/06",
-        "EVT-start": "2026/09/29",
-        "MVT-start": "2027/01/11",
-        "BTO ready": "2027/02/02",
-        "ATS-start": "2027/03/08",
-        "MP": "2027/03/18"
-      }
-    },
-    {
-      "model": "2655",
-      "mkt": "Raider 16 HX B4WGX",
-      "cpu": "NVL-HX 55W",
-      "gpu": "RTX 5070",
-      "npm": "鮑佩佩",
-      "stage": "DVT",
-      "status": "8/6  DVT SMT",
-      "highlight": "由raider改回crosshair，待確認 final SPEC&ID color plan，對schedule 影響TBD",
-      "mp_sort": "2027/03/18",
-      "orig_idx": 496,
-      "dates": {
-        "Kickoff": "2026/05/19",
-        "DVT-start": "2026/08/06",
-        "EVT-start": "2026/09/29",
-        "MVT-start": "2027/01/11",
-        "BTO ready": "2027/02/02",
-        "ATS-start": "2027/03/08",
-        "MP": "2027/03/18"
-      }
-    },
-    {
       "model": "2656",
       "mkt": "Raider 16 HX B14WH",
       "cpu": "RPL-HX Next 55W",
@@ -9847,7 +9763,7 @@
       "status": "7/24 Kick off，預計0M gerberout 8/28",
       "highlight": "NA",
       "mp_sort": "2027/02/04",
-      "orig_idx": 497,
+      "orig_idx": 493,
       "dates": {
         "Kickoff": "2026/07/24",
         "DVT-start": "2026/09/08",
@@ -9868,7 +9784,7 @@
       "status": "7/24 Kick off，預計0M gerberout 8/28",
       "highlight": "NA",
       "mp_sort": "2027/02/04",
-      "orig_idx": 498,
+      "orig_idx": 494,
       "dates": {
         "Kickoff": "2026/07/24",
         "DVT-start": "2026/09/08",
@@ -9889,7 +9805,7 @@
       "status": "7/24 Kick off，預計0M gerberout 8/28",
       "highlight": "NA",
       "mp_sort": "2027/02/04",
-      "orig_idx": 499,
+      "orig_idx": 495,
       "dates": {
         "Kickoff": "2026/07/24",
         "DVT-start": "2026/09/08",
@@ -9907,10 +9823,10 @@
       "gpu": "RTX 5050",
       "npm": "顧曉琴",
       "stage": "EVT",
-      "status": "RPL-HX R + DDR5: 7/28 0B出圖, SMT1 @ 8/12 SMT2 @ 8/24 for ASSY",
-      "highlight": "NA",
+      "status": "RPL-HX R + DDR5: EVT SMT1 @ 8/12 SMT2 @ 8/24 for ASSY",
+      "highlight": "系列調整，Crosshair max -> Crosshair：改為塑膠A, 移除light module，EVT備料先以Katana來安排",
       "mp_sort": "2026/12/07",
-      "orig_idx": 500,
+      "orig_idx": 496,
       "dates": {
         "Kickoff": "2026/05/08",
         "DVT-start": "2026/06/15",
@@ -9931,7 +9847,7 @@
       "status": "RPL-HX R + DDR4: DVT test start @ 7/6, 待9/E進版3.1 go MVT",
       "highlight": "N/A",
       "mp_sort": "2026/12/07",
-      "orig_idx": 501,
+      "orig_idx": 497,
       "dates": {
         "Kickoff": "2026/05/20",
         "DVT-start": "2026/06/27",
@@ -9948,10 +9864,10 @@
       "gpu": "RTX 5060",
       "npm": "顧曉琴",
       "stage": "EVT",
-      "status": "RPL-HX R + DDR5: 7/28 0B出圖, SMT1 @ 8/12 SMT2 @ 8/24 for ASSY",
-      "highlight": "NA",
+      "status": "RPL-HX R + DDR5: EVT SMT1 @ 8/12 SMT2 @ 8/24 for ASSY",
+      "highlight": "系列調整，Crosshair max -> Crosshair：改為塑膠A, 移除light module，EVT備料先以Katana來安排",
       "mp_sort": "2026/12/07",
-      "orig_idx": 502,
+      "orig_idx": 498,
       "dates": {
         "Kickoff": "2026/05/08",
         "DVT-start": "2026/06/15",
@@ -9972,7 +9888,7 @@
       "status": "RPL-HX R + DDR4: DVT test start @ 7/6, 待9/E進版3.1 go MVT",
       "highlight": "N/A",
       "mp_sort": "2026/12/07",
-      "orig_idx": 503,
+      "orig_idx": 499,
       "dates": {
         "Kickoff": "2026/05/20",
         "DVT-start": "2026/06/27",
@@ -9989,10 +9905,10 @@
       "gpu": "RTX 5070",
       "npm": "顧曉琴",
       "stage": "EVT",
-      "status": "RPL-HX R + DDR5: 7/28 0B出圖, SMT1 @ 8/12 SMT2 @ 8/24 for ASSY",
-      "highlight": "NA",
+      "status": "RPL-HX R + DDR5: EVT SMT1 @ 8/12 SMT2 @ 8/24 for ASSY",
+      "highlight": "系列調整，Crosshair max -> Crosshair：改為塑膠A, 移除light module，EVT備料先以Katana來安排",
       "mp_sort": "2026/12/07",
-      "orig_idx": 504,
+      "orig_idx": 500,
       "dates": {
         "Kickoff": "2026/05/08",
         "DVT-start": "2026/06/15",
@@ -10013,7 +9929,7 @@
       "status": "RPL-HX R + DDR4: DVT test start @ 7/6, 待9/E進版3.1 go MVT",
       "highlight": "N/A",
       "mp_sort": "2026/12/07",
-      "orig_idx": 505,
+      "orig_idx": 501,
       "dates": {
         "Kickoff": "2026/05/20",
         "DVT-start": "2026/06/27",
@@ -10030,10 +9946,10 @@
       "gpu": "RTX 5070",
       "npm": "顧曉琴",
       "stage": "EVT",
-      "status": "RPL-HX R + DDR5: 7/28 0B出圖, SMT1 @ 8/12 SMT2 @ 8/24 for ASSY",
-      "highlight": "NA",
+      "status": "RPL-HX R + DDR5: EVT SMT1 @ 8/12 SMT2 @ 8/24 for ASSY",
+      "highlight": "系列調整，Crosshair max -> Crosshair：改為塑膠A, 移除light module，EVT備料先以Katana來安排",
       "mp_sort": "2026/12/07",
-      "orig_idx": 506,
+      "orig_idx": 502,
       "dates": {
         "Kickoff": "2026/05/08",
         "DVT-start": "2026/06/15",
@@ -10054,7 +9970,7 @@
       "status": "RPL-HX R + DDR4: DVT test start @ 7/6, 待9/E進版3.1 go MVT",
       "highlight": "N/A",
       "mp_sort": "2026/12/07",
-      "orig_idx": 507,
+      "orig_idx": 503,
       "dates": {
         "Kickoff": "2026/05/20",
         "DVT-start": "2026/06/27",
@@ -10074,7 +9990,7 @@
       "status": "RPL-HX Next + DDR5: follow RPL HX Refresh, 待RPL HX Next QS sample WW49到料後安排MVT",
       "highlight": "N/A",
       "mp_sort": "2027/01/30",
-      "orig_idx": 508,
+      "orig_idx": 504,
       "dates": {
         "Kickoff": "2026/05/08",
         "MVT-start": "2026/12/08",
@@ -10093,7 +10009,7 @@
       "status": "RPL-HX Next + DDR4: follow RPL HX Refresh, 待RPL HX Next QS sample WW49到料後安排MVT",
       "highlight": "N/A",
       "mp_sort": "2027/01/30",
-      "orig_idx": 509,
+      "orig_idx": 505,
       "dates": {
         "Kickoff": "2026/05/20",
         "MVT-start": "2026/12/08",
@@ -10112,7 +10028,7 @@
       "status": "RPL-HX Next + DDR5: follow RPL HX Refresh, 待RPL HX Next QS sample WW49到料後安排MVT",
       "highlight": "N/A",
       "mp_sort": "2027/01/30",
-      "orig_idx": 510,
+      "orig_idx": 506,
       "dates": {
         "Kickoff": "2026/05/08",
         "MVT-start": "2026/12/08",
@@ -10131,7 +10047,7 @@
       "status": "RPL-HX Next + DDR4: follow RPL HX Refresh, 待RPL HX Next QS sample WW49到料後安排MVT",
       "highlight": "N/A",
       "mp_sort": "2027/01/30",
-      "orig_idx": 511,
+      "orig_idx": 507,
       "dates": {
         "Kickoff": "2026/05/20",
         "MVT-start": "2026/12/08",
@@ -10150,7 +10066,7 @@
       "status": "RPL-HX Next + DDR5: follow RPL HX Refresh, 待RPL HX Next QS sample WW49到料後安排MVT",
       "highlight": "N/A",
       "mp_sort": "2027/01/30",
-      "orig_idx": 512,
+      "orig_idx": 508,
       "dates": {
         "Kickoff": "2026/05/08",
         "MVT-start": "2026/12/08",
@@ -10169,7 +10085,7 @@
       "status": "RPL-HX Next + DDR4: follow RPL HX Refresh, 待RPL HX Next QS sample WW49到料後安排MVT",
       "highlight": "N/A",
       "mp_sort": "2027/01/30",
-      "orig_idx": 513,
+      "orig_idx": 509,
       "dates": {
         "Kickoff": "2026/05/20",
         "MVT-start": "2026/12/08",
@@ -10188,7 +10104,7 @@
       "status": "RPL-HX Next + DDR5: follow RPL HX Refresh, 待RPL HX Next QS sample WW49到料後安排MVT",
       "highlight": "N/A",
       "mp_sort": "2027/01/30",
-      "orig_idx": 514,
+      "orig_idx": 510,
       "dates": {
         "Kickoff": "2026/05/08",
         "MVT-start": "2026/12/08",
@@ -10207,7 +10123,7 @@
       "status": "RPL-HX Next + DDR4: follow RPL HX Refresh, 待RPL HX Next QS sample WW49到料後安排MVT",
       "highlight": "N/A",
       "mp_sort": "2027/01/30",
-      "orig_idx": 515,
+      "orig_idx": 511,
       "dates": {
         "Kickoff": "2026/05/20",
         "MVT-start": "2026/12/08",
@@ -10226,7 +10142,7 @@
       "status": "0",
       "highlight": "無",
       "mp_sort": "2025/07/31",
-      "orig_idx": 516,
+      "orig_idx": 512,
       "dates": {
         "Kickoff": "2024/12/24",
         "DVT-start": "2025/03/01",
@@ -10247,7 +10163,7 @@
       "status": "0",
       "highlight": "無",
       "mp_sort": "2025/07/31",
-      "orig_idx": 517,
+      "orig_idx": 513,
       "dates": {
         "Kickoff": "2024/12/24",
         "DVT-start": "2025/03/01",
@@ -10268,7 +10184,7 @@
       "status": "0",
       "highlight": "未有報價,BTO暫未開放",
       "mp_sort": "2025/07/31",
-      "orig_idx": 518,
+      "orig_idx": 514,
       "dates": {
         "Kickoff": "2024/12/24",
         "DVT-start": "2025/03/01",
@@ -10289,7 +10205,7 @@
       "status": "MVT 测试中，业务暂无出货需求，BTO未开",
       "highlight": "无",
       "mp_sort": "2025/10/22",
-      "orig_idx": 519,
+      "orig_idx": 515,
       "dates": {
         "Kickoff": "2024/12/24",
         "MVT-start": "2025/07/29",
@@ -10308,7 +10224,7 @@
       "status": "MVT 测试中，业务暂无出货需求，BTO未开",
       "highlight": "無",
       "mp_sort": "2025/10/22",
-      "orig_idx": 520,
+      "orig_idx": 516,
       "dates": {
         "Kickoff": "2024/12/24",
         "MVT-start": "2025/07/29",
@@ -10327,7 +10243,7 @@
       "status": "MVT 测试中，业务暂无出货需求，BTO未开",
       "highlight": "無",
       "mp_sort": "2025/10/22",
-      "orig_idx": 521,
+      "orig_idx": 517,
       "dates": {
         "Kickoff": "2024/12/24",
         "MVT-start": "2025/07/29",
@@ -10346,7 +10262,7 @@
       "status": "0",
       "highlight": "BTO未開",
       "mp_sort": "2026/03/07",
-      "orig_idx": 522,
+      "orig_idx": 518,
       "dates": {
         "Kickoff": "2025/06/20",
         "MVT-start": "2025/12/23",
@@ -10365,7 +10281,7 @@
       "status": "-2",
       "highlight": "3/21入庫",
       "mp_sort": "2026/03/21",
-      "orig_idx": 523,
+      "orig_idx": 519,
       "dates": {
         "Kickoff": "2025/06/20",
         "MVT-start": "2025/12/23",
@@ -10384,7 +10300,7 @@
       "status": "0",
       "highlight": "BTO未開",
       "mp_sort": "2026/03/07",
-      "orig_idx": 524,
+      "orig_idx": 520,
       "dates": {
         "Kickoff": "2025/06/20",
         "MVT-start": "2025/12/23",
@@ -10403,7 +10319,7 @@
       "status": "0",
       "highlight": "業務沒需求",
       "mp_sort": "2025/06/30",
-      "orig_idx": 525,
+      "orig_idx": 521,
       "dates": {
         "Kickoff": "2025/02/18",
         "MVT-start": "2025/04/17",
@@ -10422,7 +10338,7 @@
       "status": "-18",
       "highlight": "根據生管排程,C/R重工於6/30入庫",
       "mp_sort": "2025/06/30",
-      "orig_idx": 526,
+      "orig_idx": 522,
       "dates": {
         "Kickoff": "2025/02/18",
         "MVT-start": "2025/04/17",
@@ -10441,7 +10357,7 @@
       "status": "",
       "highlight": "2/2上線, WHQL 2/23取得, 中間有3週GAP,需call-help",
       "mp_sort": "2026/02/14",
-      "orig_idx": 527,
+      "orig_idx": 523,
       "dates": {
         "Kickoff": "2025/09/22",
         "BTO ready": "2026/01/09",
@@ -10459,7 +10375,7 @@
       "status": "",
       "highlight": "plan 2/2 ATS start, WHQL 2/9取得, 中間有7天的GAP",
       "mp_sort": "2026/02/14",
-      "orig_idx": 528,
+      "orig_idx": 524,
       "dates": {
         "Kickoff": "2025/09/22",
         "BTO ready": "2025/12/22",
@@ -10477,7 +10393,7 @@
       "status": "",
       "highlight": "plan 2/2 ATS start, WHQL 2/9取得, 中間有7天的GAP",
       "mp_sort": "2026/02/14",
-      "orig_idx": 529,
+      "orig_idx": 525,
       "dates": {
         "Kickoff": "2025/09/22",
         "BTO ready": "2025/12/26",
@@ -10495,7 +10411,7 @@
       "status": "",
       "highlight": "2/2上線, WHQL 2/23取得, 中間有3週GAP,需call-help",
       "mp_sort": "2026/02/14",
-      "orig_idx": 530,
+      "orig_idx": 526,
       "dates": {
         "Kickoff": "2025/09/22",
         "BTO ready": "2026/01/09",
@@ -10513,7 +10429,7 @@
       "status": "",
       "highlight": "plan 2/2 ATS start, WHQL 2/9取得, 中間有7天的GAP",
       "mp_sort": "2026/02/14",
-      "orig_idx": 531,
+      "orig_idx": 527,
       "dates": {
         "Kickoff": "2025/09/22",
         "BTO ready": "2025/12/22",
@@ -10531,7 +10447,7 @@
       "status": "",
       "highlight": "plan 2/2 ATS start, WHQL 2/9取得, 中間有7天的GAP",
       "mp_sort": "2026/02/14",
-      "orig_idx": 532,
+      "orig_idx": 528,
       "dates": {
         "Kickoff": "2025/09/22",
         "BTO ready": "2025/12/26",
@@ -10549,7 +10465,7 @@
       "status": "0",
       "highlight": "排程原因",
       "mp_sort": "2026/03/27",
-      "orig_idx": 533,
+      "orig_idx": 529,
       "dates": {
         "Kickoff": "2025/09/30",
         "MVT-start": "2025/12/24",
@@ -10568,7 +10484,7 @@
       "status": "0",
       "highlight": "NA",
       "mp_sort": "2026/03/27",
-      "orig_idx": 534,
+      "orig_idx": 530,
       "dates": {
         "Kickoff": "2025/09/30",
         "MVT-start": "2025/12/24",
@@ -10587,7 +10503,7 @@
       "status": "0",
       "highlight": "NA",
       "mp_sort": "2026/03/27",
-      "orig_idx": 535,
+      "orig_idx": 531,
       "dates": {
         "Kickoff": "2025/09/30",
         "MVT-start": "2025/12/24",
@@ -10606,7 +10522,7 @@
       "status": "+26",
       "highlight": "特仕版使用新包材，等待包材入料;first lot 1K",
       "mp_sort": "2026/05/26",
-      "orig_idx": 536,
+      "orig_idx": 532,
       "dates": {
         "Kickoff": "2025/11/21",
         "MVT-start": "2026/02/27",
@@ -10625,7 +10541,7 @@
       "status": "Dragon Edition BTO仅开放RTX 5090",
       "highlight": "NA",
       "mp_sort": "2026/05/26",
-      "orig_idx": 537,
+      "orig_idx": 533,
       "dates": {
         "Kickoff": "2025/11/21",
         "BTO ready": "2026/03/02",
@@ -10643,7 +10559,7 @@
       "status": "Dragon Edition BTO仅开放RTX 5090",
       "highlight": "NA",
       "mp_sort": "2026/05/26",
-      "orig_idx": 538,
+      "orig_idx": 534,
       "dates": {
         "Kickoff": "2025/11/21",
         "BTO ready": "2026/03/02",
@@ -10658,13 +10574,13 @@
       "gpu": "RTX 5070Ti",
       "npm": "高宇奇",
       "stage": "Design",
-      "status": "製程DFM修改需求,0M gerber out變更為8/4,暫不影響後續EVT schedule.",
+      "status": "PCB 0M已於8/4 gerber out,預計8/19 DVT SMT.",
       "highlight": "1) SSE需要進行約4週的POC評估確認1851 aRGB介面Light Bar的技術可行性以及後續FW開發工作,已提供MCU demo board/Light bar for SSE POC study, SSE預計WW33提供評估結果.",
       "mp_sort": "2027/03/18",
-      "orig_idx": 539,
+      "orig_idx": 535,
       "dates": {
         "Kickoff": "2026/06/29",
-        "DVT-start": "2026/08/18",
+        "DVT-start": "2026/08/19",
         "EVT-start": "2026/10/23",
         "MVT-start": "2027/01/08",
         "BTO ready": "2027/02/01",
@@ -10679,13 +10595,13 @@
       "gpu": "RTX 5080",
       "npm": "高宇奇",
       "stage": "Design",
-      "status": "製程DFM修改需求,0M gerber out變更為8/4,暫不影響後續EVT schedule.",
+      "status": "PCB 0M已於8/4 gerber out,預計8/19 DVT SMT.",
       "highlight": "1) SSE需要進行約4週的POC評估確認1851 aRGB介面Light Bar的技術可行性以及後續FW開發工作,已提供MCU demo board/Light bar for SSE POC study, SSE預計WW33提供評估結果.",
       "mp_sort": "2027/03/18",
-      "orig_idx": 540,
+      "orig_idx": 536,
       "dates": {
         "Kickoff": "2026/06/29",
-        "DVT-start": "2026/08/18",
+        "DVT-start": "2026/08/19",
         "EVT-start": "2026/10/23",
         "MVT-start": "2027/01/08",
         "BTO ready": "2027/02/01",
@@ -10700,13 +10616,13 @@
       "gpu": "RTX 5090",
       "npm": "高宇奇",
       "stage": "Design",
-      "status": "製程DFM修改需求,0M gerber out變更為8/4,暫不影響後續EVT schedule.",
+      "status": "PCB 0M已於8/4 gerber out,預計8/19 DVT SMT.",
       "highlight": "1) SSE需要進行約4週的POC評估確認1851 aRGB介面Light Bar的技術可行性以及後續FW開發工作,已提供MCU demo board/Light bar for SSE POC study, SSE預計WW33提供評估結果.",
       "mp_sort": "2027/03/18",
-      "orig_idx": 541,
+      "orig_idx": 537,
       "dates": {
         "Kickoff": "2026/06/29",
-        "DVT-start": "2026/08/18",
+        "DVT-start": "2026/08/19",
         "EVT-start": "2026/10/23",
         "MVT-start": "2027/01/08",
         "BTO ready": "2027/02/01",
@@ -10724,7 +10640,7 @@
       "status": "-3",
       "highlight": "NA",
       "mp_sort": "2026/01/27",
-      "orig_idx": 542,
+      "orig_idx": 538,
       "dates": {
         "Kickoff": "2025/12/10",
         "MVT-start": "2025/12/26",
@@ -10743,7 +10659,7 @@
       "status": "",
       "highlight": "NA",
       "mp_sort": "2026/06/10",
-      "orig_idx": 543,
+      "orig_idx": 539,
       "dates": {
         "Kickoff": "2026/04/21",
         "MVT-start": "2026/05/20",
@@ -10762,7 +10678,7 @@
       "status": "-3",
       "highlight": "NA",
       "mp_sort": "2026/01/27",
-      "orig_idx": 544,
+      "orig_idx": 540,
       "dates": {
         "Kickoff": "2025/12/10",
         "MVT-start": "2025/12/26",
@@ -10781,7 +10697,7 @@
       "status": "-3",
       "highlight": "NA",
       "mp_sort": "2026/01/27",
-      "orig_idx": 545,
+      "orig_idx": 541,
       "dates": {
         "Kickoff": "2025/12/10",
         "MVT-start": "2025/12/26",
@@ -10800,7 +10716,7 @@
       "status": "-20",
       "highlight": "原定6/30 MP, 因應出貨需求pull in MP至6/10.",
       "mp_sort": "2026/06/10",
-      "orig_idx": 546,
+      "orig_idx": 542,
       "dates": {
         "Kickoff": "2026/04/21",
         "MVT-start": "2026/05/20",
@@ -10819,7 +10735,7 @@
       "status": "-3",
       "highlight": "NA",
       "mp_sort": "2026/01/27",
-      "orig_idx": 547,
+      "orig_idx": 543,
       "dates": {
         "Kickoff": "2025/12/10",
         "MVT-start": "2025/12/26",
@@ -10838,7 +10754,7 @@
       "status": "-3",
       "highlight": "NA",
       "mp_sort": "2026/01/27",
-      "orig_idx": 548,
+      "orig_idx": 544,
       "dates": {
         "Kickoff": "2025/12/10",
         "MVT-start": "2025/12/26",
@@ -10857,7 +10773,7 @@
       "status": "",
       "highlight": "NA",
       "mp_sort": "2026/06/10",
-      "orig_idx": 549,
+      "orig_idx": 545,
       "dates": {
         "Kickoff": "2026/04/21",
         "MVT-start": "2026/05/20",
@@ -10876,7 +10792,7 @@
       "status": "",
       "highlight": "NA",
       "mp_sort": "2026/06/10",
-      "orig_idx": 550,
+      "orig_idx": 546,
       "dates": {
         "Kickoff": "2026/04/21",
         "MVT-start": "2026/05/20",
@@ -10895,7 +10811,7 @@
       "status": "9/19 通知drop",
       "highlight": "NA",
       "mp_sort": "2026/01/30",
-      "orig_idx": 551,
+      "orig_idx": 547,
       "dates": {
         "Kickoff": "2025/06/27",
         "DVT-start": "2025/08/28",
@@ -10916,7 +10832,7 @@
       "status": "9/19 通知drop",
       "highlight": "NA",
       "mp_sort": "2026/01/30",
-      "orig_idx": 552,
+      "orig_idx": 548,
       "dates": {
         "Kickoff": "2025/06/27",
         "DVT-start": "2025/08/28",
@@ -10937,7 +10853,7 @@
       "status": "9/19 通知drop",
       "highlight": "需NV在1/31 前提供VBIOS/WHQLdriver for ATS上線",
       "mp_sort": "2026/02/14",
-      "orig_idx": 553,
+      "orig_idx": 549,
       "dates": {
         "Kickoff": "2025/06/27",
         "DVT-start": "2025/08/28",
@@ -10958,7 +10874,7 @@
       "status": "-14",
       "highlight": "5/13正式進入MP(DDR4)",
       "mp_sort": "2026/05/13",
-      "orig_idx": 554,
+      "orig_idx": 550,
       "dates": {
         "Kickoff": "2026/03/03",
         "MVT-start": "2026/03/30",
@@ -10977,7 +10893,7 @@
       "status": "-14",
       "highlight": "5/13正式進入MP(DDR4)",
       "mp_sort": "2026/05/13",
-      "orig_idx": 555,
+      "orig_idx": 551,
       "dates": {
         "Kickoff": "2026/03/03",
         "MVT-start": "2026/03/30",
@@ -10996,7 +10912,7 @@
       "status": "0",
       "highlight": "6/5有業務訂單, 6/12正式進入MP(DDR4)",
       "mp_sort": "2026/06/12",
-      "orig_idx": 556,
+      "orig_idx": 552,
       "dates": {
         "Kickoff": "2026/03/03",
         "MVT-start": "2026/03/30",
@@ -11015,7 +10931,7 @@
       "status": "0",
       "highlight": "6/5有業務訂單, 6/12正式進入MP(DDR4)",
       "mp_sort": "2026/06/12",
-      "orig_idx": 557,
+      "orig_idx": 553,
       "dates": {
         "Kickoff": "2026/03/03",
         "MVT-start": "2026/03/30",
@@ -11034,7 +10950,7 @@
       "status": "-14",
       "highlight": "5/13正式進入MP(DDR4)",
       "mp_sort": "2026/05/13",
-      "orig_idx": 558,
+      "orig_idx": 554,
       "dates": {
         "Kickoff": "2026/03/03",
         "MVT-start": "2026/03/30",
@@ -11053,7 +10969,7 @@
       "status": "-14",
       "highlight": "5/13正式進入MP(DDR4)",
       "mp_sort": "2026/05/13",
-      "orig_idx": 559,
+      "orig_idx": 555,
       "dates": {
         "Kickoff": "2026/03/03",
         "MVT-start": "2026/03/30",
@@ -11072,7 +10988,7 @@
       "status": "-14",
       "highlight": "5/13正式進入MP(DDR4)",
       "mp_sort": "2026/05/13",
-      "orig_idx": 560,
+      "orig_idx": 556,
       "dates": {
         "Kickoff": "2026/03/03",
         "MVT-start": "2026/03/30",
@@ -11091,7 +11007,7 @@
       "status": "0",
       "highlight": "6/5有業務訂單, 6/12正式進入MP(DDR4)",
       "mp_sort": "2026/06/12",
-      "orig_idx": 561,
+      "orig_idx": 557,
       "dates": {
         "Kickoff": "2026/03/03",
         "MVT-start": "2026/03/30",
@@ -11110,7 +11026,7 @@
       "status": "0",
       "highlight": "6/5有業務訂單, 6/12正式進入MP(DDR4)",
       "mp_sort": "2026/06/12",
-      "orig_idx": 562,
+      "orig_idx": 558,
       "dates": {
         "Kickoff": "2026/03/03",
         "MVT-start": "2026/03/30",
@@ -11129,7 +11045,7 @@
       "status": "0",
       "highlight": "6/5有業務訂單, 6/12正式進入MP(DDR4)",
       "mp_sort": "2026/06/12",
-      "orig_idx": 563,
+      "orig_idx": 559,
       "dates": {
         "Kickoff": "2026/03/03",
         "MVT-start": "2026/03/30",
@@ -11148,7 +11064,7 @@
       "status": "0",
       "highlight": "6/18正式進入MP(Disney ID)",
       "mp_sort": "2026/06/18",
-      "orig_idx": 564,
+      "orig_idx": 560,
       "dates": {
         "Kickoff": "2026/04/08",
         "MVT-start": "2026/05/15",
@@ -11164,10 +11080,10 @@
       "gpu": "RTX 5050",
       "npm": "蔡東宏",
       "stage": "MVT",
-      "status": "HPT sku:預計8/7 MVT SMT,請BIOS RD儘速提供PI 1200i NDA版本的MSI BIOS",
+      "status": "HPT sku:預計8/7 MVT SMT,8/10試組,8/12組裝",
       "highlight": "1).Schedule:AMD PI 1200i NDA release@7/28 USA time(original 6/19,delay 39天)與工廠將MVT排程延至8/7 (original 8/4,delay 3天),因要和量產工單一起生產,因應上述時程變更,MP預計延至9/22(先前已由 9 /17提前至 8/31, 現又延至9/22),後續將依實際測試結果滾動式調整專案時程。  2).Material:Thermal module依現有設計圖面take risk讓廠商去進行修模同時備料MVT & ATS,若實測結果未達預期,物料需報廢,schedule也可能因此造成影響",
       "mp_sort": "2026/09/22",
-      "orig_idx": 565,
+      "orig_idx": 561,
       "dates": {
         "Kickoff": "2026/05/28",
         "DVT-start": "2026/06/26",
@@ -11175,10 +11091,7 @@
         "BTO ready": "2026/08/21",
         "ATS-start": "2026/09/12",
         "MP": "2026/09/22"
-      },
-      "mp_changed": true,
-      "old_mp": "2026/09/19",
-      "old_stage": "DVT"
+      }
     },
     {
       "model": "15TK",
@@ -11190,7 +11103,7 @@
       "status": "0",
       "highlight": "1)認證:SRRC尚未取證,預計7月底完成,可以清關入中國區,但是上架販售有風險,目前無訂單",
       "mp_sort": "2026/05/30",
-      "orig_idx": 566,
+      "orig_idx": 562,
       "dates": {
         "Kickoff": "2025/10/17",
         "DVT-start": "2025/11/17",
@@ -11210,7 +11123,7 @@
       "status": "-5",
       "highlight": "1)認證:SRRC尚未取證,預計7月底完成,可以清關入中國區,但是上架販售有風險,目前無訂單",
       "mp_sort": "2026/05/25",
-      "orig_idx": 567,
+      "orig_idx": 563,
       "dates": {
         "Kickoff": "2025/10/17",
         "DVT-start": "2025/11/17",
@@ -11230,7 +11143,7 @@
       "status": "8/19 pending",
       "highlight": "NA",
       "mp_sort": "2025/08/19",
-      "orig_idx": 568,
+      "orig_idx": 564,
       "dates": {
         "Kickoff": "2025/06/27",
         "DVT-start": "2025/08/26",
@@ -11251,7 +11164,7 @@
       "status": "8/19 pending",
       "highlight": "NA",
       "mp_sort": "2025/08/19",
-      "orig_idx": 569,
+      "orig_idx": 565,
       "dates": {
         "Kickoff": "2025/06/27",
         "DVT-start": "2025/08/26",
@@ -11272,7 +11185,7 @@
       "status": "8/19 pending",
       "highlight": "NA",
       "mp_sort": "2025/08/19",
-      "orig_idx": 570,
+      "orig_idx": 566,
       "dates": {
         "Kickoff": "2025/06/27",
         "DVT-start": "2025/08/26",
@@ -11293,7 +11206,7 @@
       "status": "暫無業務需求,BTO 未開放",
       "highlight": "NA",
       "mp_sort": "2026/01/30",
-      "orig_idx": 571,
+      "orig_idx": 567,
       "dates": {
         "Kickoff": "2025/06/27",
         "DVT-start": "2025/08/28",
@@ -11314,7 +11227,7 @@
       "status": "同上",
       "highlight": "同上",
       "mp_sort": "2026/01/30",
-      "orig_idx": 572,
+      "orig_idx": 568,
       "dates": {
         "Kickoff": "2025/06/27",
         "DVT-start": "2025/08/28",
@@ -11335,7 +11248,7 @@
       "status": "同上",
       "highlight": "同上",
       "mp_sort": "2026/01/30",
-      "orig_idx": 573,
+      "orig_idx": 569,
       "dates": {
         "Kickoff": "2025/06/27",
         "DVT-start": "2025/08/28",
@@ -11353,10 +11266,10 @@
       "gpu": "RTX 5050",
       "npm": "蔡東宏",
       "stage": "MVT",
-      "status": "DDR5 sku, MVT2 組裝中",
+      "status": "DDR5 sku, MVT 測試中",
       "highlight": "1) ATS與MP的物料簽樣與備料,需要RD與採購和物管協助 2)A件交期依森田薄膜進料時間,預計15T3組裝在8/25,MP在9/3,會比原時程晚4天,會導致15T3無法meet原8/30 MP的目標,需要RD/採購協助助pull in",
       "mp_sort": "2026/08/30",
-      "orig_idx": 574,
+      "orig_idx": 570,
       "dates": {
         "Kickoff": "2026/04/20",
         "DVT-start": "2026/06/01",
@@ -11373,10 +11286,10 @@
       "gpu": "RTX 5050",
       "npm": "蔡東宏",
       "stage": "MVT",
-      "status": "DDR4 sku,MVT組裝中,預計8/4拿到機器開始測試,8/7 PCB risk buy",
+      "status": "DDR4 sku, MVT 測試中,預計8/7 PCB risk buy",
       "highlight": "1) ATS與MP的物料簽樣與備料,需要RD與採購和物管協助 2)A件交期依森田薄膜進料時間,預計15T3組裝在8/25,MP在9/3,會比原時程晚4天,會導致15T3無法meet原8/30 MP的目標,需要RD/採購協助助pull in",
       "mp_sort": "2026/08/31",
-      "orig_idx": 575,
+      "orig_idx": 571,
       "dates": {
         "Kickoff": "2026/05/15",
         "DVT-start": "2026/06/15",
@@ -11393,10 +11306,10 @@
       "gpu": "RTX 5060",
       "npm": "蔡東宏",
       "stage": "MVT",
-      "status": "DDR5 sku, MVT2組裝中",
+      "status": "DDR5 sku, MVT 測試中",
       "highlight": "1) ATS與MP的物料簽樣與備料,需要RD與採購和物管協助 2)A件交期依森田薄膜進料時間,預計15T3組裝在8/25,MP在9/3,會比原時程晚4天,會導致15T3無法meet原8/30 MP的目標,需要RD/採購協助助pull in",
       "mp_sort": "2026/08/30",
-      "orig_idx": 576,
+      "orig_idx": 572,
       "dates": {
         "Kickoff": "2026/04/20",
         "DVT-start": "2026/06/01",
@@ -11413,10 +11326,10 @@
       "gpu": "RTX 5060",
       "npm": "蔡東宏",
       "stage": "MVT",
-      "status": "DDR4 sku,MVT組裝中,預計8/4拿到機器開始測試,8/7 PCB risk buy",
+      "status": "DDR4 sku, MVT 測試中,預計8/7 PCB risk buy",
       "highlight": "1) ATS與MP的物料簽樣與備料,需要RD與採購和物管協助 2)A件交期依森田薄膜進料時間,預計15T3組裝在8/25,MP在9/3,會比原時程晚4天,會導致15T3無法meet原8/30 MP的目標,需要RD/採購協助助pull in",
       "mp_sort": "2026/08/31",
-      "orig_idx": 577,
+      "orig_idx": 573,
       "dates": {
         "Kickoff": "2026/05/15",
         "DVT-start": "2026/06/15",
@@ -11433,10 +11346,10 @@
       "gpu": "RTX 5070",
       "npm": "蔡東宏",
       "stage": "MVT",
-      "status": "DDR5 sku, MVT2組裝中",
+      "status": "DDR5 sku, MVT 測試中",
       "highlight": "1) ATS與MP的物料簽樣與備料,需要RD與採購和物管協助 2)A件交期依森田薄膜進料時間,預計15T3組裝在8/25,MP在9/3,會比原時程晚4天,會導致15T3無法meet原8/30 MP的目標,需要RD/採購協助助pull in",
       "mp_sort": "2026/08/30",
-      "orig_idx": 578,
+      "orig_idx": 574,
       "dates": {
         "Kickoff": "2026/04/20",
         "DVT-start": "2026/06/01",
@@ -11453,10 +11366,10 @@
       "gpu": "RTX 5070",
       "npm": "蔡東宏",
       "stage": "MVT",
-      "status": "DDR4 sku,MVT組裝中,預計8/4拿到機器開始測試,8/7 PCB risk buy",
+      "status": "DDR4 sku, MVT 測試中,預計8/7 PCB risk buy",
       "highlight": "1) ATS與MP的物料簽樣與備料,需要RD與採購和物管協助 2)A件交期依森田薄膜進料時間,預計15T3組裝在8/25,MP在9/3,會比原時程晚4天,會導致15T3無法meet原8/30 MP的目標,需要RD/採購協助助pull in",
       "mp_sort": "2026/08/31",
-      "orig_idx": 579,
+      "orig_idx": 575,
       "dates": {
         "Kickoff": "2026/05/15",
         "DVT-start": "2026/06/15",
@@ -11476,7 +11389,7 @@
       "status": "RTX 5070 VRAM 將以 8GB 為主要出貨配置",
       "highlight": "NA",
       "mp_sort": "2026/08/30",
-      "orig_idx": 580,
+      "orig_idx": 576,
       "dates": {
         "Kickoff": "2026/04/20",
         "DVT-start": "2026/06/01",
@@ -11496,7 +11409,7 @@
       "status": "RTX 5070 VRAM 將以 8GB 為主要出貨配置",
       "highlight": "NA",
       "mp_sort": "2026/08/31",
-      "orig_idx": 581,
+      "orig_idx": 577,
       "dates": {
         "Kickoff": "2026/05/15",
         "DVT-start": "2026/06/15",
@@ -11513,10 +11426,10 @@
       "gpu": "RTX 5050",
       "npm": "顧曉琴",
       "stage": "EVT",
-      "status": "RPL-HX R + DDR5: 7/28 0B出圖, SMT1 @ 8/12 SMT2 @ 8/24 for ASSY",
+      "status": "RPL-HX R + DDR5: EVT SMT1 @ 8/12 SMT2 @ 8/24 for ASSY",
       "highlight": "NA",
       "mp_sort": "2026/11/30",
-      "orig_idx": 582,
+      "orig_idx": 578,
       "dates": {
         "Kickoff": "2026/05/08",
         "DVT-start": "2026/06/15",
@@ -11537,7 +11450,7 @@
       "status": "RPL-HX R + DDR4: DVT test start @ 7/6, 待9/E進版3.1 go MVT",
       "highlight": "N/A",
       "mp_sort": "2026/12/02",
-      "orig_idx": 583,
+      "orig_idx": 579,
       "dates": {
         "Kickoff": "2026/05/20",
         "DVT-start": "2026/06/27",
@@ -11554,10 +11467,10 @@
       "gpu": "RTX 5060",
       "npm": "顧曉琴",
       "stage": "EVT",
-      "status": "RPL-HX R + DDR5: 7/28 0B出圖, SMT1 @ 8/12 SMT2 @ 8/24 for ASSY",
+      "status": "RPL-HX R + DDR5: EVT SMT1 @ 8/12 SMT2 @ 8/24 for ASSY",
       "highlight": "NA",
       "mp_sort": "2026/11/30",
-      "orig_idx": 584,
+      "orig_idx": 580,
       "dates": {
         "Kickoff": "2026/05/08",
         "DVT-start": "2026/06/15",
@@ -11578,7 +11491,7 @@
       "status": "RPL-HX R + DDR4: DVT test start @ 7/6, 待9/E進版3.1 go MVT",
       "highlight": "N/A",
       "mp_sort": "2026/12/02",
-      "orig_idx": 585,
+      "orig_idx": 581,
       "dates": {
         "Kickoff": "2026/05/20",
         "DVT-start": "2026/06/27",
@@ -11595,10 +11508,10 @@
       "gpu": "RTX 5070",
       "npm": "顧曉琴",
       "stage": "EVT",
-      "status": "RPL-HX R + DDR5: 7/28 0B出圖, SMT1 @ 8/12 SMT2 @ 8/24 for ASSY",
+      "status": "RPL-HX R + DDR5: EVT SMT1 @ 8/12 SMT2 @ 8/24 for ASSY",
       "highlight": "NA",
       "mp_sort": "2026/11/30",
-      "orig_idx": 586,
+      "orig_idx": 582,
       "dates": {
         "Kickoff": "2026/05/08",
         "DVT-start": "2026/06/15",
@@ -11619,7 +11532,7 @@
       "status": "RPL-HX R + DDR4: DVT test start @ 7/6, 待9/E進版3.1 go MVT",
       "highlight": "N/A",
       "mp_sort": "2026/12/02",
-      "orig_idx": 587,
+      "orig_idx": 583,
       "dates": {
         "Kickoff": "2026/05/20",
         "DVT-start": "2026/06/27",
@@ -11639,7 +11552,7 @@
       "status": "RPL-HX Next + DDR5: follow RPL HX Refresh, 待RPL HX Next QS sample WW49到料後安排MVT",
       "highlight": "N/A",
       "mp_sort": "2027/01/30",
-      "orig_idx": 588,
+      "orig_idx": 584,
       "dates": {
         "Kickoff": "2026/05/08",
         "MVT-start": "2026/12/08",
@@ -11658,7 +11571,7 @@
       "status": "RPL-HX Next+ DDR4: follow RPL HX Refresh, 待RPL HX Next QS sample WW49到料後安排MVT",
       "highlight": "N/A",
       "mp_sort": "2027/01/30",
-      "orig_idx": 589,
+      "orig_idx": 585,
       "dates": {
         "Kickoff": "2026/05/20",
         "DVT-start": "2026/06/27",
@@ -11678,7 +11591,7 @@
       "status": "RPL-HX Next + DDR5: follow RPL HX Refresh, 待RPL HX Next QS sample WW49到料後安排MVT",
       "highlight": "N/A",
       "mp_sort": "2027/01/30",
-      "orig_idx": 590,
+      "orig_idx": 586,
       "dates": {
         "Kickoff": "2026/05/08",
         "MVT-start": "2026/12/08",
@@ -11697,7 +11610,7 @@
       "status": "RPL-HX Next+ DDR4: follow RPL HX Refresh, 待RPL HX Next QS sample WW49到料後安排MVT",
       "highlight": "N/A",
       "mp_sort": "2027/01/30",
-      "orig_idx": 591,
+      "orig_idx": 587,
       "dates": {
         "Kickoff": "2026/05/20",
         "DVT-start": "2026/06/27",
@@ -11717,7 +11630,7 @@
       "status": "RPL-HX Next + DDR5: follow RPL HX Refresh, 待RPL HX Next QS sample WW49到料後安排MVT",
       "highlight": "N/A",
       "mp_sort": "2027/01/30",
-      "orig_idx": 592,
+      "orig_idx": 588,
       "dates": {
         "Kickoff": "2026/05/08",
         "MVT-start": "2026/12/08",
@@ -11736,7 +11649,7 @@
       "status": "RPL-HX Next+ DDR4: follow RPL HX Refresh, 待RPL HX Next QS sample WW49到料後安排MVT",
       "highlight": "N/A",
       "mp_sort": "2027/01/30",
-      "orig_idx": 593,
+      "orig_idx": 589,
       "dates": {
         "Kickoff": "2026/05/20",
         "DVT-start": "2026/06/27",
@@ -11756,7 +11669,7 @@
       "status": "7/1 通知pending",
       "highlight": "1, Thermal備料時間不足，請採購&RD 協助，EVT 測試結束後需備ATS 物料，根據各階段實際測試狀況再調整 2, Fulcrum report 需EE support 在9/10之前完成 3,EVT/MVT PCB 需快洗,優先組158Q for RD/DQA/3C測試及認證 4,EVT 1.0出圖同步備ATS PCB 300pcs 5,MVT DQA 測試1周請示PCB risk buy,PCB ready9/30.與2nd MP gap 3天 6,BSMI/3C/SRRC認證若EVT1不能準時上線，9/E 完成會有risk 7,75W battery cable需最遲在8/16之前簽樣備料",
       "mp_sort": "2025/09/27",
-      "orig_idx": 594,
+      "orig_idx": 590,
       "dates": {
         "Kickoff": "2025/03/28",
         "DVT-start": "2025/05/30",
@@ -11777,7 +11690,7 @@
       "status": "同上",
       "highlight": "同上",
       "mp_sort": "2025/09/27",
-      "orig_idx": 595,
+      "orig_idx": 591,
       "dates": {
         "Kickoff": "2025/03/28",
         "DVT-start": "2025/05/30",
@@ -11798,7 +11711,7 @@
       "status": "同上",
       "highlight": "同上",
       "mp_sort": "2025/09/27",
-      "orig_idx": 596,
+      "orig_idx": 592,
       "dates": {
         "Kickoff": "2025/03/28",
         "DVT-start": "2025/05/30",
@@ -11819,7 +11732,7 @@
       "status": "6/30通知pending",
       "highlight": "1, Thermal備料時間不足，請採購&RD 協助，EVT 測試結束後需備ATS 物料，根據各階段實際測試狀況再調整 2, Fulcrum report 需EE support 在9/10之前完成 3,EVT/MVT PCB 需快洗,優先組158Q for RD/DQA/3C測試及認證 4,EVT 1.0出圖同步備ATS PCB 300pcs 5,MVT DQA 測試1周請示PCB risk buy,PCB ready9/30.與2nd MP gap 3天",
       "mp_sort": "2025/10/12",
-      "orig_idx": 597,
+      "orig_idx": 593,
       "dates": {
         "Kickoff": "2025/03/28",
         "DVT-start": "2025/05/30",
@@ -11840,7 +11753,7 @@
       "status": "同上",
       "highlight": "同上",
       "mp_sort": "2025/10/12",
-      "orig_idx": 598,
+      "orig_idx": 594,
       "dates": {
         "Kickoff": "2025/03/28",
         "DVT-start": "2025/05/30",
@@ -11861,7 +11774,7 @@
       "status": "同上",
       "highlight": "同上",
       "mp_sort": "2025/10/12",
-      "orig_idx": 599,
+      "orig_idx": 595,
       "dates": {
         "Kickoff": "2025/03/28",
         "DVT-start": "2025/05/30",
@@ -11879,13 +11792,13 @@
       "gpu": "RTX 5070Ti",
       "npm": "高宇奇",
       "stage": "Design",
-      "status": "製程DFM修改需求,0M gerber out變更為8/4,暫不影響後續EVT schedule.",
+      "status": "PCB 0M已於8/4 gerber out,預計8/19 DVT SMT.",
       "highlight": "1) SSE需要進行約4週的POC評估確認1851 aRGB介面Light Bar的技術可行性以及後續FW開發工作,已提供MCU demo board/Light bar for SSE POC study, SSE預計WW33提供評估結果.",
       "mp_sort": "2027/03/18",
-      "orig_idx": 600,
+      "orig_idx": 596,
       "dates": {
         "Kickoff": "2026/06/29",
-        "DVT-start": "2026/08/18",
+        "DVT-start": "2026/08/19",
         "EVT-start": "2026/10/23",
         "MVT-start": "2027/01/08",
         "BTO ready": "2027/02/01",
@@ -11900,13 +11813,13 @@
       "gpu": "RTX 5080",
       "npm": "高宇奇",
       "stage": "Design",
-      "status": "製程DFM修改需求,0M gerber out變更為8/4,暫不影響後續EVT schedule.",
+      "status": "PCB 0M已於8/4 gerber out,預計8/19 DVT SMT.",
       "highlight": "1) SSE需要進行約4週的POC評估確認1851 aRGB介面Light Bar的技術可行性以及後續FW開發工作,已提供MCU demo board/Light bar for SSE POC study, SSE預計WW33提供評估結果.",
       "mp_sort": "2027/03/18",
-      "orig_idx": 601,
+      "orig_idx": 597,
       "dates": {
         "Kickoff": "2026/06/29",
-        "DVT-start": "2026/08/18",
+        "DVT-start": "2026/08/19",
         "EVT-start": "2026/10/23",
         "MVT-start": "2027/01/08",
         "BTO ready": "2027/02/01",
@@ -11921,16 +11834,100 @@
       "gpu": "RTX 5090",
       "npm": "高宇奇",
       "stage": "Design",
-      "status": "製程DFM修改需求,0M gerber out變更為8/4,暫不影響後續EVT schedule.",
+      "status": "PCB 0M已於8/4 gerber out,預計8/19 DVT SMT.",
       "highlight": "1) SSE需要進行約4週的POC評估確認1851 aRGB介面Light Bar的技術可行性以及後續FW開發工作,已提供MCU demo board/Light bar for SSE POC study, SSE預計WW33提供評估結果.",
       "mp_sort": "2027/03/18",
-      "orig_idx": 602,
+      "orig_idx": 598,
       "dates": {
         "Kickoff": "2026/06/29",
-        "DVT-start": "2026/08/18",
+        "DVT-start": "2026/08/19",
         "EVT-start": "2026/10/23",
         "MVT-start": "2027/01/08",
         "BTO ready": "2027/02/01",
+        "ATS-start": "2027/03/08",
+        "MP": "2027/03/18"
+      }
+    },
+    {
+      "model": "2655",
+      "mkt": "Crosshair 16 Max HX E4WEK",
+      "cpu": "NVL-HX 55W",
+      "gpu": "RTX 5050",
+      "npm": "鮑佩佩",
+      "stage": "DVT",
+      "status": "8/6 DVT SMT",
+      "highlight": "由 Raider改回Crosshair Max with D件快拆門",
+      "mp_sort": "2027/03/18",
+      "orig_idx": 599,
+      "dates": {
+        "Kickoff": "2026/05/19",
+        "DVT-start": "2026/08/06",
+        "EVT-start": "2026/09/29",
+        "MVT-start": "2027/01/11",
+        "BTO ready": "2027/02/02",
+        "ATS-start": "2027/03/08",
+        "MP": "2027/03/18"
+      }
+    },
+    {
+      "model": "2655",
+      "mkt": "Crosshair 16 Max HX E4WFK",
+      "cpu": "NVL-HX 55W",
+      "gpu": "RTX 5060",
+      "npm": "鮑佩佩",
+      "stage": "DVT",
+      "status": "8/6 DVT SMT",
+      "highlight": "由 Raider改回Crosshair Max with D件快拆門",
+      "mp_sort": "2027/03/18",
+      "orig_idx": 600,
+      "dates": {
+        "Kickoff": "2026/05/19",
+        "DVT-start": "2026/08/06",
+        "EVT-start": "2026/09/29",
+        "MVT-start": "2027/01/11",
+        "BTO ready": "2027/02/02",
+        "ATS-start": "2027/03/08",
+        "MP": "2027/03/18"
+      }
+    },
+    {
+      "model": "2655",
+      "mkt": "Crosshair 16 Max HX E4WGK",
+      "cpu": "NVL-HX 55W",
+      "gpu": "RTX 5070",
+      "npm": "鮑佩佩",
+      "stage": "DVT",
+      "status": "8/6 DVT SMT",
+      "highlight": "由 Raider改回Crosshair Max with D件快拆門",
+      "mp_sort": "2027/03/18",
+      "orig_idx": 601,
+      "dates": {
+        "Kickoff": "2026/05/19",
+        "DVT-start": "2026/08/06",
+        "EVT-start": "2026/09/29",
+        "MVT-start": "2027/01/11",
+        "BTO ready": "2027/02/02",
+        "ATS-start": "2027/03/08",
+        "MP": "2027/03/18"
+      }
+    },
+    {
+      "model": "2655",
+      "mkt": "Crosshair 16 Max HX E4WGXK",
+      "cpu": "NVL-HX 55W",
+      "gpu": "RTX 5070",
+      "npm": "鮑佩佩",
+      "stage": "DVT",
+      "status": "8/6 DVT SMT",
+      "highlight": "由 Raider改回Crosshair Max with D件快拆門",
+      "mp_sort": "2027/03/18",
+      "orig_idx": 602,
+      "dates": {
+        "Kickoff": "2026/05/19",
+        "DVT-start": "2026/08/06",
+        "EVT-start": "2026/09/29",
+        "MVT-start": "2027/01/11",
+        "BTO ready": "2027/02/02",
         "ATS-start": "2027/03/08",
         "MP": "2027/03/18"
       }
@@ -12853,8 +12850,8 @@
       "cpu": "NVL-H 28W",
       "gpu": "Intel® Arc™ Graphics",
       "npm": "顏春梅",
-      "stage": "Design",
-      "status": "0A layout 中 0A G/O@8/7",
+      "stage": "DVT",
+      "status": "0A G/O@8/7，DVT SMT@8/18",
       "highlight": "NA",
       "mp_sort": "2026/12/31",
       "orig_idx": 650,
@@ -13056,7 +13053,7 @@
     },
     {
       "model": "14T4",
-      "mkt": "Prestige 14 AI",
+      "mkt": "Prestige 14 AI+ D4MG",
       "cpu": "NVL-H 30W",
       "gpu": "Intel® Arc™ Graphics",
       "npm": "朱芳芳",
@@ -14299,9 +14296,9 @@
       "gpu": "N/A",
       "npm": "倪嬌嬌",
       "stage": "MVT",
-      "status": "MVT SMT@8/13--depend on PS chip & Software時間作調整",
-      "highlight": "1) Schedule:  本週CPU交期還未放行, 綜合PS software時間, 先預抓8/13 MVT start. 2)備料：量產交料2.8k HQ23, 最新MP*1K交期回復在12/M（follow leading customer）交料, 與ATS start Gap 2個月, 採購協助push廠商交期中",
-      "mp_sort": "2026/10/26",
+      "status": "1)MVT1 SMT@8/13--只先安排少量for TE/BIOS/HW 2)MVT2 SMT depend on PS Software時間, plan as 8/19",
+      "highlight": "1) Schedule:  a. MVT拆分兩次SMT搭配PS software作驗證 b. 量產software更新時間至10/16, update ATS@11/9. 2)備料：量產交料2.8k HQ23, 最新MP*1K交期回復在12/M（follow leading customer）交料, 與ATS start Gap 2個月, 採購協助push廠商交期中",
+      "mp_sort": "2026/11/23",
       "orig_idx": 722,
       "dates": {
         "Kickoff": "2025/04/30",
@@ -14309,9 +14306,12 @@
         "EVT-start": "2026/04/15",
         "MVT-start": "2026/08/13",
         "BTO ready": "2026/09/14",
-        "ATS-start": "2026/10/13",
-        "MP": "2026/10/26"
-      }
+        "ATS-start": "2026/11/09",
+        "MP": "2026/11/23"
+      },
+      "mp_changed": true,
+      "old_mp": "2026/10/26",
+      "old_stage": "MVT"
     },
     {
       "model": "15A4",
@@ -14405,7 +14405,7 @@
       "npm": "林晉弘",
       "stage": "MVT",
       "status": "MVT測試中",
-      "highlight": "1)Battery life: 2.8K panel+day0 rev.B+balance mode測試，Web browersing測試達716min，接近過關。NV更新會導入部分省電作法於Rev. C，待更新SW後驗證。 2)NV Abnormal shut down 的solution，經DQA於BSP Day0 rev.B驗證後，未發生除error code \"0x7E\"外的ABS現象，後續會持續觀察。 3) Day0 rev.C BIOS 7/29 release，測試image預計7/30 release，工廠/DQA將同時切換測試。 4)工廠用MP樣品測試，反應主要問題，需RD一起分析 1.Long run自動測試 S3/S4/S5/ Reboot/ FSU進系統在login 画面持续转圈宕機，黑屏無顯 ,宕機 2. LCD 花屏（panel 有黑線) 3. camera 開啟錄像后 camera APP 卡住",
+      "highlight": "1)Battery life: 8/6三方會議中，MSFT口頭布達，MSFT用MSI機台測試battery life，結果不如預期，因現象不僅出現在MSI機台上，其他OEM亦同，故會議中MSFT請NV內部先確認，MSFT預計8/7出分析報告。因結果跟MSI自測與NV手上的數據差距頗大，待與MSFT確認測試細節。 2)NV 8/5 relese Day0 rev.E，預計8/10 release BIOS與 image，工廠/DQA將同時切換測試。 3)更新到day0 rev.C後測試，工廠/DQA主要問題點如下，仍須RD與廠商協助 a)Camera lost and 錄影當住 b)Audio撥放雜音與耳機孔插拔問題 c)Abnormal shut down and 0x7E BSOD須持續觀察 d)SD卡有機率插壞 e)USB Type A redetect問題 f)Light sensor",
       "mp_sort": "2026/08/31",
       "orig_idx": 727,
       "dates": {
@@ -14425,9 +14425,9 @@
       "gpu": "N/A",
       "npm": "賴雪鳳",
       "stage": "EVT",
-      "status": "N1 SoC 出貨延遲 MVT 預計延到8/13 SMT",
+      "status": "N1 SoC 出貨延遲 MVT 預計延到8/13  做 MVT1 for 少數RD 測試, 待PS SW ready 再上線做MVT2 for 全部team member",
       "highlight": "備料: Samsung 2.8K panel 可先出HR14*1K for N1 9月ATS 用, 另外要再驗證HR16 for後續出貨需求",
-      "mp_sort": "2026/10/26",
+      "mp_sort": "2026/11/23",
       "orig_idx": 728,
       "dates": {
         "Kickoff": "2025/04/30",
@@ -14435,9 +14435,12 @@
         "EVT-start": "2026/04/15",
         "MVT-start": "2026/08/13",
         "BTO ready": "2026/09/14",
-        "ATS-start": "2026/10/13",
-        "MP": "2026/10/26"
-      }
+        "ATS-start": "2026/11/09",
+        "MP": "2026/11/23"
+      },
+      "mp_changed": true,
+      "old_mp": "2026/10/26",
+      "old_stage": "EVT"
     },
     {
       "model": "13S1",
@@ -14975,18 +14978,21 @@
       "gpu": "Intel® graphics",
       "npm": "倪嬌嬌",
       "stage": "MVT",
-      "status": "Weibu: MVT 7/30 ASSY中",
-      "highlight": "1)認證：8/E ready可出貨地區:  DE/UK/TR/BNX/NEU/SEE/FR/ES/PL/CZ/CIS/IT/JP/AU 2）認證 8/E無法同步ready地區:  9/8 ready: LA/CA/ AR/CL  9/18 ready: UA 10/2 ready: CO/RU 12/18 ready: MX 2）備料: 日文鍵芯開放時程待追蹤",
-      "mp_sort": "2026/08/31",
+      "status": "Weibu: MVT 7/30 ASSY",
+      "highlight": "1)認證：8/E ready可出貨地區:  DE/UK/TR/BNX/NEU/SEE/FR/ES/PL/CZ/CIS/IT/JP/AU 2）認證 8/E無法同步ready地區:  9/8 ready: LA/CA/ AR/CL  9/18 ready: UA 10/2 ready: CO/RU 12/18 ready: MX 2）備料: a. 日文鍵芯開放時程待追蹤 b. 8/4通知微步D件修模改善按壓偏軟的問題, 評估D件備料8/25 ready. 3）8月訂單: 132台",
+      "mp_sort": "2026/09/07",
       "orig_idx": 756,
       "dates": {
         "Kickoff": "2026/06/02",
         "DVT-start": "2026/07/07",
         "MVT-start": "2026/07/29",
         "BTO ready": "2026/07/08",
-        "ATS-start": "2026/08/18",
-        "MP": "2026/08/31"
-      }
+        "ATS-start": "2026/08/26",
+        "MP": "2026/09/07"
+      },
+      "mp_changed": true,
+      "old_mp": "2026/08/31",
+      "old_stage": "MVT"
     },
     {
       "model": "26V1",
@@ -14996,7 +15002,7 @@
       "npm": "倪嬌嬌",
       "stage": "MVT",
       "status": "Weibu: 7/30 MVT ASSY",
-      "highlight": "1)認證: 1. 8/E ready可出貨地區:  DE/UK/TR/BNX/NEU/SEE/FR/ES/PL/CZ/CIS/IT/JP/AU 2)認證 8/E無法同步ready地區:  9/8 ready: LA/CA/ AR/CL  9/18 ready: UA 10/2 ready: CO/RU 12/18 ready: MX",
+      "highlight": "1)認證: 1. 8/E ready可出貨地區:  DE/UK/TR/BNX/NEU/SEE/FR/ES/PL/CZ/CIS/IT/JP/AU 2)認證 8/E無法同步ready地區:  9/8 ready: LA/CA/ AR/CL  9/18 ready: UA 10/2 ready: CO/RU 12/18 ready: MX 2） 備料: 8/7待業務確認26V1 D件是否需修模改善按壓偏軟問題, 可能會ATS排程有影響 .  3) 八月訂單: 680台",
       "mp_sort": "2026/08/31",
       "orig_idx": 757,
       "dates": {
@@ -15537,9 +15543,9 @@
       "cpu": "ARL-H 45W",
       "gpu": "RTX 4050 (35W+10W)/ GDDR6 6GB",
       "npm": "李文欽",
-      "stage": "MVT",
-      "status": "（清白光鍵盤庫存）ATS C/R驗證中",
-      "highlight": "NA",
+      "stage": "MP",
+      "status": "0",
+      "highlight": "1)  清白光鍵盤庫存共50 pcs",
       "mp_sort": "2026/07/31",
       "orig_idx": 785,
       "dates": {
@@ -15556,9 +15562,9 @@
       "cpu": "ARL-H 45W",
       "gpu": "RTX 4050 (35W+10W)/ GDDR6 6GB",
       "npm": "李文欽",
-      "stage": "MVT",
-      "status": "（清日文4區RGB鍵盤庫存)",
-      "highlight": "1)方向鍵上的快捷鍵無功能, EC和BIOS需要進版, 請DQA協助快掃測試",
+      "stage": "MP",
+      "status": "0",
+      "highlight": "1)清日文4區RGB鍵盤庫存 共950pcs",
       "mp_sort": "2026/07/31",
       "orig_idx": 786,
       "dates": {
@@ -16202,7 +16208,7 @@
       "npm": "李文欽",
       "stage": "MVT",
       "status": "MVT2驗證中",
-      "highlight": "1) ATS與MP的物料簽樣與備料,需要RD與採購和物管協助 2)A件交期依森田薄膜進料時間,15T2 ATS組裝在8/20, MP在8/30, 會比原時程晚2天,會導致15T2無法meet 8/27 MP的目標,需要RD/採購協助pull in",
+      "highlight": "1) ATS與MP的物料簽樣與備料,需要RD與採購和物管協助 2)A件交期依森田薄膜進料時間,15T2 ATS組裝在8/20, MP在8/30, 會比原時程晚2天,會導致15T2無法meet 8/27 MP的目標,需要RD/採購協助pull in 3)PCB預計交期在8/20,需麻煩採購協助Pull in",
       "mp_sort": "2026/08/27",
       "orig_idx": 819,
       "dates": {
@@ -17678,7 +17684,7 @@
     },
     {
       "model": "14T4",
-      "mkt": "Prestige 14 AI+ Flip",
+      "mkt": "Prestige 14 Flip AI+ D4MTG",
       "cpu": "NVL-H 30W",
       "gpu": "Intel® Arc™ Graphics",
       "npm": "朱芳芳",
@@ -17725,7 +17731,7 @@
       "npm": "林晉弘",
       "stage": "MVT",
       "status": "MVT測試中",
-      "highlight": "1)Battery life: 2.8K panel+day0 rev.B+balance mode測試，Web browersing測試達716min，接近過關。NV更新會導入部分省電作法於Rev. C，待更新SW後驗證。 2)NV Abnormal shut down 的solution，經DQA於BSP Day0 rev.B驗證後，未發生除error code \"0x7E\"外的ABS現象，後續會持續觀察。 3) Day0 rev.C BIOS 7/29 release，測試image預計7/30 release，工廠/DQA將同時切換測試。 4)工廠用MP樣品測試，反應主要問題，需RD一起分析 1.Long run自動測試 S3/S4/S5/ Reboot/ FSU進系統在login 画面持续转圈宕機，黑屏無顯 ,宕機 2. LCD 花屏（panel 有黑線) 3. camera 開啟錄像后 camera APP 卡住",
+      "highlight": "1)Battery life: 8/6三方會議中，MSFT口頭布達，MSFT用MSI機台測試battery life，結果不如預期，因現象不僅出現在MSI機台上，其他OEM亦同，故會議中MSFT請NV內部先確認，MSFT預計8/7出分析報告。因結果跟MSI自測與NV手上的數據差距頗大，待與MSFT確認測試細節。 2)NV 8/5 relese Day0 rev.E，預計8/10 release BIOS與 image，工廠/DQA將同時切換測試。 3)更新到day0 rev.C後測試，工廠/DQA主要問題點如下，仍須RD與廠商協助 a)Camera lost and 錄影當住 b)Audio撥放雜音與耳機孔插拔問題 c)Abnormal shut down and 0x7E BSOD須持續觀察 d)SD卡有機率插壞 e)USB Type A redetect問題 f)Light sensor",
       "mp_sort": "2026/08/31",
       "orig_idx": 896,
       "dates": {
@@ -17960,5 +17966,5 @@
       }
     }
   ],
-  "buildTime": "2026/08/03 08:35:07"
+  "buildTime": "2026/08/07 13:44:07"
 }

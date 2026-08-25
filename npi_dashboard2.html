@@ -130,8 +130,11 @@ body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,-ap
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9000;justify-content:center;align-items:center;padding:16px}
 .modal-overlay.active{display:flex}
 .modal-box{background:var(--bg);border:1px solid var(--border);border-radius:10px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;position:relative;box-shadow:0 8px 32px rgba(0,0,0,.5)}
-.modal-close{position:absolute;top:12px;right:16px;background:none;border:none;color:var(--text2);font-size:24px;cursor:pointer;line-height:1;z-index:10}
-.modal-close:hover{color:#333}
+.modal-toolbar{position:absolute;top:8px;right:10px;display:flex;gap:4px;z-index:10}
+.modal-shot-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text2);width:30px;height:30px;border-radius:6px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:14px;padding:0;line-height:1;transition:all .15s}
+.modal-shot-btn:hover{background:var(--border);color:var(--text);border-color:#888}
+.modal-close{position:relative;background:var(--bg3);border:1px solid var(--border);color:var(--text2);width:30px;height:30px;border-radius:6px;cursor:pointer;font-size:18px;line-height:1;display:inline-flex;align-items:center;justify-content:center;padding:0;transition:all .15s}
+.modal-close:hover{color:var(--text);background:var(--border);border-color:#888}
 .modal-body{padding:24px}
 .modal-body .hdr{margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border)}
 .modal-body .hdr h2{color:#333;font-size:20px;font-weight:600;margin-bottom:4px}
@@ -210,7 +213,11 @@ body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,-ap
 <div class="tooltip" id="tooltip"></div>
 <div class="modal-overlay" id="detailModal">
   <div class="modal-box">
-    <button class="modal-close" onclick="closeDetail()">&times;</button>
+    <div class="modal-toolbar">
+      <button type="button" class="modal-shot-btn btn-shot-modal" title="截此彈窗" onclick="takeElementShot('.modal-box', CROP_SHOT.opts.filePrefix + '_modal')">📸</button>
+      <button type="button" class="modal-shot-btn btn-crop-modal" title="範圍截圖" onclick="takeElementCrop('.modal-box', CROP_SHOT.opts.filePrefix + '_modal')">✂️</button>
+      <button class="modal-close" title="關閉" onclick="closeDetail()">&times;</button>
+    </div>
     <div class="modal-body" id="detailBody"></div>
   </div>
 </div>
@@ -18288,7 +18295,7 @@ const DATA = {
       }
     }
   ],
-  "buildTime": "2026/08/25 08:44:05"
+  "buildTime": "2026/08/25 08:55:44"
 };
 
 const STAGE_ORDER = ['Design','DVT','EVT','MVT','ATS','Study','Pending','BTO-','ATS-','MP'];

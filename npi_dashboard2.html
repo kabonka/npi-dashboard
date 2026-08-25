@@ -151,6 +151,8 @@ body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,-ap
 <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
+</style>
+<link rel="stylesheet" href="crop-screenshot.css">
 </head>
 <body>
 
@@ -186,6 +188,8 @@ body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,-ap
   <button class="sort-btn" style="margin-left:8px;background:#2F5496;color:#fff;border-color:#2F5496;cursor:pointer" onclick="downloadExcel()">⬇ Excel</button>
   <button class="sort-btn" style="margin-left:8px;background:#548235;color:#fff;border-color:#548235;cursor:pointer" onclick="downloadExcelProject()">⬇ Excel Project</button>
   <button class="sort-btn" style="margin-left:8px;background:#C55A11;color:#fff;border-color:#C55A11;cursor:pointer" onclick="downloadExcelModel()">⬇ Excel Model</button>
+  <button class="sort-btn btn-shot" style="margin-left:8px;background:#7030A0;color:#fff;border-color:#7030A0;cursor:pointer" onclick="takeScreenshot()">📷 長截圖</button>
+  <button class="sort-btn btn-crop" style="background:#C00000;color:#fff;border-color:#C00000;cursor:pointer" onclick="takeCropScreenshot()">✂️ 範圍截圖</button>
 </div>
 
 <div class="list-section">
@@ -13355,10 +13359,7 @@ const DATA = {
         "BTO ready": "2026/11/20",
         "ATS-start": "2026/12/21",
         "MP": "2026/12/31"
-      },
-      "mp_changed": true,
-      "old_mp": "2026/12/25",
-      "old_stage": "DVT"
+      }
     },
     {
       "model": "159K",
@@ -13703,10 +13704,7 @@ const DATA = {
         "BTO ready": "2026/11/20",
         "ATS-start": "2026/12/21",
         "MP": "2026/12/31"
-      },
-      "mp_changed": true,
-      "old_mp": "2026/12/25",
-      "old_stage": "DVT"
+      }
     },
     {
       "model": "13S1",
@@ -18025,10 +18023,7 @@ const DATA = {
         "BTO ready": "2026/11/20",
         "ATS-start": "2026/12/21",
         "MP": "2026/12/31"
-      },
-      "mp_changed": true,
-      "old_mp": "2026/12/25",
-      "old_stage": "DVT"
+      }
     },
     {
       "model": "2624",
@@ -18048,10 +18043,7 @@ const DATA = {
         "BTO ready": "2026/11/20",
         "ATS-start": "2026/12/21",
         "MP": "2026/12/31"
-      },
-      "mp_changed": true,
-      "old_mp": "2026/12/25",
-      "old_stage": "DVT"
+      }
     },
     {
       "model": "2621",
@@ -18293,13 +18285,10 @@ const DATA = {
         "BTO ready": "2026/08/18",
         "ATS-start": "2026/09/15",
         "MP": "2026/09/30"
-      },
-      "mp_changed": true,
-      "old_mp": "2026/05/23",
-      "old_stage": "BTO-"
+      }
     }
   ],
-  "buildTime": "2026/08/24 08:30:22"
+  "buildTime": "2026/08/25 08:44:05"
 };
 
 const STAGE_ORDER = ['Design','DVT','EVT','MVT','ATS','Study','Pending','BTO-','ATS-','MP'];
@@ -18893,6 +18882,62 @@ async function downloadExcelModel(){
 }
 
 renderStats();initFilters();renderList();
+</script>
+
+<!-- ============================================================
+  範圍截圖 modal — 8 握把(n/s/e/w/ne/nw/se/sw) + 整框拖曳 + 框外重拉新框 + X/Y/寬/高數值輸入
+============================================================ -->
+<div class="crop-bk" id="cropBk">
+  <div class="crop-box">
+    <div class="crop-head">
+      <b>✂️ 範圍截圖</b>
+      <span class="crop-lbl">X</span><input type="number" id="crX" class="crop-num" min="0">
+      <span class="crop-lbl">Y</span><input type="number" id="crY" class="crop-num" min="0">
+      <span class="crop-lbl">寬</span><input type="number" id="crW" class="crop-num" min="10">
+      <span class="crop-lbl">高</span><input type="number" id="crH" class="crop-num" min="10">
+      <span class="crop-info" id="crInfo"></span>
+      <button type="button" class="btn" onclick="cropSelectAll()">全選</button>
+      <button type="button" class="btn" id="crDl" onclick="cropDownload()">⬇ 下載裁切圖</button>
+      <button type="button" class="btn" onclick="cropClose()">取消</button>
+    </div>
+    <div class="crop-stage" id="cropStage">
+      <div id="cropImgWrap">
+        <img id="cropImg" alt="截圖預覽" draggable="false">
+        <div id="cropSel">
+          <div class="crp-h crp-n" data-d="n"></div><div class="crp-h crp-s" data-d="s"></div>
+          <div class="crp-h crp-w" data-d="w"></div><div class="crp-h crp-e" data-d="e"></div>
+          <div class="crp-h crp-nw" data-d="nw"></div><div class="crp-h crp-ne" data-d="ne"></div>
+          <div class="crp-h crp-sw" data-d="sw"></div><div class="crp-h crp-se" data-d="se"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="html2canvas.min.js"></script>
+<script src="crop-screenshot.js"></script>
+<script>
+/* ---- 長截圖 / 範圍截圖設定 ---- */
+CROP_SHOT.opts = {
+  closeSelectors : [['.ms-panel.show','show'], ['.ms-btn.open','open'], ['#detailModal.active','active']],
+  expandSelectors: ['.list-scroll'],
+  bannerHTML     : function(){
+    const f = s => (s && s.size ? [...s].join(', ') : '全部');
+    return '<div id="shot-summary">'
+      + '<div class="ss-title">📷 NPI Check Dashboard 2 — ' + new Date().toLocaleString('zh-TW') + '</div>'
+      + '<div class="ss-row"><b>Model:</b> ' + f(filterModelVals)
+      + '　<b>Stage:</b> ' + f(activeStages)
+      + '　<b>CPU:</b> ' + f(filterCpuVals)
+      + '　<b>GPU:</b> ' + f(filterGpuVals) + '</div>'
+      + '<div class="ss-row"><b>MP Year:</b> ' + f(filterYearVals)
+      + '　<b>MKT:</b> ' + f(filterMktVals)
+      + (filterSearchVal ? '　<b>Search:</b> ' + filterSearchVal : '') + '</div>'
+      + '</div>';
+  },
+  filePrefix     : 'npi_dashboard2',
+  scale          : 1.5,
+  backgroundColor: '#0f1117'
+};
 </script>
 </body>
 </html>

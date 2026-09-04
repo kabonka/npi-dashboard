@@ -5923,7 +5923,7 @@
       "npm": "蔡東宏",
       "stage": "BTO-",
       "status": "HPT:BTO未開",
-      "highlight": "1).8/31 業務通知決定收斂到Max, non Max 還有最後2.9K 套料, 接完就收斂.現在開始的新報價往Max 2).Schedule:AMD PI 1200I NDA Release delay(6/19→7/28)與生管延後MVT SMT 排程(8/4→8/7),累計delay 42天,取消 DVT排程改以 APU Rework 驗證追趕時程後,MP還是會delay 22天至9/22(先前已由 9 /17提前至 8/31,現又延至9/22),後續將依實際測試結果滾動式調整專案時程",
+      "highlight": "1).9/3 業務通知:R7 155 報價單會改回在non-Max sku,優先消化non-Max thermal庫存 2).Schedule:AMD PI 1200I NDA Release delay(6/19→7/28)與生管延後MVT SMT (8/4→8/7),累計delay 42天,取消 DVT排程改以 APU Rework 驗證追趕進度後,MP還是會delay 22天至9/22(先前已由 9 /17提前至 8/31,現又延至9/22)",
       "mp_sort": "2026/09/22",
       "orig_idx": 299,
       "dates": {
@@ -5942,8 +5942,8 @@
       "gpu": "RTX 5060",
       "npm": "蔡東宏",
       "stage": "MVT",
-      "status": "HPT:MVT進行中, APU R7 155 ETD@9/21, 暫定9/24進行C/R@26PN081119C*50",
-      "highlight": "1).8/31 業務通知決定收斂到Max, non Max 還有最後2.9K 套料, 接完就收斂.現在開始的新報價往Max 2).Schedule:AMD PI 1200I NDA Release delay(6/19→7/28)與生管延後MVT SMT 排程(8/4→8/7),累計delay 42天,取消 DVT排程改以 APU Rework 驗證追趕時程後,MP還是會delay 22天至9/22(先前已由 9 /17提前至 8/31,現又延至9/22),後續將依實際測試結果滾動式調整專案時程",
+      "status": "HPT:MVT進行中, 預計9/11 ATS@26PN083486A*100",
+      "highlight": "1).9/3 業務通知:R7 155 報價單會改回在non-Max sku,優先消化non-Max thermal庫存 2).Schedule:AMD PI 1200I NDA Release delay(6/19→7/28)與生管延後MVT SMT (8/4→8/7),累計delay 42天,取消 DVT排程改以 APU Rework 驗證追趕進度後,MP還是會delay 22天至9/22(先前已由 9 /17提前至 8/31,現又延至9/22)",
       "mp_sort": "2026/09/22",
       "orig_idx": 300,
       "dates": {
@@ -5963,7 +5963,7 @@
       "npm": "蔡東宏",
       "stage": "BTO-",
       "status": "HPT:BTO未開",
-      "highlight": "1).8/31 業務通知決定收斂到Max, non Max 還有最後2.9K 套料, 接完就收斂.現在開始的新報價往Max 2).Schedule:AMD PI 1200I NDA Release delay(6/19→7/28)與生管延後MVT SMT 排程(8/4→8/7),累計delay 42天,取消 DVT排程改以 APU Rework 驗證追趕時程後,MP還是會delay 22天至9/22(先前已由 9 /17提前至 8/31,現又延至9/22),後續將依實際測試結果滾動式調整專案時程",
+      "highlight": "1).9/3 業務通知:R7 155 報價單會改回在non-Max sku,優先消化non-Max thermal庫存 2).Schedule:AMD PI 1200I NDA Release delay(6/19→7/28)與生管延後MVT SMT (8/4→8/7),累計delay 42天,取消 DVT排程改以 APU Rework 驗證追趕進度後,MP還是會delay 22天至9/22(先前已由 9 /17提前至 8/31,現又延至9/22)",
       "mp_sort": "2026/09/22",
       "orig_idx": 301,
       "dates": {
@@ -10502,8 +10502,8 @@
       "gpu": "RTX 5070Ti",
       "npm": "高宇奇",
       "stage": "DVT",
-      "status": "1) DVT板子已於8/24到台北,目前板子已開機並分發給各team member開始進行測試.",
-      "highlight": "1) 根據SSE POC會議討論共識,1851最後採用2顆MCU架構for所有的發光device,並且根據SSE提出的建議,第1顆MCU控制Per key KB,另1顆MCU控制其餘所有發光device,預計9月初提供1台1851 mockup系統for SSE FW implement.",
+      "status": "DVT板子測試中",
+      "highlight": "1851目前上4支memory才能開機,RD正在跟Intel debug/study此問題.",
       "mp_sort": "2027/03/18",
       "orig_idx": 532,
       "dates": {
@@ -10523,8 +10523,8 @@
       "gpu": "RTX 5080",
       "npm": "高宇奇",
       "stage": "DVT",
-      "status": "1) DVT板子已於8/24到台北,目前板子已開機並分發給各team member開始進行測試.",
-      "highlight": "1) 根據SSE POC會議討論共識,1851最後採用2顆MCU架構for所有的發光device,並且根據SSE提出的建議,第1顆MCU控制Per key KB,另1顆MCU控制其餘所有發光device,預計9月初提供1台1851 mockup系統for SSE FW implement.",
+      "status": "DVT板子測試中",
+      "highlight": "1851目前上4支memory才能開機,RD正在跟Intel debug/study此問題.",
       "mp_sort": "2027/03/18",
       "orig_idx": 533,
       "dates": {
@@ -10544,8 +10544,8 @@
       "gpu": "RTX 5090",
       "npm": "高宇奇",
       "stage": "DVT",
-      "status": "1) DVT板子已於8/24到台北,目前板子已開機並分發給各team member開始進行測試.",
-      "highlight": "1) 根據SSE POC會議討論共識,1851最後採用2顆MCU架構for所有的發光device,並且根據SSE提出的建議,第1顆MCU控制Per key KB,另1顆MCU控制其餘所有發光device,預計9月初提供1台1851 mockup系統for SSE FW implement.",
+      "status": "DVT板子測試中",
+      "highlight": "1851目前上4支memory才能開機,RD正在跟Intel debug/study此問題.",
       "mp_sort": "2027/03/18",
       "orig_idx": 534,
       "dates": {
@@ -11008,8 +11008,8 @@
       "gpu": "RTX 5050",
       "npm": "蔡東宏",
       "stage": "MVT",
-      "status": "HPT:MVT進行中, 預計9/11 ATS@26PN083486A*100",
-      "highlight": "1).8/31 業務通知決定收斂到Max, non Max 還有最後2.9K 套料, 接完就收斂.現在開始的新報價往Max 2).Schedule:AMD PI 1200I NDA Release delay(6/19→7/28)與生管延後MVT SMT 排程(8/4→8/7),累計delay 42天,取消 DVT排程改以 APU Rework 驗證追趕時程後,MP還是會delay 22天至9/22(先前已由 9 /17提前至 8/31,現又延至9/22),後續將依實際測試結果滾動式調整專案時程",
+      "status": "HPT:MVT進行中, APU R7 155 ETD@9/21, 暫定9/24進行C/R@26PN081119C*50",
+      "highlight": "1).9/3 業務通知:R7 155 報價單會改回在non-Max sku,優先消化non-Max thermal庫存 2).Schedule:AMD PI 1200I NDA Release delay(6/19→7/28)與生管延後MVT SMT (8/4→8/7),累計delay 42天,取消 DVT排程改以 APU Rework 驗證追趕進度後,MP還是會delay 22天至9/22(先前已由 9 /17提前至 8/31,現又延至9/22)",
       "mp_sort": "2026/09/22",
       "orig_idx": 558,
       "dates": {
@@ -11355,7 +11355,7 @@
       "npm": "顧曉琴",
       "stage": "EVT",
       "status": "RPL-HX R + DDR5: EVT test, DQA 9/1 領取機台測試，台北RD機台預計9/8領取測試",
-      "highlight": "NA",
+      "highlight": "1)備料: 業務尚未提供1st lot需求, 塑膠顆粒先按MOQ備料",
       "mp_sort": "2026/11/30",
       "orig_idx": 575,
       "dates": {
@@ -11396,7 +11396,7 @@
       "npm": "顧曉琴",
       "stage": "EVT",
       "status": "RPL-HX R + DDR5: EVT test, DQA 9/1 領取機台測試，台北RD機台預計9/8領取測試",
-      "highlight": "NA",
+      "highlight": "1)備料: 業務尚未提供1st lot需求, 塑膠顆粒先按MOQ備料",
       "mp_sort": "2026/11/30",
       "orig_idx": 577,
       "dates": {
@@ -11437,7 +11437,7 @@
       "npm": "顧曉琴",
       "stage": "EVT",
       "status": "RPL-HX R + DDR5: EVT test, DQA 9/1 領取機台測試，台北RD機台預計9/8領取測試",
-      "highlight": "NA",
+      "highlight": "1)備料: 業務尚未提供1st lot需求, 塑膠顆粒先按MOQ備料",
       "mp_sort": "2026/11/30",
       "orig_idx": 579,
       "dates": {
@@ -11478,7 +11478,7 @@
       "npm": "顧曉琴",
       "stage": "EVT",
       "status": "RPL-HX R + DDR5: EVT test, DQA 9/1 領取機台測試，台北RD機台預計9/8領取測試",
-      "highlight": "NA",
+      "highlight": "1)備料: 業務尚未提供1st lot需求, 塑膠顆粒先按MOQ備料",
       "mp_sort": "2026/11/30",
       "orig_idx": 581,
       "dates": {
@@ -11800,8 +11800,8 @@
       "gpu": "RTX 5070Ti",
       "npm": "高宇奇",
       "stage": "DVT",
-      "status": "1) DVT板子已於8/24到台北,目前板子已開機並分發給各team member開始進行測試.",
-      "highlight": "1) 根據SSE POC會議討論共識,1851最後採用2顆MCU架構for所有的發光device,並且根據SSE提出的建議,第1顆MCU控制Per key KB,另1顆MCU控制其餘所有發光device,預計9月初提供1台1851 mockup系統for SSE FW implement.",
+      "status": "DVT板子測試中",
+      "highlight": "1851目前上4支memory才能開機,RD正在跟Intel debug/study此問題.",
       "mp_sort": "2027/03/18",
       "orig_idx": 597,
       "dates": {
@@ -11821,8 +11821,8 @@
       "gpu": "RTX 5080",
       "npm": "高宇奇",
       "stage": "DVT",
-      "status": "1) DVT板子已於8/24到台北,目前板子已開機並分發給各team member開始進行測試.",
-      "highlight": "1) 根據SSE POC會議討論共識,1851最後採用2顆MCU架構for所有的發光device,並且根據SSE提出的建議,第1顆MCU控制Per key KB,另1顆MCU控制其餘所有發光device,預計9月初提供1台1851 mockup系統for SSE FW implement.",
+      "status": "DVT板子測試中",
+      "highlight": "1851目前上4支memory才能開機,RD正在跟Intel debug/study此問題.",
       "mp_sort": "2027/03/18",
       "orig_idx": 598,
       "dates": {
@@ -11842,8 +11842,8 @@
       "gpu": "RTX 5090",
       "npm": "高宇奇",
       "stage": "DVT",
-      "status": "1) DVT板子已於8/24到台北,目前板子已開機並分發給各team member開始進行測試.",
-      "highlight": "1) 根據SSE POC會議討論共識,1851最後採用2顆MCU架構for所有的發光device,並且根據SSE提出的建議,第1顆MCU控制Per key KB,另1顆MCU控制其餘所有發光device,預計9月初提供1台1851 mockup系統for SSE FW implement.",
+      "status": "DVT板子測試中",
+      "highlight": "1851目前上4支memory才能開機,RD正在跟Intel debug/study此問題.",
       "mp_sort": "2027/03/18",
       "orig_idx": 599,
       "dates": {
@@ -18070,5 +18070,5 @@
       }
     }
   ],
-  "buildTime": "2026/09/04 09:57:31"
+  "buildTime": "2026/09/04 16:21:26"
 }

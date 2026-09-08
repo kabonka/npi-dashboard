@@ -31,3 +31,18 @@
 #shot-summary .ss-title{font-weight:700;font-size:13px;margin-bottom:6px;color:#fff;}
 #shot-summary .ss-row{font-size:12px;margin:3px 0;line-height:1.7;color:#b8bdd4;}
 #shot-summary .ss-row b{color:#e0e0e0;font-weight:600;}
+
+/* ============================================================
+ * 弹窗内截图按钮（📸 截此彈窗 / ✂️ 範圍截圖 / × 關閉）
+ * 共享样式，深浅主题皆适用；外部 <link> 晚于内联 <style> 载入，故以下规则为权威样式
+ * ============================================================ */
+.modal-toolbar{position:absolute;top:8px;right:10px;display:flex;gap:6px;z-index:10}
+.modal-shot-btn{background:var(--bg3,#1a1d27);border:1px solid var(--border,#2e3345);color:var(--text2,#b8bdd4);width:30px;height:30px;border-radius:6px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:14px;padding:0;line-height:1;transition:all .15s}
+.modal-shot-btn:hover{background:var(--border,#2e3345);color:#fff;border-color:#888}
+/* 两个截图按钮用强调色区分，一眼可辨 */
+.btn-shot-modal{background:#16a34a;border-color:#15803d;color:#fff}
+.btn-shot-modal:hover{background:#15803d;color:#fff;border-color:#166534}
+.btn-crop-modal{background:#ea580c;border-color:#c2410c;color:#fff}
+.btn-crop-modal:hover{background:#c2410c;color:#fff;border-color:#9a3412}
+.modal-close{position:relative;background:var(--bg3,#1a1d27);border:1px solid var(--border,#2e3345);color:var(--text2,#b8bdd4);width:30px;height:30px;border-radius:6px;cursor:pointer;font-size:18px;line-height:1;display:inline-flex;align-items:center;justify-content:center;padding:0;transition:all .15s}
+.modal-close:hover{color:#fff;background:var(--border,#2e3345);border-color:#888}

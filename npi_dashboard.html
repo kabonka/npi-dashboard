@@ -18103,6 +18103,7 @@ const CELL_W = 36;
 
 // Default filter: show Design/DVT/EVT/MVT/ATS, MP Year 2026+2027
 let activeStages=new Set(['Design','DVT','EVT','MVT','ATS']), filterModelVals=new Set(), filterCpuVals=new Set(), filterGpuVals=new Set(), filterYearVals=new Set(['2026','2027']), filterMktVals=new Set(), filterSearchVal='';
+let MS_ITEMS={}; // cached dropdown item lists (populated in initFilters)
 let sortKey='kickoff'; // default: kickoff earliest first
 let expandedModels = new Set();
 
@@ -18193,7 +18194,7 @@ function renderStats(){
   });
 
   const c=document.getElementById('statsContainer');
-  let h=`<div class="stat-card sc-model ${activeStages.size===0?'active':''}" data-stage="all" onclick="toggleStage('all')"><div class="label">Model</div><div class="value">${modelSet.size}</div></div>`;
+  let h=`<div class="stat-card sc-model ${activeStages.size===ACTIVE_STAGES.length?'active':''}" data-stage="all" onclick="toggleStage('all')"><div class="label">Model</div><div class="value">${modelSet.size}</div></div>`;
   for(const s of ACTIVE_STAGES){
     const color = STAGE_COLORS[s] || '#888';
     const cnt = stageCounts[s] || 0;
@@ -18213,7 +18214,7 @@ function renderLegend(){
 }
 
 function toggleStage(s){
-  if(s==='all'){activeStages.clear()}
+  if(s==='all'){activeStages=new Set(ACTIVE_STAGES)}
   else{
     if(activeStages.has(s))activeStages.delete(s);
     else activeStages.add(s);
@@ -18230,7 +18231,7 @@ function syncStatCards(){
 /* Multi-select dropdown component */
 function createMsDropdown(containerId, items, selectedSet, onChange){
   const wrap=document.getElementById(containerId);
-  const allChecked=selectedSet.size===0;
+  const allChecked=selectedSet.size===items.length;
   let btnLabel=allChecked?'All':selectedSet.size+' selected';
   let h=`<div class="ms-btn" onclick="toggleMsPanel('${containerId}')">${btnLabel}<span class="ms-arrow">▼</span></div>`;
   h+=`<div class="ms-panel" id="${containerId}_panel">`;
@@ -18261,7 +18262,7 @@ function toggleMsPanel(id){
 function msToggleAll(id){
   const wrap=document.getElementById(id);
   const set=wrap._onChange();
-  set.clear();
+  wrap._items.forEach(x=>set.add(x));
   updateMsComponent(id);
   syncStatCards();
   renderGantt();
@@ -18281,7 +18282,7 @@ function updateMsComponent(id){
   if(!wrap||!wrap._onChange)return;
   const set=wrap._onChange();
   const items=wrap._items;
-  const allChecked=set.size===0;
+  const allChecked=set.size===items.length;
   const btn=wrap.querySelector('.ms-btn');
   btn.innerHTML=(allChecked?'All':set.size+' selected')+`<span class="ms-arrow">▼</span>`;
   const panel=document.getElementById(id+'_panel');
@@ -18300,6 +18301,14 @@ function initFilters(){
   const mpYears=[...new Set(DATA.records.map(r=>r.mp_sort).filter(Boolean).map(d=>d.substring(0,4)))].sort();
   const mktItems=[...new Set(DATA.records.map(r=>r.mkt.split(' ')[0]).filter(Boolean))].sort();
   const modelItems=[...new Set(DATA.records.map(r=>r.model).filter(Boolean))].sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
+  // cache item lists so resetFilters can rebuild "all selected" state
+  MS_ITEMS={model:modelItems,cpu:cpuItems,gpu:gpuItems,year:mpYears,mkt:mktItems};
+  // default = all selected
+  filterModelVals=new Set(modelItems);
+  filterCpuVals=new Set(cpuItems);
+  filterGpuVals=new Set(gpuItems);
+  filterYearVals=new Set(mpYears);
+  filterMktVals=new Set(mktItems);
   createMsDropdown('msModel',modelItems,filterModelVals,()=>filterModelVals);
   createMsDropdown('msStage',ACTIVE_STAGES,activeStages,()=>activeStages);
   createMsDropdown('msCpu',cpuItems,filterCpuVals,()=>filterCpuVals);
@@ -18317,7 +18326,7 @@ function initFilters(){
 }
 
 function resetFilters(){
-  activeStages=new Set(['Design','DVT','EVT','MVT','ATS']);filterModelVals.clear();filterCpuVals.clear();filterGpuVals.clear();filterYearVals=new Set(['2026','2027']);filterMktVals.clear();filterSearchVal='';sortKey='kickoff';
+  activeStages=new Set(ACTIVE_STAGES);filterModelVals=new Set(MS_ITEMS.model);filterCpuVals=new Set(MS_ITEMS.cpu);filterGpuVals=new Set(MS_ITEMS.gpu);filterYearVals=new Set(MS_ITEMS.year);filterMktVals=new Set(MS_ITEMS.mkt);filterSearchVal='';sortKey='kickoff';
   updateMsComponent('msModel');updateMsComponent('msStage');updateMsComponent('msCpu');updateMsComponent('msGpu');updateMsComponent('msYear');updateMsComponent('msMkt');
   document.getElementById('filterSearch').value='';
   document.getElementById('sortKickoff').classList.add('active');

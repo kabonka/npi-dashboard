@@ -897,6 +897,40 @@ renderList();
     print(f"Search HTML 已生成: {SEARCH_HTML_PATH}")
 
 
+def _git_kwargs():
+    """給所有 git subprocess 呼叫用的統一參數。
+
+    ⚠️ 為什麼一定要指定 encoding='utf-8'：
+      git 輸出的是 UTF-8（本專案有一堆中文檔名：Spec總表.xlsx、一键生成2.bat、
+      MP变动记录_dashboard.html…）。而 Windows 上 Python 的 subprocess 用
+      `text=True` 時會用「系統地區編碼」解碼 —— 繁中機器是 cp950。
+      git 吐 UTF-8 的中文檔名、Python 用 cp950 解，就會炸：
+        UnicodeDecodeError: 'cp950' codec can't decode byte 0xe4 in position ...
+      而且錯誤發生在 subprocess 的內部 reader thread，會噴一大串
+      `Exception in thread Thread-N (_readerthread)` 誤導人以為是別的問題。
+    解法：明確指定 utf-8；errors='replace' 當保險，避免任何殘餘位元組讓整支程式掛掉。
+    （2026-10-03 使用者實際踩到，push 因此中斷。）
+    """
+    return dict(capture_output=True, text=True, encoding='utf-8', errors='replace')
+
+
+def _git_push_kwargs():
+    """push 專用參數：除了編碼，再加上 stdin=DEVNULL 與逾時保護。
+
+    ⚠️ 為什麼 push 要特別處理：
+      沒有已存憑證時，git 會叫出 credential helper 的 GUI 視窗（PortableGit 預設是
+      helper-selector）等使用者登入。這是「正常的一次性設定」，人工雙擊 bat 時
+      就該看到那個視窗。
+      但如果**沒有人**在電腦前（或視窗被其他視窗蓋住），這個 push 會**永遠等待**，
+      讓整支 bat 看起來像當掉。
+      加上 timeout=180：真的沒人理它就放棄並印出明確指示，不會卡死整個流程。
+    """
+    kw = _git_kwargs()
+    kw['timeout'] = 180
+    kw['stdin'] = subprocess.DEVNULL   # 不讓它去讀 stdin（避免互動式提示卡住）
+    return kw
+
+
 def git_upload():
     """Git add, commit, and push to GitHub (requires git repo in BASE_DIR)"""
     try:
@@ -927,10 +961,10 @@ def git_upload():
         # ── 第一步：fetch + soft reset 到远程最新，避免分支分叉 ──
         # 用 --soft 不碰工作树，不受 Windows 文件锁定影响
         r_fetch = subprocess.run(['git', 'fetch', 'origin', 'main'],
-                                cwd=BASE_DIR, capture_output=True, text=True)
+                                cwd=BASE_DIR, **_git_kwargs())
         if r_fetch.returncode == 0:
             subprocess.run(['git', 'reset', '--soft', 'origin/main'],
-                          cwd=BASE_DIR, capture_output=True, text=True)
+                          cwd=BASE_DIR, **_git_kwargs())
 
         # ── 关键修复：强制保留 3 个截图资源，绝不被 reset --soft 的 deleted 状态误删 ──
         # 问题根因：若工作树缺这 3 个文件（或被 git rm / git add -A 标记成 deleted），
@@ -943,21 +977,21 @@ def git_upload():
             fpath = os.path.join(BASE_DIR, sf)
             if os.path.exists(fpath):
                 # 重新 add 会用工作树内容覆盖任何 staged deleted 状态
-                subprocess.run(['git', 'add', sf], cwd=BASE_DIR, capture_output=True, text=True)
+                subprocess.run(['git', 'add', sf], cwd=BASE_DIR, **_git_kwargs())
             else:
                 print(f"[Git] 本地缺失 {sf}，从 4c2132e 恢复（避免被删除）")
                 subprocess.run(['git', 'checkout', '4c2132e', '--', sf],
-                              cwd=BASE_DIR, capture_output=True, text=True)
-                subprocess.run(['git', 'add', sf], cwd=BASE_DIR, capture_output=True, text=True)
+                              cwd=BASE_DIR, **_git_kwargs())
+                subprocess.run(['git', 'add', sf], cwd=BASE_DIR, **_git_kwargs())
 
         for f in files:
             fpath = os.path.join(BASE_DIR, f)
             if os.path.exists(fpath):
-                subprocess.run(['git', 'add', f], cwd=BASE_DIR, capture_output=True)
+                subprocess.run(['git', 'add', f], cwd=BASE_DIR, **_git_kwargs())
 
         # 检查是否有变更
         r = subprocess.run(['git', 'status', '--porcelain'],
-                          cwd=BASE_DIR, capture_output=True, text=True)
+                          cwd=BASE_DIR, **_git_kwargs())
         if not r.stdout.strip():
             print("Git: 没有需要提交的变更")
             return
@@ -965,27 +999,51 @@ def git_upload():
         # Commit
         msg = f"Update NPI Dashboard {datetime.datetime.now().strftime('%Y-%m-%d %H:%M')}"
         r = subprocess.run(['git', 'commit', '-m', msg],
-                          cwd=BASE_DIR, capture_output=True, text=True)
+                          cwd=BASE_DIR, **_git_kwargs())
         if r.returncode != 0:
             print(f"⚠️ Git commit 失败: {r.stderr or r.stdout}")
             return
         print(f"Git: committed — {msg}")
 
         # Push (显式指定 origin main，防止 upstream 未配置)
-        r = subprocess.run(['git', 'push', '-u', 'origin', 'main'],
-                          cwd=BASE_DIR, capture_output=True, text=True)
+        try:
+            r = subprocess.run(['git', 'push', '-u', 'origin', 'main'],
+                              cwd=BASE_DIR, **_git_push_kwargs())
+        except subprocess.TimeoutExpired:
+            print("⚠️ Git push 逾時（等了 180 秒）—— 很可能是在等憑證登入視窗。")
+            print("   commit 已完成，只是還沒推上去。")
+            print("   請在電腦前重新執行 一键生成2.bat，看到登入視窗時完成登入即可。")
+            return
         if r.returncode != 0:
-            print(f"⚠️ Git push 失败: {r.stderr.strip() or r.stdout.strip()}")
+            err = (r.stderr or r.stdout or '').strip()
+            print(f"⚠️ Git push 失败: {err}")
+            # 憑證問題是最常見的失敗原因，給明確的下一步指示
+            low = err.lower()
+            if ('username' in low or 'authentication' in low or 'could not read' in low
+                    or 'credential' in low or 'permission denied' in low):
+                print()
+                print("  ┌─────────────────────────────────────────────────────┐")
+                print("  │ 這是『憑證（登入）問題』，不是程式錯誤。             │")
+                print("  │                                                     │")
+                print("  │ 請這樣做：                                          │")
+                print("  │  1. 直接雙擊 一键生成2.bat（不要在無視窗的環境跑）  │")
+                print("  │  2. 畫面會跳出登入視窗 → 選 GitHub / 瀏覽器登入     │")
+                print("  │  3. 登入一次之後就會記住，之後不用再登入            │")
+                print("  │                                                     │")
+                print("  │ 註：commit 已經完成，只是『推不上去』。             │")
+                print("  │     憑證設好後再跑一次 STEP 7 就會推送成功。        │")
+                print("  └─────────────────────────────────────────────────────┘")
+                print()
             return
 
         # ── 验证推送是否真正到达远程 ──
         local_head = subprocess.run(
             ['git', 'rev-parse', 'HEAD'],
-            cwd=BASE_DIR, capture_output=True, text=True
+            cwd=BASE_DIR, **_git_kwargs()
         ).stdout.strip()
         remote_ref = subprocess.run(
             ['git', 'ls-remote', 'origin', 'refs/heads/main'],
-            cwd=BASE_DIR, capture_output=True, text=True
+            cwd=BASE_DIR, **_git_kwargs()
         ).stdout.strip()
         remote_head = remote_ref.split('\t')[0] if remote_ref else ''
         if local_head and remote_head and local_head == remote_head:
@@ -1086,6 +1144,11 @@ def update_mp_change_log(changed_records, base_dir):
 REMOTE_URL = "https://github.com/kabonka/npi-dashboard.git"
 
 
+def _upload_disabled_by_env():
+    """環境變數 NPI_SKIP_UPLOAD=1 時跳過上傳（bat 用的輔助開關）。"""
+    return os.environ.get('NPI_SKIP_UPLOAD', '').strip() in ('1', 'true', 'TRUE', 'yes')
+
+
 def git_ensure_repo():
     """确保 BASE_DIR 存在 git 仓库。如果不存在则初始化并拉取远程历史。"""
     import shutil
@@ -1105,20 +1168,20 @@ def git_ensure_repo():
 
     # git init（优先用 -b main 避免 master vs main 分支名不匹配）
     r_init = subprocess.run(['git', 'init', '-b', 'main'],
-                           cwd=BASE_DIR, capture_output=True, text=True)
+                           cwd=BASE_DIR, **_git_kwargs())
     if r_init.returncode != 0:
         subprocess.run(['git', 'init'], cwd=BASE_DIR, capture_output=True)
         subprocess.run(['git', 'checkout', '-b', 'main'],
-                      cwd=BASE_DIR, capture_output=True, text=True)
+                      cwd=BASE_DIR, **_git_kwargs())
 
     subprocess.run(['git', 'remote', 'add', 'origin', REMOTE_URL],
                    cwd=BASE_DIR, capture_output=True)
 
     r = subprocess.run(['git', 'fetch', 'origin', 'main'],
-                       cwd=BASE_DIR, capture_output=True, text=True)
+                       cwd=BASE_DIR, **_git_kwargs())
     if r.returncode == 0:
         subprocess.run(['git', 'checkout', '-B', 'main', 'origin/main'],
-                       cwd=BASE_DIR, capture_output=True, text=True)
+                       cwd=BASE_DIR, **_git_kwargs())
         print(f"[Git] 已同步远程仓库 ({REMOTE_URL}) → {BASE_DIR}")
     else:
         print("[Git] 将以本地内容创建首次提交")
@@ -1165,12 +1228,53 @@ def main():
     git_ensure_repo()
 
     # Git 上传（如需关闭，注释下行）
-    git_upload()
+    #
+    # 2026-10-03 調整：新增 --no-upload 參數。
+    # 原因：build_mp_dashboard.py(STEP5) 會「讀取」本程式產出的 MP变动记录.xlsx，
+    #       所以 MP/TTM dashboard 一定得在 build_npi.py「之後」才生成。
+    #       但原本 git_upload() 寫死在這裡，導致 STEP5/6 的產物永遠慢一輪才推上去。
+    # 解法：一键生成2.bat 用 --no-upload 先跑完三個 builder，最後再統一上傳一次。
+    #       單獨手動執行 `python build_npi.py` 時行為完全不變（照舊會上傳）。
+    if '--no-upload' in sys.argv:
+        print("\n[Git] 偵測到 --no-upload，跳過上傳（由 一键生成2.bat 最後統一推送）")
+    elif _upload_disabled_by_env():
+        print("\n[Git] 偵測到 NPI_SKIP_UPLOAD，跳過上傳")
+    else:
+        git_upload()
 
     print("完成！双击打开 HTML 即可查看 Dashboard。")
 
 
+def upload_only():
+    """只做「上傳」，不重新生成任何東西。
+
+    給 一键生成2.bat 的最後一步用：等 build_npi.py / build_mp_dashboard.py /
+    build_ttm_npi.py 三個 builder 都跑完、所有產物都是最新的之後，
+    再統一呼叫這裡推一次 GitHub。
+    """
+    print("=" * 46)
+    print("[Git] 統一上傳（所有 dashboard 已生成完畢）")
+    print("=" * 46)
+    git_ensure_repo()
+    git_upload()
+
+
 if __name__ == "__main__":
+    # `python build_npi.py --upload-only` → 只上傳，不重生
+    if '--upload-only' in sys.argv:
+        try:
+            upload_only()
+        except Exception:
+            import traceback
+            print("\n" + "=" * 50)
+            print("FATAL ERROR (upload_only):")
+            traceback.print_exc()
+            print("=" * 50)
+            sys.exit(1)
+        if os.environ.get('NPI_NO_PAUSE') != '1':
+            input("\nPress Enter to close...")
+        sys.exit(0)
+
     print("Script started...")
     try:
         main()
@@ -1181,4 +1285,5 @@ if __name__ == "__main__":
         traceback.print_exc()
         print("=" * 50)
         sys.exit(1)
-    input("\nPress Enter to close...")
+    if os.environ.get('NPI_NO_PAUSE') != '1':
+        input("\nPress Enter to close...")

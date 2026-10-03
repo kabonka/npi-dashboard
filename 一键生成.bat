@@ -1,4 +1,6 @@
 @echo off
+rem 讓主控台用 UTF-8，Python 輸出的中文才不會亂碼 (2026-10-03)
+chcp 65001 >nul 2>&1
 cd /d "%~dp0"
 
 echo === STEP 1: Find Python ===

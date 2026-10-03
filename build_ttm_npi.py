@@ -1261,6 +1261,20 @@ def main():
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Expires" content="0">
+<script>
+// 强制绕过缓存：每次访问都请求最新版本
+// （2026-10-03 使用者要求，與 npi_dashboard.html / npi_dashboard2.html 一致）
+// 注意：這是 Python f-string，所有 JS 的 {{ }} 都要寫成 {{{{ }}}}
+(function(){{
+  var ts = Date.now();
+  var href = location.href.split('#')[0];
+  if(href.indexOf('_nocache_') === -1){{
+    var sep = href.indexOf('?') === -1 ? '?' : '&';
+    location.replace(href + sep + '_nocache_=' + ts);
+  }}
+}})();
+</script>
 <title>TTM Dashboard (NPI_vx)</title>
 <style>
 :root {{ color-scheme: light; --green:#1f8a4c; --green-d:#15693a; --green-l:#e8f5ec; --line:#d8e3dc; --ink:#1f2a24; }}

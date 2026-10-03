@@ -343,6 +343,20 @@ def build_search_html(records):
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Expires" content="0">
+<script>
+// 强制绕过缓存：每次访问都请求最新版本
+// （2026-10-03 使用者要求，與 TTM_dashboard.html 等一致）
+// 注意：這是 Python f-string，JS 的大括號要寫成雙層 {{ }} 才會輸出單層
+(function(){{
+  var ts = Date.now();
+  var href = location.href.split('#')[0];
+  if(href.indexOf('_nocache_') === -1){{
+    var sep = href.indexOf('?') === -1 ? '?' : '&';
+    location.replace(href + sep + '_nocache_=' + ts);
+  }}
+}})();
+</script>
 <title>NPI Search Dashboard</title>
 <!-- Google tag (gtag.js) - 替换 G-N3Q3QSRHRM 为你的 GA4 衡量 ID -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-N3Q3QSRHRM"></script>

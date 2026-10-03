@@ -344,6 +344,14 @@ def build_search_html(records):
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>NPI Search Dashboard</title>
+<!-- Google tag (gtag.js) - 替换 G-N3Q3QSRHRM 为你的 GA4 衡量 ID -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-N3Q3QSRHRM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){{dataLayer.push(arguments);}}
+  gtag('js', new Date());
+  gtag('config', 'G-N3Q3QSRHRM');
+</script>
 <style>
 *{{margin:0;padding:0;box-sizing:border-box}}
 :root{{
@@ -398,8 +406,8 @@ body{{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sa
 .badge-Study{{background:var(--study);color:#333}}.badge-MP{{background:var(--mp)}}
 .badge-m{{background:var(--mvt)}}.badge-M{{background:var(--mp)}}
 /* MP 变动行高亮 */
-.list-table tbody tr.mp-changed{{background:rgba(255,0,0,0.2)!important;border-left:3px solid #ff4444}}
-.list-table tbody tr.mp-changed:hover{{background:rgba(255,0,0,0.3)!important}}
+.list-table tbody tr.mp-changed{{background:#dc2626!important;color:#fff;border-left:3px solid #dc2626}}
+.list-table tbody tr.mp-changed:hover{{background:#b91c1c!important;color:#fff}}
 /* 空状态 */
 .empty{{text-align:center;padding:60px 20px;color:var(--text2);font-size:14px}}
 /* ── 统计栏 ── */
@@ -500,6 +508,10 @@ const DATA = {json_str};
 // ── 筛选状态 ──
 let filterModelVals=new Set();
 let filterMktVals=new Set();
+// 列表「預設顯示」哪些 Stage（資料驅動：選項永遠是 Spec總表.xlsx 的實際值）。
+// 字串完全比對 — 資料裡的 ATS 階段是 'ATS-'，所以這裡寫 'ATS' 對不到它；
+// 要預設顯示 ATS- 就把 "ATS-" 也加進來。
+const DEFAULT_STAGES=['Study','Design','DVT','EVT','MVT','ATS'];
 let searchModelVal='';
 let searchMktVal='';
 let statStageFilter='';
@@ -554,26 +566,36 @@ function escHtml(s){{return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
 
 // ── 统计 ──
 function updateStats(){{
-  const activeStages=['Design','DVT','EVT','MVT','ATS','m','M'];
+  // 統計「跟著資料跑」：Stage 值一律取自 Spec總表.xlsx 的實際值。
+  // 注意實際值是 'ATS-'（不是 'ATS'），也**沒有** 'M'/'m' 這兩個值 ——
+  // 以前寫死 'ATS'/'M'/'m' 會讓 ATS 卡片永遠 0，這裡改成資料驅動。
   const filtered=getFilteredRecords();
-  // Model统计：active stage中Model去重
+  const dataStages=[...new Set(DATA.records.map(r=>(r.stage||'').trim()).filter(Boolean))];
+  const hasUserIntent=filterModelVals.size>0||filterMktVals.size>0||searchModelVal||searchMktVal||statStageFilter;
+  // 沒有指定條件時，卡片只算「預設顯示」的 Stage（跟列表一致）
+  const shownStages=dataStages.filter(s=>DEFAULT_STAGES.includes(s));
+  const counted=hasUserIntent?dataStages:shownStages;
+  // Model 統計：被計入的 Stage 中，Model 去重
   const modelSet=new Set();
-  let design=0,dvt=0,evt=0,mvt=0,ats=0;
+  const byStage={{}};
   filtered.forEach(r=>{{
     const s=(r.stage||'').trim();
-    if(activeStages.includes(s))modelSet.add(r.model);
-    if(s==='Design')design++;
-    if(s==='DVT')dvt++;
-    if(s==='EVT')evt++;
-    if(s==='MVT'||s==='m')mvt++;
-    if(s==='ATS')ats++;
+    byStage[s]=(byStage[s]||0)+1;
+    if(counted.includes(s))modelSet.add(r.model);
   }});
+  // 卡片 ↔ 實際 Stage 值：卡片名稱 → 資料裡真正的值
+  const CARD_STAGE={{Design:'Design',DVT:'DVT',EVT:'EVT',MVT:'MVT',ATS:'ATS-'}};
   document.getElementById('statModel').textContent=modelSet.size;
-  document.getElementById('statDesign').textContent=design;
-  document.getElementById('statDVT').textContent=dvt;
-  document.getElementById('statEVT').textContent=evt;
-  document.getElementById('statMVT').textContent=mvt;
-  document.getElementById('statATS').textContent=ats;
+  const setEl=(id,val)=>{{const el=document.getElementById(id);if(el)el.textContent=val;}};
+  setEl('statDesign',byStage[CARD_STAGE.Design]||0);
+  setEl('statDVT',byStage[CARD_STAGE.DVT]||0);
+  setEl('statEVT',byStage[CARD_STAGE.EVT]||0);
+  setEl('statMVT',byStage[CARD_STAGE.MVT]||0);
+  setEl('statATS',byStage[CARD_STAGE.ATS]||0);
+  // MP / BTO- / Pending 卡片（若版型有提供）
+  setEl('statMP',byStage['MP']||0);
+  setEl('statBTO',byStage['BTO-']||0);
+  setEl('statPending',byStage['Pending']||0);
 }}
 
 // ── 统计点击筛选 ──
@@ -615,13 +637,22 @@ function onSearchChange(){{
 }}
 
 // ── 过滤+排序 ──
+// 列表顯示的 Stage = Spec總表.xlsx 的**實際值**（資料驅動，不寫死清單）；
+// 再用 DEFAULT_STAGES 當「預設顯示」偏好，跟其他儀表板一致。
+// 註：資料裡的 ATS 階段實際值是 'ATS-'，所以 DEFAULT_STAGES 寫 'ATS' 對不到它。
+//     要連 ATS- 一起預設顯示，就把它寫進 DEFAULT_STAGES（或由使用者從下拉勾選）。
 function getFilteredRecords(){{
-  const activeStages=['Design','DVT','EVT','MVT','ATS','m','M'];
-  const listStages=['Design','DVT','EVT','MVT','ATS','m'];
+  const dataStages=[...new Set(DATA.records.map(r=>(r.stage||'').trim()).filter(Boolean))];
+  // 預設顯示清單：資料裡的 Stage ∩ DEFAULT_STAGES（字串完全比對）。
+  // 資料裡的 ATS 階段實際值是 'ATS-'，所以 DEFAULT_STAGES 寫 'ATS' 對不到它。
+  const shownStages=dataStages.filter(s=>DEFAULT_STAGES.includes(s));
+  // 使用者「已經主動指定條件」時（選了 Model/MKT、打了關鍵字、或點了統計卡），
+  // 就不再套用預設顯示清單 —— 否則像 MP / BTO- / Pending / ATS- 這種
+  // 不在預設清單裡的 Stage 永遠查不到，選了型號卻一片空白。
+  const hasUserIntent=filterModelVals.size>0||filterMktVals.size>0||searchModelVal||searchMktVal||statStageFilter;
   return DATA.records.filter(r=>{{
-    // 列表只显示 Design/DVT/EVT/MVT/ATS（m=MVT别名）
     const stg=(r.stage||'').trim();
-    if(!listStages.includes(stg))return false;
+    if(!hasUserIntent&&!shownStages.includes(stg))return false;
     if(filterModelVals.size>0&&!filterModelVals.has(r.model))return false;
     if(filterMktVals.size>0&&!filterMktVals.has(r.mkt.split(' ')[0]))return false;
     if(searchModelVal){{const q=searchModelVal.toLowerCase();if(!r.model.toLowerCase().includes(q))return false;}}
@@ -724,7 +755,7 @@ function generateDetailHTML(r){{
   let timelineH='';
   const dk=['Kickoff','DVT-start','EVT-start','MVT-start','BTO ready','ATS-start','MP'];
   dk.forEach(k=>{{
-    if(dates[k])timelineH+='<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #2e3345"><span style="color:#8a8fa8;font-size:12px">'+k+'</span><span style="color:#e0e0e0;font-size:12px">'+dates[k]+'</span></div>';
+    if(dates[k])timelineH+='<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #2e3345"><span style="color:#ffffff;font-size:12px">'+k+'</span><span style="color:#ffffff;font-size:12px">'+dates[k]+'</span></div>';
   }});
 
   let h='';

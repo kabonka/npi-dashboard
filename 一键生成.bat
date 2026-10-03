@@ -1,4 +1,5 @@
 @echo off
+cd /d "%~dp0"
 
 echo === STEP 1: Find Python ===
 
@@ -80,6 +81,12 @@ if not exist "%~dp0build_npi_1.py" (
     exit /b 1
 )
 echo build_npi_1.py OK
+if not exist "%~dp0build_ttm_npi.py" (
+    echo ERROR: build_ttm_npi.py NOT FOUND
+    pause
+    exit /b 1
+)
+echo build_ttm_npi.py OK
 
 echo.
 echo === BEFORE (%date% %time%) ===
@@ -88,6 +95,20 @@ dir "%~dp0*.html" | findstr ".html"
 echo.
 echo === STEP 4: Run build_npi_1.py ===
 %PYCMD% "%~dp0build_npi_1.py"
+echo ExitCode: %errorlevel%
+
+echo.
+echo === STEP 5: Run build_mp_dashboard.py (MP變動記錄) ===
+if exist "%~dp0build_mp_dashboard.py" (
+    %PYCMD% "%~dp0build_mp_dashboard.py"
+    echo ExitCode: %errorlevel%
+) else (
+    echo SKIP: build_mp_dashboard.py NOT FOUND
+)
+
+echo.
+echo === STEP 6: Run build_ttm_npi.py (TTM Dashboard) ===
+%PYCMD% "%~dp0build_ttm_npi.py"
 echo ExitCode: %errorlevel%
 
 echo.

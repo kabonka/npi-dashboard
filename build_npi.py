@@ -364,6 +364,14 @@ def build_search_html(records):
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>NPI Search Dashboard</title>
+<!-- Google tag (gtag.js) - 替换 G-N3Q3QSRHRM 为你的 GA4 衡量 ID -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-N3Q3QSRHRM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){{dataLayer.push(arguments);}}
+  gtag('js', new Date());
+  gtag('config', 'G-N3Q3QSRHRM');
+</script>
 <style>
 *{{margin:0;padding:0;box-sizing:border-box}}
 :root{{
@@ -429,8 +437,8 @@ body{{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sa
 .badge-Study{{background:var(--study);color:#333}}.badge-MP{{background:var(--mp)}}
 .badge-m{{background:var(--mvt)}}.badge-M{{background:var(--mp)}}
 /* MP 变动行高亮 */
-.list-table tbody tr.mp-changed{{background:rgba(255,0,0,0.2)!important;border-left:3px solid #ff4444}}
-.list-table tbody tr.mp-changed:hover{{background:rgba(255,0,0,0.3)!important}}
+.list-table tbody tr.mp-changed{{background:#dc2626!important;color:#fff;border-left:3px solid #dc2626}}
+.list-table tbody tr.mp-changed:hover{{background:#b91c1c!important;color:#fff}}
 /* 空状态 */
 .empty{{text-align:center;padding:60px 20px;color:var(--text2);font-size:14px}}
 /* ── 统计栏 ── */
@@ -538,7 +546,15 @@ const DATA = {json_str};
 // ── 筛选状态 ──
 let filterModelVals=new Set();
 let filterMktVals=new Set();
-const filterStageVals=new Set(['Design','DVT','EVT','MVT','ATS','MP','Study']);
+// filterStageVals：使用者「手動調整」過的 Stage 白名單。
+// 預設為空 → 由 getFilteredRecords() 用資料 ∩ DEFAULT_STAGES 推導「預設檢視」，
+// 兩支生成器（build_npi.py / build_npi_1.py）輸出的預設檢視才會一致（57 筆）。
+// ⚠️ 不要在預設值裡塞 MP / ATS 之類的值 —— 非空就會蓋掉 DEFAULT_STAGES。
+const filterStageVals=new Set();
+// 列表「預設顯示」哪些 Stage（資料驅動：選項永遠是 Spec總表.xlsx 的實際值）。
+// 字串完全比對 — 資料裡的 ATS 階段是 'ATS-'，所以這裡寫 'ATS' 對不到它；
+// 要預設顯示 ATS- 就把 "ATS-" 也加進來。
+const DEFAULT_STAGES=['Study','Design','DVT','EVT','MVT','ATS'];
 const filterYearVals=new Set(['2026','2027']);
 let searchModelVal='';
 let searchMktVal='';
@@ -663,21 +679,33 @@ function onSearchChange(){{
 }}
 
 // ── 过滤+排序 ──
+// Stage 白名單由資料 + DEFAULT_STAGES 推導（資料驅動），不再寫死；
+// filterStageVals 有值時（使用者已手動調整）以它為準。
 function getFilteredRecords(){{
+  const dataStages=[...new Set(DATA.records.map(r=>(r.stage||'').trim()).filter(Boolean))];
+  const stageAllow=filterStageVals.size>0
+    ? filterStageVals
+    : new Set(dataStages.filter(s=>DEFAULT_STAGES.includes(s)));
+  // 使用者「已經主動指定條件」時（選了 Model/MKT、打了關鍵字、或點了統計卡），
+  // 就不再套用預設顯示清單 —— 否則像 MP / BTO- / Pending / ATS- 這種
+  // 不在預設清單裡的 Stage 永遠查不到，選了型號卻一片空白。
+  const hasUserIntent=filterModelVals.size>0||filterMktVals.size>0||searchModelVal||searchMktVal||statStageFilter;
   return DATA.records.filter(r=>{{
     const stg=(r.stage||'').trim();
     // Stage 筛选
-    if(filterStageVals.size>0&&!filterStageVals.has(stg))return false;
-    // MP Year 筛选
-    if(filterYearVals.size>0){{
-      const mpDate=r.dates?r.dates['MP']||'':'';
-      if(mpDate){{const mpYear=mpDate.substring(0,4);if(!filterYearVals.has(mpYear))return false;}}
-      else return false;
-    }}
+    if(!hasUserIntent&&!stageAllow.has(stg))return false;
     if(filterModelVals.size>0&&!filterModelVals.has(r.model))return false;
     if(filterMktVals.size>0&&!filterMktVals.has(r.mkt.split(' ')[0]))return false;
     if(searchModelVal){{const q=searchModelVal.toLowerCase();if(!r.model.toLowerCase().includes(q))return false;}}
     if(searchMktVal){{const q=searchMktVal.toLowerCase();if(!r.mkt.toLowerCase().includes(q))return false;}}
+    // MP Year 篩選（「預設檢視」性質，跟 Stage 白名單同理）：
+    // 只在「使用者什麼都沒指定」時才生效；使用者主動查詢時不再套用。
+    // 否則 MP 日期為空的 2 筆（Pending）在任何查詢下都會被這條吃掉。
+    if(!hasUserIntent&&filterYearVals.size>0){{
+      const mpDate=r.dates?r.dates['MP']||'':'';
+      if(mpDate){{const mpYear=mpDate.substring(0,4);if(!filterYearVals.has(mpYear))return false;}}
+      else return false;
+    }}
     // 统计栏筛选
     if(statStageFilter==='MVT'){{
       if(stg!=='MVT'&&stg!=='m')return false;
@@ -836,7 +864,7 @@ function generateDetailHTML(r){{
   let timelineH='';
   const dk=['Kickoff','DVT-start','EVT-start','MVT-start','BTO ready','ATS-start','MP'];
   dk.forEach(k=>{{
-    if(dates[k])timelineH+='<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #2e3345"><span style="color:#8a8fa8;font-size:12px">'+k+'</span><span style="color:#e0e0e0;font-size:12px">'+dates[k]+'</span></div>';
+    if(dates[k])timelineH+='<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #2e3345"><span style="color:#ffffff;font-size:12px">'+k+'</span><span style="color:#ffffff;font-size:12px">'+dates[k]+'</span></div>';
   }});
 
   let h='';
@@ -891,6 +919,9 @@ def git_upload():
         os.path.basename(SEARCH_HTML_PATH),
         os.path.basename(HTML_PATH.replace('.html', '.xlsx')),
         'MP变动记录.xlsx',
+        # TTM Dashboard 與它的產物（2026-10-03 使用者要求一併上傳 GitHub）
+        'TTM_dashboard.html',
+        'MP变动记录_dashboard.html',
     ]
     try:
         # ── 第一步：fetch + soft reset 到远程最新，避免分支分叉 ──
@@ -900,6 +931,24 @@ def git_upload():
         if r_fetch.returncode == 0:
             subprocess.run(['git', 'reset', '--soft', 'origin/main'],
                           cwd=BASE_DIR, capture_output=True, text=True)
+
+        # ── 关键修复：强制保留 3 个截图资源，绝不被 reset --soft 的 deleted 状态误删 ──
+        # 问题根因：若工作树缺这 3 个文件（或被 git rm / git add -A 标记成 deleted），
+        #   reset --soft 会把 "deleted" 状态保留在暂存区，随后 commit + push 会把它们
+        #   从远端彻底删除，导致线上版長截圖 404。
+        # 修法：commit 前强制恢复——working dir 有文件就直接 add（覆盖 staged deleted），
+        #   缺文件则从已知含此文件的 commit 4c2132e 取回（4c2132e 是 main 的祖先，本地必有）。
+        SCREENSHOT_FILES = ['crop-screenshot.css', 'crop-screenshot.js', 'html2canvas.min.js']
+        for sf in SCREENSHOT_FILES:
+            fpath = os.path.join(BASE_DIR, sf)
+            if os.path.exists(fpath):
+                # 重新 add 会用工作树内容覆盖任何 staged deleted 状态
+                subprocess.run(['git', 'add', sf], cwd=BASE_DIR, capture_output=True, text=True)
+            else:
+                print(f"[Git] 本地缺失 {sf}，从 4c2132e 恢复（避免被删除）")
+                subprocess.run(['git', 'checkout', '4c2132e', '--', sf],
+                              cwd=BASE_DIR, capture_output=True, text=True)
+                subprocess.run(['git', 'add', sf], cwd=BASE_DIR, capture_output=True, text=True)
 
         for f in files:
             fpath = os.path.join(BASE_DIR, f)

@@ -3,6 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Expires" content="0">
+<script>
+// 强制绕过缓存：每次访问都请求最新版本
+// （2026-10-03 使用者要求，與 TTM_dashboard.html 等一致）
+// 注意：這段是 Python 純字串（非 f-string），所以 JS 的大括號直接寫單層即可
+(function(){
+  var ts = Date.now();
+  var href = location.href.split('#')[0];
+  if(href.indexOf('_nocache_') === -1){
+    var sep = href.indexOf('?') === -1 ? '?' : '&';
+    location.replace(href + sep + '_nocache_=' + ts);
+  }
+})();
+</script>
 <title>MP 變動記錄分析 Dashboard</title>
 <style>
 :root{

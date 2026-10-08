@@ -363,29 +363,7 @@ def build_search_html(records):
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta http-equiv="Expires" content="0">
-<script>
-// 强制绕过缓存：每次访问都请求最新版本
-// （2026-10-03 使用者要求，與 TTM_dashboard.html 等一致）
-// 注意：這是 Python f-string，JS 的大括號要寫成雙層 {{ }} 才會輸出單層
-(function(){{
-  var ts = Date.now();
-  var href = location.href.split('#')[0];
-  if(href.indexOf('_nocache_') === -1){{
-    var sep = href.indexOf('?') === -1 ? '?' : '&';
-    location.replace(href + sep + '_nocache_=' + ts);
-  }}
-}})();
-</script>
 <title>NPI Search Dashboard</title>
-<!-- Google tag (gtag.js) - 替换 G-N3Q3QSRHRM 为你的 GA4 衡量 ID -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-N3Q3QSRHRM"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){{dataLayer.push(arguments);}}
-  gtag('js', new Date());
-  gtag('config', 'G-N3Q3QSRHRM');
-</script>
 <style>
 *{{margin:0;padding:0;box-sizing:border-box}}
 :root{{
@@ -451,8 +429,8 @@ body{{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sa
 .badge-Study{{background:var(--study);color:#333}}.badge-MP{{background:var(--mp)}}
 .badge-m{{background:var(--mvt)}}.badge-M{{background:var(--mp)}}
 /* MP 变动行高亮 */
-.list-table tbody tr.mp-changed{{background:#dc2626!important;color:#fff;border-left:3px solid #dc2626}}
-.list-table tbody tr.mp-changed:hover{{background:#b91c1c!important;color:#fff}}
+.list-table tbody tr.mp-changed{{background:rgba(255,0,0,0.2)!important;border-left:3px solid #ff4444}}
+.list-table tbody tr.mp-changed:hover{{background:rgba(255,0,0,0.3)!important}}
 /* 空状态 */
 .empty{{text-align:center;padding:60px 20px;color:var(--text2);font-size:14px}}
 /* ── 统计栏 ── */
@@ -560,15 +538,7 @@ const DATA = {json_str};
 // ── 筛选状态 ──
 let filterModelVals=new Set();
 let filterMktVals=new Set();
-// filterStageVals：使用者「手動調整」過的 Stage 白名單。
-// 預設為空 → 由 getFilteredRecords() 用資料 ∩ DEFAULT_STAGES 推導「預設檢視」，
-// 兩支生成器（build_npi.py / build_npi_1.py）輸出的預設檢視才會一致（57 筆）。
-// ⚠️ 不要在預設值裡塞 MP / ATS 之類的值 —— 非空就會蓋掉 DEFAULT_STAGES。
-const filterStageVals=new Set();
-// 列表「預設顯示」哪些 Stage（資料驅動：選項永遠是 Spec總表.xlsx 的實際值）。
-// 字串完全比對 — 資料裡的 ATS 階段是 'ATS-'，所以這裡寫 'ATS' 對不到它；
-// 要預設顯示 ATS- 就把 "ATS-" 也加進來。
-const DEFAULT_STAGES=['Study','Design','DVT','EVT','MVT','ATS'];
+const filterStageVals=new Set(['Design','DVT','EVT','MVT','ATS','MP','Study']);
 const filterYearVals=new Set(['2026','2027']);
 let searchModelVal='';
 let searchMktVal='';
@@ -693,33 +663,21 @@ function onSearchChange(){{
 }}
 
 // ── 过滤+排序 ──
-// Stage 白名單由資料 + DEFAULT_STAGES 推導（資料驅動），不再寫死；
-// filterStageVals 有值時（使用者已手動調整）以它為準。
 function getFilteredRecords(){{
-  const dataStages=[...new Set(DATA.records.map(r=>(r.stage||'').trim()).filter(Boolean))];
-  const stageAllow=filterStageVals.size>0
-    ? filterStageVals
-    : new Set(dataStages.filter(s=>DEFAULT_STAGES.includes(s)));
-  // 使用者「已經主動指定條件」時（選了 Model/MKT、打了關鍵字、或點了統計卡），
-  // 就不再套用預設顯示清單 —— 否則像 MP / BTO- / Pending / ATS- 這種
-  // 不在預設清單裡的 Stage 永遠查不到，選了型號卻一片空白。
-  const hasUserIntent=filterModelVals.size>0||filterMktVals.size>0||searchModelVal||searchMktVal||statStageFilter;
   return DATA.records.filter(r=>{{
     const stg=(r.stage||'').trim();
     // Stage 筛选
-    if(!hasUserIntent&&!stageAllow.has(stg))return false;
-    if(filterModelVals.size>0&&!filterModelVals.has(r.model))return false;
-    if(filterMktVals.size>0&&!filterMktVals.has(r.mkt.split(' ')[0]))return false;
-    if(searchModelVal){{const q=searchModelVal.toLowerCase();if(!r.model.toLowerCase().includes(q))return false;}}
-    if(searchMktVal){{const q=searchMktVal.toLowerCase();if(!r.mkt.toLowerCase().includes(q))return false;}}
-    // MP Year 篩選（「預設檢視」性質，跟 Stage 白名單同理）：
-    // 只在「使用者什麼都沒指定」時才生效；使用者主動查詢時不再套用。
-    // 否則 MP 日期為空的 2 筆（Pending）在任何查詢下都會被這條吃掉。
-    if(!hasUserIntent&&filterYearVals.size>0){{
+    if(filterStageVals.size>0&&!filterStageVals.has(stg))return false;
+    // MP Year 筛选
+    if(filterYearVals.size>0){{
       const mpDate=r.dates?r.dates['MP']||'':'';
       if(mpDate){{const mpYear=mpDate.substring(0,4);if(!filterYearVals.has(mpYear))return false;}}
       else return false;
     }}
+    if(filterModelVals.size>0&&!filterModelVals.has(r.model))return false;
+    if(filterMktVals.size>0&&!filterMktVals.has(r.mkt.split(' ')[0]))return false;
+    if(searchModelVal){{const q=searchModelVal.toLowerCase();if(!r.model.toLowerCase().includes(q))return false;}}
+    if(searchMktVal){{const q=searchMktVal.toLowerCase();if(!r.mkt.toLowerCase().includes(q))return false;}}
     // 统计栏筛选
     if(statStageFilter==='MVT'){{
       if(stg!=='MVT'&&stg!=='m')return false;
@@ -878,7 +836,7 @@ function generateDetailHTML(r){{
   let timelineH='';
   const dk=['Kickoff','DVT-start','EVT-start','MVT-start','BTO ready','ATS-start','MP'];
   dk.forEach(k=>{{
-    if(dates[k])timelineH+='<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #2e3345"><span style="color:#ffffff;font-size:12px">'+k+'</span><span style="color:#ffffff;font-size:12px">'+dates[k]+'</span></div>';
+    if(dates[k])timelineH+='<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #2e3345"><span style="color:#8a8fa8;font-size:12px">'+k+'</span><span style="color:#e0e0e0;font-size:12px">'+dates[k]+'</span></div>';
   }});
 
   let h='';
@@ -911,40 +869,6 @@ renderList();
     print(f"Search HTML 已生成: {SEARCH_HTML_PATH}")
 
 
-def _git_kwargs():
-    """給所有 git subprocess 呼叫用的統一參數。
-
-    ⚠️ 為什麼一定要指定 encoding='utf-8'：
-      git 輸出的是 UTF-8（本專案有一堆中文檔名：Spec總表.xlsx、一键生成2.bat、
-      MP变动记录_dashboard.html…）。而 Windows 上 Python 的 subprocess 用
-      `text=True` 時會用「系統地區編碼」解碼 —— 繁中機器是 cp950。
-      git 吐 UTF-8 的中文檔名、Python 用 cp950 解，就會炸：
-        UnicodeDecodeError: 'cp950' codec can't decode byte 0xe4 in position ...
-      而且錯誤發生在 subprocess 的內部 reader thread，會噴一大串
-      `Exception in thread Thread-N (_readerthread)` 誤導人以為是別的問題。
-    解法：明確指定 utf-8；errors='replace' 當保險，避免任何殘餘位元組讓整支程式掛掉。
-    （2026-10-03 使用者實際踩到，push 因此中斷。）
-    """
-    return dict(capture_output=True, text=True, encoding='utf-8', errors='replace')
-
-
-def _git_push_kwargs():
-    """push 專用參數：除了編碼，再加上 stdin=DEVNULL 與逾時保護。
-
-    ⚠️ 為什麼 push 要特別處理：
-      沒有已存憑證時，git 會叫出 credential helper 的 GUI 視窗（PortableGit 預設是
-      helper-selector）等使用者登入。這是「正常的一次性設定」，人工雙擊 bat 時
-      就該看到那個視窗。
-      但如果**沒有人**在電腦前（或視窗被其他視窗蓋住），這個 push 會**永遠等待**，
-      讓整支 bat 看起來像當掉。
-      加上 timeout=180：真的沒人理它就放棄並印出明確指示，不會卡死整個流程。
-    """
-    kw = _git_kwargs()
-    kw['timeout'] = 180
-    kw['stdin'] = subprocess.DEVNULL   # 不讓它去讀 stdin（避免互動式提示卡住）
-    return kw
-
-
 def git_upload():
     """Git add, commit, and push to GitHub (requires git repo in BASE_DIR)"""
     try:
@@ -967,45 +891,24 @@ def git_upload():
         os.path.basename(SEARCH_HTML_PATH),
         os.path.basename(HTML_PATH.replace('.html', '.xlsx')),
         'MP变动记录.xlsx',
-        # TTM Dashboard 與它的產物（2026-10-03 使用者要求一併上傳 GitHub）
-        'TTM_dashboard.html',
-        'MP变动记录_dashboard.html',
     ]
     try:
         # ── 第一步：fetch + soft reset 到远程最新，避免分支分叉 ──
         # 用 --soft 不碰工作树，不受 Windows 文件锁定影响
         r_fetch = subprocess.run(['git', 'fetch', 'origin', 'main'],
-                                cwd=BASE_DIR, **_git_kwargs())
+                                cwd=BASE_DIR, capture_output=True, text=True)
         if r_fetch.returncode == 0:
             subprocess.run(['git', 'reset', '--soft', 'origin/main'],
-                          cwd=BASE_DIR, **_git_kwargs())
-
-        # ── 关键修复：强制保留 3 个截图资源，绝不被 reset --soft 的 deleted 状态误删 ──
-        # 问题根因：若工作树缺这 3 个文件（或被 git rm / git add -A 标记成 deleted），
-        #   reset --soft 会把 "deleted" 状态保留在暂存区，随后 commit + push 会把它们
-        #   从远端彻底删除，导致线上版長截圖 404。
-        # 修法：commit 前强制恢复——working dir 有文件就直接 add（覆盖 staged deleted），
-        #   缺文件则从已知含此文件的 commit 4c2132e 取回（4c2132e 是 main 的祖先，本地必有）。
-        SCREENSHOT_FILES = ['crop-screenshot.css', 'crop-screenshot.js', 'html2canvas.min.js']
-        for sf in SCREENSHOT_FILES:
-            fpath = os.path.join(BASE_DIR, sf)
-            if os.path.exists(fpath):
-                # 重新 add 会用工作树内容覆盖任何 staged deleted 状态
-                subprocess.run(['git', 'add', sf], cwd=BASE_DIR, **_git_kwargs())
-            else:
-                print(f"[Git] 本地缺失 {sf}，从 4c2132e 恢复（避免被删除）")
-                subprocess.run(['git', 'checkout', '4c2132e', '--', sf],
-                              cwd=BASE_DIR, **_git_kwargs())
-                subprocess.run(['git', 'add', sf], cwd=BASE_DIR, **_git_kwargs())
+                          cwd=BASE_DIR, capture_output=True, text=True)
 
         for f in files:
             fpath = os.path.join(BASE_DIR, f)
             if os.path.exists(fpath):
-                subprocess.run(['git', 'add', f], cwd=BASE_DIR, **_git_kwargs())
+                subprocess.run(['git', 'add', f], cwd=BASE_DIR, capture_output=True)
 
         # 检查是否有变更
         r = subprocess.run(['git', 'status', '--porcelain'],
-                          cwd=BASE_DIR, **_git_kwargs())
+                          cwd=BASE_DIR, capture_output=True, text=True)
         if not r.stdout.strip():
             print("Git: 没有需要提交的变更")
             return
@@ -1013,51 +916,27 @@ def git_upload():
         # Commit
         msg = f"Update NPI Dashboard {datetime.datetime.now().strftime('%Y-%m-%d %H:%M')}"
         r = subprocess.run(['git', 'commit', '-m', msg],
-                          cwd=BASE_DIR, **_git_kwargs())
+                          cwd=BASE_DIR, capture_output=True, text=True)
         if r.returncode != 0:
             print(f"⚠️ Git commit 失败: {r.stderr or r.stdout}")
             return
         print(f"Git: committed — {msg}")
 
         # Push (显式指定 origin main，防止 upstream 未配置)
-        try:
-            r = subprocess.run(['git', 'push', '-u', 'origin', 'main'],
-                              cwd=BASE_DIR, **_git_push_kwargs())
-        except subprocess.TimeoutExpired:
-            print("⚠️ Git push 逾時（等了 180 秒）—— 很可能是在等憑證登入視窗。")
-            print("   commit 已完成，只是還沒推上去。")
-            print("   請在電腦前重新執行 一键生成2.bat，看到登入視窗時完成登入即可。")
-            return
+        r = subprocess.run(['git', 'push', '-u', 'origin', 'main'],
+                          cwd=BASE_DIR, capture_output=True, text=True)
         if r.returncode != 0:
-            err = (r.stderr or r.stdout or '').strip()
-            print(f"⚠️ Git push 失败: {err}")
-            # 憑證問題是最常見的失敗原因，給明確的下一步指示
-            low = err.lower()
-            if ('username' in low or 'authentication' in low or 'could not read' in low
-                    or 'credential' in low or 'permission denied' in low):
-                print()
-                print("  ┌─────────────────────────────────────────────────────┐")
-                print("  │ 這是『憑證（登入）問題』，不是程式錯誤。             │")
-                print("  │                                                     │")
-                print("  │ 請這樣做：                                          │")
-                print("  │  1. 直接雙擊 一键生成2.bat（不要在無視窗的環境跑）  │")
-                print("  │  2. 畫面會跳出登入視窗 → 選 GitHub / 瀏覽器登入     │")
-                print("  │  3. 登入一次之後就會記住，之後不用再登入            │")
-                print("  │                                                     │")
-                print("  │ 註：commit 已經完成，只是『推不上去』。             │")
-                print("  │     憑證設好後再跑一次 STEP 7 就會推送成功。        │")
-                print("  └─────────────────────────────────────────────────────┘")
-                print()
+            print(f"⚠️ Git push 失败: {r.stderr.strip() or r.stdout.strip()}")
             return
 
         # ── 验证推送是否真正到达远程 ──
         local_head = subprocess.run(
             ['git', 'rev-parse', 'HEAD'],
-            cwd=BASE_DIR, **_git_kwargs()
+            cwd=BASE_DIR, capture_output=True, text=True
         ).stdout.strip()
         remote_ref = subprocess.run(
             ['git', 'ls-remote', 'origin', 'refs/heads/main'],
-            cwd=BASE_DIR, **_git_kwargs()
+            cwd=BASE_DIR, capture_output=True, text=True
         ).stdout.strip()
         remote_head = remote_ref.split('\t')[0] if remote_ref else ''
         if local_head and remote_head and local_head == remote_head:
@@ -1158,11 +1037,6 @@ def update_mp_change_log(changed_records, base_dir):
 REMOTE_URL = "https://github.com/kabonka/npi-dashboard.git"
 
 
-def _upload_disabled_by_env():
-    """環境變數 NPI_SKIP_UPLOAD=1 時跳過上傳（bat 用的輔助開關）。"""
-    return os.environ.get('NPI_SKIP_UPLOAD', '').strip() in ('1', 'true', 'TRUE', 'yes')
-
-
 def git_ensure_repo():
     """确保 BASE_DIR 存在 git 仓库。如果不存在则初始化并拉取远程历史。"""
     import shutil
@@ -1182,20 +1056,20 @@ def git_ensure_repo():
 
     # git init（优先用 -b main 避免 master vs main 分支名不匹配）
     r_init = subprocess.run(['git', 'init', '-b', 'main'],
-                           cwd=BASE_DIR, **_git_kwargs())
+                           cwd=BASE_DIR, capture_output=True, text=True)
     if r_init.returncode != 0:
         subprocess.run(['git', 'init'], cwd=BASE_DIR, capture_output=True)
         subprocess.run(['git', 'checkout', '-b', 'main'],
-                      cwd=BASE_DIR, **_git_kwargs())
+                      cwd=BASE_DIR, capture_output=True, text=True)
 
     subprocess.run(['git', 'remote', 'add', 'origin', REMOTE_URL],
                    cwd=BASE_DIR, capture_output=True)
 
     r = subprocess.run(['git', 'fetch', 'origin', 'main'],
-                       cwd=BASE_DIR, **_git_kwargs())
+                       cwd=BASE_DIR, capture_output=True, text=True)
     if r.returncode == 0:
         subprocess.run(['git', 'checkout', '-B', 'main', 'origin/main'],
-                       cwd=BASE_DIR, **_git_kwargs())
+                       cwd=BASE_DIR, capture_output=True, text=True)
         print(f"[Git] 已同步远程仓库 ({REMOTE_URL}) → {BASE_DIR}")
     else:
         print("[Git] 将以本地内容创建首次提交")
@@ -1242,53 +1116,12 @@ def main():
     git_ensure_repo()
 
     # Git 上传（如需关闭，注释下行）
-    #
-    # 2026-10-03 調整：新增 --no-upload 參數。
-    # 原因：build_mp_dashboard.py(STEP5) 會「讀取」本程式產出的 MP变动记录.xlsx，
-    #       所以 MP/TTM dashboard 一定得在 build_npi.py「之後」才生成。
-    #       但原本 git_upload() 寫死在這裡，導致 STEP5/6 的產物永遠慢一輪才推上去。
-    # 解法：一键生成2.bat 用 --no-upload 先跑完三個 builder，最後再統一上傳一次。
-    #       單獨手動執行 `python build_npi.py` 時行為完全不變（照舊會上傳）。
-    if '--no-upload' in sys.argv:
-        print("\n[Git] 偵測到 --no-upload，跳過上傳（由 一键生成2.bat 最後統一推送）")
-    elif _upload_disabled_by_env():
-        print("\n[Git] 偵測到 NPI_SKIP_UPLOAD，跳過上傳")
-    else:
-        git_upload()
+    git_upload()
 
     print("完成！双击打开 HTML 即可查看 Dashboard。")
 
 
-def upload_only():
-    """只做「上傳」，不重新生成任何東西。
-
-    給 一键生成2.bat 的最後一步用：等 build_npi.py / build_mp_dashboard.py /
-    build_ttm_npi.py 三個 builder 都跑完、所有產物都是最新的之後，
-    再統一呼叫這裡推一次 GitHub。
-    """
-    print("=" * 46)
-    print("[Git] 統一上傳（所有 dashboard 已生成完畢）")
-    print("=" * 46)
-    git_ensure_repo()
-    git_upload()
-
-
 if __name__ == "__main__":
-    # `python build_npi.py --upload-only` → 只上傳，不重生
-    if '--upload-only' in sys.argv:
-        try:
-            upload_only()
-        except Exception:
-            import traceback
-            print("\n" + "=" * 50)
-            print("FATAL ERROR (upload_only):")
-            traceback.print_exc()
-            print("=" * 50)
-            sys.exit(1)
-        if os.environ.get('NPI_NO_PAUSE') != '1':
-            input("\nPress Enter to close...")
-        sys.exit(0)
-
     print("Script started...")
     try:
         main()
@@ -1299,5 +1132,4 @@ if __name__ == "__main__":
         traceback.print_exc()
         print("=" * 50)
         sys.exit(1)
-    if os.environ.get('NPI_NO_PAUSE') != '1':
-        input("\nPress Enter to close...")
+    input("\nPress Enter to close...")

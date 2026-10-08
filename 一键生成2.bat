@@ -1,7 +1,4 @@
 @echo off
-rem 讓主控台用 UTF-8，Python 輸出的中文才不會亂碼 (2026-10-03)
-chcp 65001 >nul 2>&1
-cd /d "%~dp0"
 
 echo === STEP 1: Find Python ===
 
@@ -83,55 +80,18 @@ if not exist "%~dp0build_npi.py" (
     exit /b 1
 )
 echo build_npi.py OK
-if not exist "%~dp0build_ttm_npi.py" (
-    echo ERROR: build_ttm_npi.py NOT FOUND
-    pause
-    exit /b 1
-)
-echo build_ttm_npi.py OK
 
 echo.
 echo === BEFORE (%date% %time%) ===
 dir "%~dp0*.html" | findstr ".html"
 
-rem === 順序調整 (2026-10-03) ===
-rem build_mp_dashboard.py 會「讀取」build_npi.py 產生的 MP變動記錄.xlsx,
-rem 所以 mp/ttm 一定要在 build_npi.py 之後才跑.
-rem 但上傳只在最後做一次 -> 三個 dashboard 的最新版一起推上去, 不再慢一輪.
-rem (原本 build_npi.py 內建上傳, 現在用 --no-upload 關掉, 改由 STEP 7 統一推送)
-
 echo.
-echo === STEP 4: Run build_npi.py (build only, no upload) ===
-set NPI_NO_PAUSE=1
-%PYCMD% "%~dp0build_npi.py" --no-upload
+echo === STEP 4: Run build_npi.py ===
+%PYCMD% "%~dp0build_npi.py"
 echo ExitCode: %errorlevel%
-
-echo.
-echo === STEP 5: Run build_mp_dashboard.py (MP變動記錄) ===
-if exist "%~dp0build_mp_dashboard.py" (
-    %PYCMD% "%~dp0build_mp_dashboard.py"
-    echo ExitCode: %errorlevel%
-) else (
-    echo SKIP: build_mp_dashboard.py NOT FOUND
-)
-
-echo.
-echo === STEP 6: Run build_ttm_npi.py (TTM Dashboard) ===
-%PYCMD% "%~dp0build_ttm_npi.py"
-echo ExitCode: %errorlevel%
-
-echo.
-echo === STEP 7: Upload everything to GitHub (unified push) ===
-%PYCMD% "%~dp0build_npi.py" --upload-only
-echo ExitCode: %errorlevel%
-set NPI_NO_PAUSE=
 
 echo.
 echo === AFTER (%date% %time%) ===
 dir "%~dp0*.html" | findstr ".html"
 
-echo.
-echo ==========================================
-echo  DONE. 所有 dashboard 已生成並推送 GitHub
-echo ==========================================
 pause

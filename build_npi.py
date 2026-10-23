@@ -976,8 +976,7 @@ def git_upload():
         'functions/api/expect-mp.js',
         # 網站首頁（根目錄 / 入口頁；部署副本來源為 portal.html）
         'index.html',
-        # WebNPI Product Matrix 頁面（webnpi_web/index.html，gate.js 引用已移除）
-        'webnpi_web/index.html',
+        # 注意：webnpi_web/index.html 不在此清單 — 由 push_webnpi.bat 單獨推送
     ]
     try:
         # ── 第一步：fetch + soft reset 到远程最新，避免分支分叉 ──

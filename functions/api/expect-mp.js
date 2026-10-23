@@ -36,19 +36,19 @@ function getKV(context) {
   return null;
 }
 
-// Model -> hex so the KV key only contains [0-9a-zA-Z_].
+// Model -> fixed 4-hex per UTF-16 unit so the KV key only contains [0-9a-zA-Z_].
 function encModel(m) {
   let s = '';
   for (const ch of String(m)) {
-    s += ch.charCodeAt(0).toString(16).padStart(2, '0');
+    s += ch.charCodeAt(0).toString(16).padStart(4, '0');
   }
   return s;
 }
 
 function decModel(h) {
   let s = '';
-  for (let i = 0; i + 1 < h.length; i += 2) {
-    s += String.fromCharCode(parseInt(h.slice(i, i + 2), 16));
+  for (let i = 0; i + 3 < h.length; i += 4) {
+    s += String.fromCharCode(parseInt(h.slice(i, i + 4), 16));
   }
   return s;
 }

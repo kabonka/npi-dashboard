@@ -42,6 +42,7 @@ GATE_RE = re.compile(r'[ \t]*<script src="gate\.js"></script>\r?\n')
 # (NPI_vx 來源檔) -> (Tencentyyy 倉庫內的相對路徑，用 / 分隔)
 MAPPING = [
     ("portal.html",                "index.html"),
+    ("DEPLOY_README.md",           "README.md"),
     ("npi_search.html",            "NPI_vx_web/npi_search.html"),
     ("TTM_check.html",             "NPI_vx_web/TTM_check.html"),
     ("npi_dashboard.html",         "npi_dashboard.html"),
@@ -129,6 +130,22 @@ def main():
     removed = prune(WEB_ROOT)
     if removed:
         print("  pruned:", ", ".join(removed))
+
+    # webnpi_web 由 push_webnpi.py / webnpi 專案 sync_web.py 寫入；
+    # 後者會注入 gate.js，這裡一律清掉（線上靠 EdgeOne 訪問密碼，不掛用戶端門）
+    ext_html = os.path.join(WEB_ROOT, "webnpi_web", "index.html")
+    if os.path.isfile(ext_html):
+        with open(ext_html, "r", encoding="utf-8", errors="replace") as f:
+            ext = f.read()
+        new_ext = GATE_RE.sub("", ext)
+        if new_ext != ext:
+            if "gate.js" in new_ext:
+                print("[FAIL] gate.js reference remains in webnpi_web/index.html - abort")
+                return 1
+            with open(ext_html, "w", encoding="utf-8", newline="") as f:
+                f.write(new_ext)
+            stripped += 1
+            print("  cleaned webnpi_web/index.html (gate.js ref stripped)")
 
     print("DONE. %d file(s) deployed, %d gate-stripped, %d source(s) skipped."
           % (copied, stripped, skipped))

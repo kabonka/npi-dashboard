@@ -5,7 +5,9 @@ deploy_push.py — 推送 Tencentyyy 部署倉庫到 GitHub（EdgeOne 收到 pus
 由 一键生成2.bat 在 sync_web.py（部署複製）之後呼叫。
 安全模式（沿用 build_npi.py git_upload 的實戰經驗）：
   1. git fetch origin
-  2. 若 origin/main 存在 → git reset --soft origin/main（避免分支分叉，保留工作區檔案）
+  2. 以 FETCH_HEAD 為準 git reset --soft（避免分支分叉，保留工作區檔案）
+     ※ 不用 origin/main tracking ref：本機 Tencentyyy 的 refs/remotes 寫入會被吃
+       （fetch 報 success 但 ref 消失，原因未明），FETCH_HEAD 一律可靠。
   3. git add -A（部署資料夾只放白名單檔，全部納入管理所當然）
   4. 無變更 → 直接結束；有變更 → commit + push
   5. push 失敗不中斷 bat（印出錯誤供查看），本機 commit 保留、日後可重推
@@ -54,14 +56,15 @@ def main():
     r = git("fetch", "origin")
     if r.returncode != 0:
         print("[WARN] fetch failed:", (r.stderr or r.stdout).strip()[:300])
+        print("[NOTE] skip reset - push will still detect divergence if any")
 
-    r = git("rev-parse", "--verify", "origin/main")
+    r = git("rev-parse", "--verify", "FETCH_HEAD")
     if r.returncode == 0:
-        r = git("reset", "--soft", "origin/main")
+        r = git("reset", "--soft", "FETCH_HEAD")
         if r.returncode != 0:
             print("[WARN] reset --soft failed:", (r.stderr or r.stdout).strip()[:300])
     else:
-        print("[WARN] origin/main not found yet (first push?) - skip reset")
+        print("[WARN] FETCH_HEAD unavailable - skip reset")
 
     r = git("add", "-A")
     if r.returncode != 0:

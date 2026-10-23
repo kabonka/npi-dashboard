@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NPI 資料入口 NPI Portal</title>
+<style>
+  :root {
+    --bg: #0b0b0d;
+    --panel: #121215;
+    --panel2: #17171b;
+    --line: #26262c;
+    --txt: #e8e8ea;
+    --txt-dim: #9a9aa3;
+    --red: #e5484d;
+    --red-dim: #b8383c;
+    --cyan: #4cc2ff;
+    --purple: #a78bfa;
+    --green: #3ddc84;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--txt);
+    font-family: "Microsoft JhengHei", "PingFang TC", "Segoe UI", sans-serif;
+    min-height: 100vh;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  .layout { display: flex; min-height: 100vh; }
+
+  .sidebar {
+    width: 230px; flex-shrink: 0;
+    background: var(--panel);
+    border-right: 1px solid var(--line);
+    padding: 24px 0;
+    position: sticky; top: 0; height: 100vh; overflow-y: auto;
+  }
+  .brand { padding: 0 20px 20px; border-bottom: 1px solid var(--line); }
+  .brand .shield {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 40px; height: 44px; background: var(--red);
+    clip-path: polygon(50% 0, 100% 18%, 100% 65%, 50% 100%, 0 65%, 0 18%);
+    font-weight: 900; font-size: 18px; color: #fff; margin-bottom: 10px;
+  }
+  .brand h1 { font-size: 17px; letter-spacing: 1px; }
+  .brand .sub { font-size: 11px; color: var(--red); letter-spacing: 2px; margin-top: 2px; }
+  .nav-label {
+    padding: 20px 20px 8px; font-size: 10px; letter-spacing: 3px;
+    color: var(--txt-dim); text-transform: uppercase;
+  }
+  .nav a {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 9px 20px; font-size: 13px; color: var(--txt-dim);
+    border-left: 3px solid transparent;
+  }
+  .nav a:hover { color: var(--txt); background: var(--panel2); }
+  .nav a .dot { width: 7px; height: 7px; border-radius: 50%; margin-right: 9px; flex-shrink: 0; }
+  .nav a .nm { flex: 1; display: flex; align-items: center; }
+  .nav a .cnt { font-size: 11px; color: var(--txt-dim); }
+  .sys {
+    margin: 26px 20px 0; padding-top: 16px; border-top: 1px solid var(--line);
+    font-size: 11px; letter-spacing: 1px;
+  }
+  .sys .on { color: var(--green); }
+  .sys .dim { color: var(--txt-dim); margin-top: 4px; }
+
+  .main { flex: 1; padding: 0 34px 60px; min-width: 0; }
+  .topbar {
+    display: flex; justify-content: flex-end; align-items: center; gap: 28px;
+    padding: 18px 0 14px; border-bottom: 1px solid var(--line); margin-bottom: 26px;
+  }
+  .stat { text-align: center; }
+  .stat b { font-size: 18px; letter-spacing: 1px; }
+  .stat span { display: block; font-size: 10px; letter-spacing: 2px; color: var(--txt-dim); }
+  .topbar .upd { font-size: 11px; letter-spacing: 1px; color: var(--txt-dim); }
+  .topbar .upd em { color: var(--red); font-style: normal; font-weight: 700; }
+
+  .sec { margin-bottom: 38px; }
+  .sec-head {
+    display: flex; align-items: baseline; gap: 12px; margin-bottom: 16px;
+    padding-left: 12px; border-left: 3px solid var(--red);
+  }
+  .sec-head .no { color: var(--red); font-size: 12px; font-weight: 700; letter-spacing: 1px; }
+  .sec-head h2 { font-size: 17px; letter-spacing: 1px; }
+  .sec-head .n { font-size: 11px; color: var(--txt-dim); letter-spacing: 1px; }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; }
+  .card {
+    background: var(--panel2); border: 1px solid var(--line); border-radius: 8px;
+    padding: 18px 16px 14px; display: flex; flex-direction: column; gap: 8px;
+    transition: transform .15s, border-color .15s;
+  }
+  .card:hover { transform: translateY(-3px); border-color: var(--red-dim); }
+  .card .tag {
+    font-size: 9px; letter-spacing: 2px; font-weight: 700;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .card .tag::before { content: ""; width: 6px; height: 6px; background: currentColor; }
+  .t-red { color: var(--red); } .t-purple { color: var(--purple); }
+  .card h3 { font-size: 14.5px; line-height: 1.4; }
+  .card p { font-size: 12px; color: var(--txt-dim); line-height: 1.55; flex: 1; }
+  .card .meta {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 10px; border-top: 1px solid var(--line); font-size: 11px;
+  }
+  .card .meta .owner { color: var(--txt-dim); }
+  .card .meta .owner b { color: var(--txt); font-weight: 600; }
+  .card .open { color: var(--cyan); font-weight: 700; letter-spacing: 1px; }
+  .card:hover .open { color: var(--txt); }
+
+  @media (max-width: 860px) {
+    .layout { flex-direction: column; }
+    .sidebar { width: 100%; height: auto; position: static; }
+    .main { padding: 0 16px 40px; }
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="shield">N</div>
+      <h1>NPI 資料入口</h1>
+      <div class="sub">NPI PORTAL</div>
+    </div>
+    <div class="nav-label">Navigation</div>
+    <nav class="nav">
+      <a href="#sec1"><span class="nm"><span class="dot" style="background:var(--red)"></span>查詢工具</span><span class="cnt">1</span></a>
+      <a href="#sec2"><span class="nm"><span class="dot" style="background:var(--purple)"></span>檢查工具</span><span class="cnt">1</span></a>
+    </nav>
+    <div class="sys">
+      <div class="on">&#9679; SYSTEM ONLINE</div>
+      <div class="dim">KEEP BUILDING &middot; EST. 2026</div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="stat"><b>2</b><span>SITES</span></div>
+      <div class="stat"><b>2</b><span>SECTORS</span></div>
+      <div class="stat"><b>0</b><span>PINNED</span></div>
+      <div class="upd">UPDATED <em>2026.10.22</em></div>
+    </div>
+
+    <section class="sec" id="sec1">
+      <div class="sec-head"><span class="no">SEC.01</span><h2>查詢工具</h2><span class="n">1 SITES</span></div>
+      <div class="cards">
+        <a class="card" href="npi_search.html">
+          <span class="tag t-red">SEARCH</span>
+          <h3>NPI Search</h3>
+          <p>NPI 產品資料查詢 — 依機種 / 階段 / 日期快速檢索明細。</p>
+          <div class="meta"><span class="owner">負責者 : <b>NPI</b></span><span class="open">OPEN &#8594;</span></div>
+        </a>
+      </div>
+    </section>
+
+    <section class="sec" id="sec2">
+      <div class="sec-head"><span class="no">SEC.02</span><h2>檢查工具</h2><span class="n">1 SITES</span></div>
+      <div class="cards">
+        <a class="card" href="TTM_check.html">
+          <span class="tag t-purple">CHECKER</span>
+          <h3>TTM Check</h3>
+          <p>TTM 檢查工具 — 時程合理性核對與異常提示。</p>
+          <div class="meta"><span class="owner">負責者 : <b>NPI</b></span><span class="open">OPEN &#8594;</span></div>
+        </a>
+      </div>
+    </section>
+  </main>
+</div>
+</body>
+</html>

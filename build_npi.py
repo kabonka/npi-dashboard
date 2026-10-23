@@ -974,6 +974,8 @@ def git_upload():
         'TTM_expect_mp.json',
         # 期望MP 多維護者直寫：EdgeOne Pages Function（GET 讀 KV / POST 寫 KV）
         'functions/api/expect-mp.js',
+        # 網站首頁（根目錄 / 入口頁；部署副本來源為 portal.html）
+        'index.html',
     ]
     try:
         # ── 第一步：fetch + soft reset 到远程最新，避免分支分叉 ──

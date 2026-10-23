@@ -2,17 +2,19 @@
 """
 push_webnpi.py — 单独推送 WebNPI Product Matrix 页面上线（配合 push_webnpi.bat 双击使用）
 
-源头：webnpi\\product_matrix.html（webnpi 项目 build.py 的 canonical 产出；
-      本身不含 gate.js 引用 — 那行是 sync_web.py 同步到 Tencentyyy 时才注入的，
-      所以本脚本默认源头完全不需要 gate.js）
-落点：NPI_vx\\webnpi_web\\index.html（git 仓库内的部署路径 → 线上 /webnpi_web/index.html）
+2026-10-23 架構改版（做法 A：Tencentyyy = EdgeOne 唯一部署倉庫）：
+  源头：webnpi\\product_matrix.html（webnpi 项目 build.py 的 canonical 产出；
+        本身不含 gate.js 引用 — 那行是 sync_web.py 同步到 Tencentyyy 时才注入的，
+        所以本脚本默认源头完全不需要 gate.js）
+  落点：Tencentyyy\\webnpi_web\\index.html（部署倉庫內路徑 → 線上 /webnpi_web/index.html）
 
 特点：
   - 安全网：若源头万一含 <script src="gate.js"> 引用会自动移除
     （线上靠 EdgeOne 访问密码全站保护，不需要客户端密码门；
       且仓库/线上都没有 gate.js 文件，留着引用会让页面锁死打不开）
-  - 只 add / commit / push 这一个文件，不碰一键生成2.bat 上传清单里的其他内容
-  - 源头路径可用环境变量 WEBNPI_SRC 覆盖
+  - 只 add / commit / push 这一个文件，不碰一键生成2.bat 推送的其他内容
+  - 源头路径可用环境变量 WEBNPI_SRC 覆盖；仓库根可用 WEB_ROOT 覆盖
+    （預設 = 本腳本上層資料夾的 Tencentyyy，與 NPI_vx 同級）
 
 用法：双击 push_webnpi.bat，或命令行 python push_webnpi.py
 """
@@ -26,19 +28,23 @@ try:
 except Exception:
     pass
 
-BASE = os.path.dirname(os.path.abspath(__file__))  # NPI_vx 仓库目录
+BASE = os.path.dirname(os.path.abspath(__file__))  # NPI_vx
+WEB_ROOT = os.environ.get(
+    "WEB_ROOT",
+    os.path.abspath(os.path.join(BASE, "..", "Tencentyyy")),
+)
 SRC = os.environ.get(
     "WEBNPI_SRC",
     r"C:\Users\msipm\Desktop\AI assistant\webnpi\product_matrix.html",
 )
-DST = os.path.join(BASE, "webnpi_web", "index.html")
+DST = os.path.join(WEB_ROOT, "webnpi_web", "index.html")
 GATE_RE = re.compile(r'[ \t]*<script src="gate\.js"></script>\r?\n')
 
 
 def git(*args):
     return subprocess.run(
         ["git"] + list(args),
-        cwd=BASE,
+        cwd=WEB_ROOT,
         capture_output=True,
         text=True,
         encoding="utf-8",

@@ -2,6 +2,9 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NPI 資料入口 NPI Portal</title>
 <style>
@@ -9,6 +12,7 @@
     --bg: #0b0b0d;
     --panel: #121215;
     --panel2: #17171b;
+    --panel3: #1c1c22;
     --line: #26262c;
     --txt: #e8e8ea;
     --txt-dim: #9a9aa3;
@@ -17,6 +21,7 @@
     --cyan: #4cc2ff;
     --purple: #a78bfa;
     --green: #3ddc84;
+    --orange: #ffb454;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -29,8 +34,9 @@
 
   .layout { display: flex; min-height: 100vh; }
 
+  /* ===== Sidebar ===== */
   .sidebar {
-    width: 230px; flex-shrink: 0;
+    width: 240px; flex-shrink: 0;
     background: var(--panel);
     border-right: 1px solid var(--line);
     padding: 24px 0;
@@ -45,13 +51,16 @@
   }
   .brand h1 { font-size: 17px; letter-spacing: 1px; }
   .brand .sub { font-size: 11px; color: var(--red); letter-spacing: 2px; margin-top: 2px; }
+  .nav-group { margin-top: 18px; }
   .nav-label {
-    padding: 20px 20px 8px; font-size: 10px; letter-spacing: 3px;
+    padding: 0 20px 8px; font-size: 10px; letter-spacing: 2.5px;
     color: var(--txt-dim); text-transform: uppercase;
+    display: flex; align-items: center; gap: 8px;
   }
+  .nav-label .bar { width: 12px; height: 2px; background: currentColor; }
   .nav a {
     display: flex; justify-content: space-between; align-items: center;
-    padding: 9px 20px; font-size: 13px; color: var(--txt-dim);
+    padding: 8px 20px 8px 34px; font-size: 13px; color: var(--txt-dim);
     border-left: 3px solid transparent;
   }
   .nav a:hover { color: var(--txt); background: var(--panel2); }
@@ -65,10 +74,11 @@
   .sys .on { color: var(--green); }
   .sys .dim { color: var(--txt-dim); margin-top: 4px; }
 
-  .main { flex: 1; padding: 0 34px 60px; min-width: 0; }
+  /* ===== Main ===== */
+  .main { flex: 1; padding: 0 40px 70px; min-width: 0; max-width: 1280px; }
   .topbar {
-    display: flex; justify-content: flex-end; align-items: center; gap: 28px;
-    padding: 18px 0 14px; border-bottom: 1px solid var(--line); margin-bottom: 26px;
+    display: flex; justify-content: flex-end; align-items: center; gap: 30px;
+    padding: 18px 0 14px; border-bottom: 1px solid var(--line); margin-bottom: 30px;
   }
   .stat { text-align: center; }
   .stat b { font-size: 18px; letter-spacing: 1px; }
@@ -76,43 +86,94 @@
   .topbar .upd { font-size: 11px; letter-spacing: 1px; color: var(--txt-dim); }
   .topbar .upd em { color: var(--red); font-style: normal; font-weight: 700; }
 
-  .sec { margin-bottom: 38px; }
-  .sec-head {
-    display: flex; align-items: baseline; gap: 12px; margin-bottom: 16px;
-    padding-left: 12px; border-left: 3px solid var(--red);
+  /* ===== Group ===== */
+  .group { margin-bottom: 52px; }
+  .group-head {
+    position: relative;
+    display: flex; align-items: flex-end; gap: 18px;
+    padding: 22px 24px; margin-bottom: 22px;
+    background: linear-gradient(135deg, var(--panel2) 0%, var(--panel) 70%);
+    border: 1px solid var(--line); border-left: 4px solid var(--red);
+    border-radius: 10px; overflow: hidden;
   }
-  .sec-head .no { color: var(--red); font-size: 12px; font-weight: 700; letter-spacing: 1px; }
-  .sec-head h2 { font-size: 17px; letter-spacing: 1px; }
-  .sec-head .n { font-size: 11px; color: var(--txt-dim); letter-spacing: 1px; }
+  .group-head .ghost {
+    position: absolute; right: 14px; bottom: -18px;
+    font-size: 84px; font-weight: 900; letter-spacing: 2px;
+    color: rgba(255,255,255,.045); pointer-events: none; line-height: 1;
+  }
+  .group-head .no {
+    font-size: 13px; font-weight: 900; letter-spacing: 2px; color: var(--red);
+    padding: 4px 10px; border: 1px solid var(--red-dim); border-radius: 4px;
+    background: rgba(229,72,77,.08);
+  }
+  .group-head h2 { font-size: 21px; letter-spacing: 1.5px; }
+  .group-head .en {
+    font-size: 11px; letter-spacing: 3px; color: var(--txt-dim);
+    text-transform: uppercase; margin-bottom: 2px;
+  }
+  .group-head .desc { font-size: 12px; color: var(--txt-dim); margin-left: auto; padding-bottom: 4px; }
+  .group.g-spec .group-head { border-left-color: var(--cyan); }
+  .group.g-spec .group-head .no {
+    color: var(--cyan); border-color: rgba(76,194,255,.4); background: rgba(76,194,255,.07);
+  }
 
-  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; }
+  /* ===== Sub-section ===== */
+  .sub { margin-bottom: 24px; }
+  .sub:last-child { margin-bottom: 0; }
+  .sub-head {
+    display: flex; align-items: baseline; gap: 10px; margin-bottom: 12px;
+    padding-left: 10px; border-left: 3px solid var(--line);
+  }
+  .sub-head .tag { font-size: 10px; font-weight: 700; letter-spacing: 2px; }
+  .sub-head h3 { font-size: 15px; letter-spacing: 1px; }
+  .sub-head .n { font-size: 11px; color: var(--txt-dim); letter-spacing: 1px; }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; }
   .card {
-    background: var(--panel2); border: 1px solid var(--line); border-radius: 8px;
-    padding: 18px 16px 14px; display: flex; flex-direction: column; gap: 8px;
-    transition: transform .15s, border-color .15s;
+    background: var(--panel2); border: 1px solid var(--line); border-radius: 10px;
+    padding: 20px 18px 16px; display: flex; flex-direction: column; gap: 10px;
+    transition: transform .15s, border-color .15s, background .15s;
+    position: relative; overflow: hidden;
   }
-  .card:hover { transform: translateY(-3px); border-color: var(--red-dim); }
-  .card .tag {
-    font-size: 9px; letter-spacing: 2px; font-weight: 700;
-    display: inline-flex; align-items: center; gap: 6px;
+  .card::before {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--ac), transparent 70%);
+    opacity: 0; transition: opacity .15s;
   }
-  .card .tag::before { content: ""; width: 6px; height: 6px; background: currentColor; }
-  .t-red { color: var(--red); } .t-purple { color: var(--purple); }
-  .card h3 { font-size: 14.5px; line-height: 1.4; }
-  .card p { font-size: 12px; color: var(--txt-dim); line-height: 1.55; flex: 1; }
+  .card:hover { transform: translateY(-3px); border-color: var(--ac); background: var(--panel3); }
+  .card:hover::before { opacity: 1; }
+  .card .head { display: flex; align-items: center; gap: 12px; }
+  .card .ico {
+    width: 38px; height: 38px; border-radius: 8px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900; font-size: 16px; color: var(--ac);
+    background: color-mix(in srgb, var(--ac) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--ac) 35%, transparent);
+  }
+  .card .tag { font-size: 9px; letter-spacing: 2px; font-weight: 700; color: var(--ac); }
+  .card h3 { font-size: 15px; line-height: 1.4; }
+  .card p { font-size: 12px; color: var(--txt-dim); line-height: 1.6; flex: 1; }
   .card .meta {
     display: flex; justify-content: space-between; align-items: center;
-    padding-top: 10px; border-top: 1px solid var(--line); font-size: 11px;
+    padding-top: 12px; border-top: 1px solid var(--line); font-size: 11px;
   }
   .card .meta .owner { color: var(--txt-dim); }
   .card .meta .owner b { color: var(--txt); font-weight: 600; }
-  .card .open { color: var(--cyan); font-weight: 700; letter-spacing: 1px; }
+  .card .open { color: var(--ac); font-weight: 700; letter-spacing: 1px; }
   .card:hover .open { color: var(--txt); }
+
+  .ac-red { --ac: var(--red); }
+  .ac-purple { --ac: var(--purple); }
+  .ac-cyan { --ac: var(--cyan); }
+  .ac-green { --ac: var(--green); }
+  .ac-orange { --ac: var(--orange); }
 
   @media (max-width: 860px) {
     .layout { flex-direction: column; }
     .sidebar { width: 100%; height: auto; position: static; }
     .main { padding: 0 16px 40px; }
+    .group-head { flex-wrap: wrap; }
+    .group-head .desc { margin-left: 0; width: 100%; }
   }
 </style>
 </head>
@@ -125,12 +186,23 @@
       <h1>NPI 資料入口</h1>
       <div class="sub">NPI PORTAL</div>
     </div>
-    <div class="nav-label">Navigation</div>
-    <nav class="nav">
-      <a href="#sec1"><span class="nm"><span class="dot" style="background:var(--red)"></span>查詢工具</span><span class="cnt">1</span></a>
-      <a href="#sec2"><span class="nm"><span class="dot" style="background:var(--purple)"></span>檢查工具</span><span class="cnt">1</span></a>
-      <a href="#sec3"><span class="nm"><span class="dot" style="background:var(--cyan)"></span>產品矩陣</span><span class="cnt">1</span></a>
-    </nav>
+
+    <div class="nav-group">
+      <div class="nav-label" style="color:var(--red)"><span class="bar"></span>Schedule &amp; Status</div>
+      <nav class="nav">
+        <a href="#g1-s1"><span class="nm"><span class="dot" style="background:var(--red)"></span>查詢工具</span><span class="cnt">1</span></a>
+        <a href="#g1-s2"><span class="nm"><span class="dot" style="background:var(--purple)"></span>檢查工具</span><span class="cnt">1</span></a>
+      </nav>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label" style="color:var(--cyan)"><span class="bar"></span>Product &amp; Spec</div>
+      <nav class="nav">
+        <a href="#g2-s1"><span class="nm"><span class="dot" style="background:var(--cyan)"></span>產品矩陣</span><span class="cnt">1</span></a>
+        <a href="#g2-s2"><span class="nm"><span class="dot" style="background:var(--green)"></span>規格查詢</span><span class="cnt">1</span></a>
+      </nav>
+    </div>
+
     <div class="sys">
       <div class="on">&#9679; SYSTEM ONLINE</div>
       <div class="dim">KEEP BUILDING &middot; EST. 2026</div>
@@ -139,47 +211,99 @@
 
   <main class="main">
     <div class="topbar">
-      <div class="stat"><b>3</b><span>SITES</span></div>
-      <div class="stat"><b>3</b><span>SECTORS</span></div>
-      <div class="stat"><b>0</b><span>PINNED</span></div>
-      <div class="upd">UPDATED <em>2026.10.23</em></div>
+      <div class="stat"><b>4</b><span>SITES</span></div>
+      <div class="stat"><b>2</b><span>GROUPS</span></div>
+      <div class="stat"><b>4</b><span>SECTORS</span></div>
+      <div class="upd">UPDATED <em>2026.10.26</em></div>
     </div>
 
-    <section class="sec" id="sec1">
-      <div class="sec-head"><span class="no">SEC.01</span><h2>查詢工具</h2><span class="n">1 SITES</span></div>
-      <div class="cards">
-        <a class="card" href="NPI_vx_web/npi_search.html">
-          <span class="tag t-red">SEARCH</span>
-          <h3>NPI Search</h3>
-          <p>NPI 產品資料查詢 — 依機種 / 階段 / 日期快速檢索明細。</p>
-          <div class="meta"><span class="owner">負責者 : <b>NPI</b></span><span class="open">OPEN &#8594;</span></div>
-        </a>
+    <!-- ============ GROUP 1 : NPI Schedule & Status ============ -->
+    <section class="group g-sched" id="g1">
+      <div class="group-head">
+        <span class="no">G1</span>
+        <div>
+          <div class="en">NPI Schedule &amp; Status</div>
+          <h2>時程與狀態</h2>
+        </div>
+        <span class="desc">NPI 時程查檢與狀態追蹤相關工具</span>
+        <span class="ghost">01</span>
+      </div>
+
+      <div class="sub" id="g1-s1">
+        <div class="sub-head"><span class="tag" style="color:var(--red)">QUERY</span><h3>查詢工具</h3><span class="n">1 SITES</span></div>
+        <div class="cards">
+          <a class="card ac-red" href="NPI_vx_web/npi_search.html">
+            <div class="head"><span class="ico">S</span><div><div class="tag">SEARCH</div><h3>NPI Search</h3></div></div>
+            <p>NPI 產品資料查詢 — 依機種 / 階段 / 日期快速檢索明細。</p>
+            <div class="meta"><span class="owner">負責者 : <b>NPI</b></span><span class="open">OPEN &#8594;</span></div>
+          </a>
+        </div>
+      </div>
+
+      <div class="sub" id="g1-s2">
+        <div class="sub-head"><span class="tag" style="color:var(--purple)">CHECK</span><h3>檢查工具</h3><span class="n">1 SITES</span></div>
+        <div class="cards">
+          <a class="card ac-purple" href="NPI_vx_web/TTM_check.html">
+            <div class="head"><span class="ico">T</span><div><div class="tag">CHECKER</div><h3>TTM Check</h3></div></div>
+            <p>TTM 檢查工具 — 時程合理性核對與異常提示。</p>
+            <div class="meta"><span class="owner">負責者 : <b>NPI</b></span><span class="open">OPEN &#8594;</span></div>
+          </a>
+        </div>
       </div>
     </section>
 
-    <section class="sec" id="sec2">
-      <div class="sec-head"><span class="no">SEC.02</span><h2>檢查工具</h2><span class="n">1 SITES</span></div>
-      <div class="cards">
-        <a class="card" href="NPI_vx_web/TTM_check.html">
-          <span class="tag t-purple">CHECKER</span>
-          <h3>TTM Check</h3>
-          <p>TTM 檢查工具 — 時程合理性核對與異常提示。</p>
-          <div class="meta"><span class="owner">負責者 : <b>NPI</b></span><span class="open">OPEN &#8594;</span></div>
-        </a>
+    <!-- ============ GROUP 2 : Product & Spec ============ -->
+    <section class="group g-spec" id="g2">
+      <div class="group-head">
+        <span class="no">G2</span>
+        <div>
+          <div class="en">Product &amp; Spec</div>
+          <h2>產品與規格</h2>
+        </div>
+        <span class="desc">產品矩陣與規格資料檢索</span>
+        <span class="ghost">02</span>
       </div>
-    </section>
-    <section class="sec" id="sec3">
-      <div class="sec-head"><span class="no">SEC.03</span><h2>產品矩陣</h2><span class="n">1 SITES</span></div>
-      <div class="cards">
-        <a class="card" href="webnpi_web/index.html">
-          <span class="tag" style="color:var(--cyan)">MATRIX</span>
-          <h3>WebNPI Product Matrix</h3>
-          <p>產品矩陣總覽 — 依 MKT / Size / CPU / GPU 檢索各機種量產時程。</p>
-          <div class="meta"><span class="owner">負責者 : <b>NPI</b></span><span class="open">OPEN &#8594;</span></div>
-        </a>
+
+      <div class="sub" id="g2-s1">
+        <div class="sub-head"><span class="tag" style="color:var(--cyan)">MATRIX</span><h3>產品矩陣</h3><span class="n">1 SITES</span></div>
+        <div class="cards">
+          <a class="card ac-cyan" href="webnpi_web/index.html">
+            <div class="head"><span class="ico">M</span><div><div class="tag">MATRIX</div><h3>WebNPI Product Matrix</h3></div></div>
+            <p>產品矩陣總覽 — 依 MKT / Size / CPU / GPU 檢索各機種量產時程。</p>
+            <div class="meta"><span class="owner">負責者 : <b>NPI</b></span><span class="open">OPEN &#8594;</span></div>
+          </a>
+        </div>
+      </div>
+
+      <div class="sub" id="g2-s2">
+        <div class="sub-head"><span class="tag" style="color:var(--green)">SPEC</span><h3>規格查詢</h3><span class="n">1 SITES</span></div>
+        <div class="cards">
+          <a class="card ac-green" href="spec2_web/index.html">
+            <div class="head"><span class="ico">P</span><div><div class="tag">SPEC</div><h3>Spec 總表 · 規格查詢</h3></div></div>
+            <p>依 Group / Feature / 機種檢索產品規格明細，支援 Excel 匯出。</p>
+            <div class="meta"><span class="owner">負責者 : <b>NPI</b></span><span class="open">OPEN &#8594;</span></div>
+          </a>
+        </div>
       </div>
     </section>
   </main>
 </div>
+
+<script>
+/* ===== 防缓存自动更新：比对 version.json，发现新版本强制刷新一次 ===== */
+(async function () {
+  try {
+    var res = await fetch('version.json?t=' + Date.now(), { cache: 'no-store' });
+    var v = (await res.text()).trim();
+    var seen = sessionStorage.getItem('portal_v');
+    if (seen === null) {
+      sessionStorage.setItem('portal_v', v);
+    } else if (seen !== v) {
+      sessionStorage.setItem('portal_v', v);
+      location.reload(true);
+    }
+  } catch (e) { /* version.json 不存在时静默跳过 */ }
+})();
+</script>
 </body>
 </html>

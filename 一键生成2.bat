@@ -1,5 +1,23 @@
 @echo off
-rem 讓主控台用 UTF-8，Python 輸出的中文才不會亂碼 (2026-10-03)
+rem ============================================================
+rem  一键生成2.bat - DEPLOY step only (since 2026-10-26):
+rem    sync sources into Tencentyyy -> push to GitHub ->
+rem    EdgeOne auto-deploys (~15-20s).
+rem
+rem  Full flow (3 stages):
+rem    [1] source data update  (edit Excel / HTML by hand)
+rem    [2] update_xxx.bat      rebuild + sync into Tencentyyy
+rem    [3] 一键生成2.bat        upload to EdgeOne  <- this file
+rem
+rem  This script NO LONGER rebuilds anything. If you changed
+rem  source data, run the matching update_*.bat FIRST:
+rem    update_npi_search.bat      (Spec總表.xlsx -> NPI Search)
+rem    update_TTM_check.bat       (Spec總表.xlsx -> TTM Check)
+rem    update_product_matrix.bat  (webnpi xlsx -> Product Matrix)
+rem    update_standalone.bat      (spec2 xlsx -> Spec standalone)
+rem  portal.html / expect-mp.js / TTM_expect_mp.json have no
+rem  generator - just run this file, its sync covers them.
+rem ============================================================
 chcp 65001 >nul 2>&1
 cd /d "%~dp0"
 
@@ -50,7 +68,7 @@ if errorlevel 1 (
 )
 for /f "delims=" %%i in ('where python') do set PYCMD=%%i
 echo WARNING: Using 'where python' result.
-echo If you get ExitCode 9009, you have the Microsoft Store stub Python.
+echo If you get ExitCode 9009, this is the Microsoft Store stub Python.
 echo Install real Python from https://www.python.org/downloads/
 
 :found
@@ -63,85 +81,23 @@ echo === STEP 2: Install openpyxl ===
 echo Done
 
 echo.
-echo === STEP 3: Check files ===
-if not exist "%~dp0npi_dashboard.html" (
-    echo ERROR: npi_dashboard.html NOT FOUND
-    dir "%~dp0"
-    pause
-    exit /b 1
-)
-echo npi_dashboard.html OK
-if not exist "%~dp0npi_dashboard2.html" (
-    echo ERROR: npi_dashboard2.html NOT FOUND
-    pause
-    exit /b 1
-)
-echo npi_dashboard2.html OK
-if not exist "%~dp0build_npi.py" (
-    echo ERROR: build_npi.py NOT FOUND
-    pause
-    exit /b 1
-)
-echo build_npi.py OK
-if not exist "%~dp0build_ttm_npi.py" (
-    echo ERROR: build_ttm_npi.py NOT FOUND
-    pause
-    exit /b 1
-)
-echo build_ttm_npi.py OK
-
-echo.
-echo === BEFORE (%date% %time%) ===
-dir "%~dp0*.html" | findstr ".html"
-
-rem === 順序調整 (2026-10-03) ===
-rem build_mp_dashboard.py 會「讀取」build_npi.py 產生的 MP變動記錄.xlsx,
-rem 所以 mp/ttm 一定要在 build_npi.py 之後才跑.
-rem 但上傳只在最後做一次 -> 三個 dashboard 的最新版一起推上去, 不再慢一輪.
-rem (原本 build_npi.py 內建上傳, 現在用 --no-upload 關掉, 改由 STEP 7 統一推送)
-
-echo.
-echo === STEP 4: Run build_npi.py (build only, no upload) ===
-set NPI_NO_PAUSE=1
-%PYCMD% "%~dp0build_npi.py" --no-upload
-echo ExitCode: %errorlevel%
-
-echo.
-echo === STEP 5: Run build_mp_dashboard.py (MP變動記錄) ===
-if exist "%~dp0build_mp_dashboard.py" (
-    %PYCMD% "%~dp0build_mp_dashboard.py"
-    echo ExitCode: %errorlevel%
-) else (
-    echo SKIP: build_mp_dashboard.py NOT FOUND
-)
-
-echo.
-echo === STEP 6: Run build_ttm_npi.py (TTM Dashboard) ===
-%PYCMD% "%~dp0build_ttm_npi.py"
-echo ExitCode: %errorlevel%
-
-echo.
-echo === STEP 7: Deploy copy to Tencentyyy repo ===
+echo === STEP 3: Sync sources into Tencentyyy (safety pass) ===
 %PYCMD% "%~dp0sync_web.py"
 echo ExitCode: %errorlevel%
 
 echo.
-echo === STEP 8: Push deploy repo (Tencentyyy = LIVE site) ===
+echo === STEP 4: Push deploy repo (Tencentyyy = LIVE site) ===
 %PYCMD% "%~dp0deploy_push.py"
 echo ExitCode: %errorlevel%
 
 echo.
-echo === STEP 9: Backup push old repo (kabonka/npi-dashboard) ===
+echo === STEP 5: Backup push old repo (kabonka/npi-dashboard) ===
 %PYCMD% "%~dp0build_npi.py" --upload-only
 echo ExitCode: %errorlevel%
-set NPI_NO_PAUSE=
-
-echo.
-echo === AFTER (%date% %time%) ===
-dir "%~dp0*.html" | findstr ".html"
 
 echo.
 echo ==========================================
-echo  DONE. 所有 dashboard 已生成並推送 GitHub
+echo  DONE. Pushed to GitHub - EdgeOne deploys
+echo  in ~15-20 seconds. Ctrl+F5 to verify.
 echo ==========================================
 pause

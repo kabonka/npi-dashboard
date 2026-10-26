@@ -10,7 +10,7 @@ sync_web.py — 部署複製器：把 NPI_vx 產出的乾淨檔案複製進 Tenc
     webnpi_web/index.html      產品矩陣（由 push_webnpi.py 單獨管理，本腳本不清除）
     functions/api/expect-mp.js Pages Function（必须在倉庫根目錄，路由才會是 /api/expect-mp）
     TTM_expect_mp.json         期望MP 靜態基準（頁面 fallback 用，留在根目錄）
-    npi_dashboard*.html / *.xlsx / MP变动记录*  根目錄其餘上線檔（互相不連結，留根目錄）
+    （npi_dashboard 系列 / MP變動記錄 dashboard 2026-10-23 起不再上線，留在 NPI_vx 本機）
 
   不再注入 gate.js：線上靠 EdgeOne 訪問密碼全站保護（2026-10-23 與使用者確認）。
   安全網：若來源檔殘留 <script src="gate.js"> 引用會自動剝離；剝不掉就中止（避免頁面被鎖死）。
@@ -25,6 +25,7 @@ import os
 import re
 import shutil
 import sys
+import datetime
 
 try:
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -42,21 +43,13 @@ GATE_RE = re.compile(r'[ \t]*<script src="gate\.js"></script>\r?\n')
 # (NPI_vx 來源檔) -> (Tencentyyy 倉庫內的相對路徑，用 / 分隔)
 MAPPING = [
     ("portal.html",                "index.html"),
+    ("version.json",               "version.json"),
     ("DEPLOY_README.md",           "README.md"),
     ("npi_search.html",            "NPI_vx_web/npi_search.html"),
     ("TTM_check.html",             "NPI_vx_web/TTM_check.html"),
-    ("npi_dashboard.html",         "npi_dashboard.html"),
-    ("npi_dashboard2.html",        "npi_dashboard2.html"),
-    ("npi_data.json",              "npi_data.json"),
-    ("npi_dashboard.xlsx",         "npi_dashboard.xlsx"),
-    ("MP变动记录.xlsx",             "MP变动记录.xlsx"),
-    ("MP变动记录_dashboard.html",   "MP变动记录_dashboard.html"),
     ("TTM_expect_mp.json",         "TTM_expect_mp.json"),
     ("functions/api/expect-mp.js", "functions/api/expect-mp.js"),
-    # 根目錄靜態資源（npi_dashboard 系列的截圖功能用；TTM/npi_search 已全內聯不需）
-    ("crop-screenshot.css",        "crop-screenshot.css"),
-    ("crop-screenshot.js",         "crop-screenshot.js"),
-    ("html2canvas.min.js",         "html2canvas.min.js"),
+    ("../spec2/index.standalone.html", "spec2_web/index.html"),
 ]
 
 # webnpi_web 由 push_webnpi.py 單獨推送：本腳本不複製它，但 prune 時要保留
@@ -110,6 +103,16 @@ def main():
             continue
         dst_path = os.path.join(WEB_ROOT, *dst_rel.split("/"))
         os.makedirs(os.path.dirname(dst_path), exist_ok=True)
+
+        # 版本戳：每次部署寫入新時間戳，讓線上 portal 的版本檢測腳本觸發自動刷新
+        if dst_rel == "version.json":
+            stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+            with open(dst_path, "w", encoding="utf-8", newline="") as f:
+                f.write(stamp + "\n")
+            print("  ->", dst_rel, "(stamp", stamp + ")")
+            copied += 1
+            continue
+
         if dst_rel.endswith(TEXT_EXT):
             with open(src_path, "r", encoding="utf-8", errors="replace") as f:
                 content = f.read()

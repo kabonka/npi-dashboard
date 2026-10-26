@@ -1,25 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-sync_web.py — 部署複製器：把 NPI_vx 產出的乾淨檔案複製進 Tencentyyy（git 倉庫根）。
-由 一键生成.bat / 一键生成2.bat 在建置完成後呼叫。
+sync_web.py - deploy copier: copy NPI_vx clean files into Tencentyyy (git repo root)
+and inject front-end gate gate.js (SHA-256, unlock once per origin).
+Called by bat; output is GitHub kabonka/npi-portal auto-deploy source.
 
-2026-10-23 架構改版（做法 A：Tencentyyy = EdgeOne 唯一部署倉庫）：
-  倉庫佈局（一功能一資料夾，入口首頁在根目錄）：
-    index.html                 入口首頁（源：portal.html，卡片連結各功能）
-    NPI_vx_web/                查詢 + 檢查工具（npi_search / TTM_check，皆自足）
-    webnpi_web/index.html      產品矩陣（由 push_webnpi.py 單獨管理，本腳本不清除）
-    functions/api/expect-mp.js Pages Function（必须在倉庫根目錄，路由才會是 /api/expect-mp）
-    TTM_expect_mp.json         期望MP 靜態基準（頁面 fallback 用，留在根目錄）
-    （npi_dashboard 系列 / MP變動記錄 dashboard 2026-10-23 起不再上線，留在 NPI_vx 本機）
-
-  不再注入 gate.js：線上靠 EdgeOne 訪問密碼全站保護（2026-10-23 與使用者確認）。
-  安全網：若來源檔殘留 <script src="gate.js"> 引用會自動剝離；剝不掉就中止（避免頁面被鎖死）。
-
-  prune：刪除 Tencentyyy 中不在部署清單的檔案（自動清除舊 gate.js 版副本），
-  但保留 .git 與 webnpi_web/。要新增部署檔記得加進 MAPPING，否則會被 prune 掉。
-
-  路徑可攜：WEB_ROOT 預設 = 本腳本上層資料夾的 Tencentyyy（與 NPI_vx 同級），
-  可用環境變數 WEB_ROOT 覆蓋。
+2026-10-26 fix: re-enable gate.js injection (EdgeOne free plan has no built-in access
+password, so the client-side gate is the real protection).
 """
 import os
 import re
@@ -32,15 +18,13 @@ try:
 except Exception:
     pass
 
-BASE = os.path.dirname(os.path.abspath(__file__))  # NPI_vx（build 工作區）
-WEB_ROOT = os.environ.get(
-    "WEB_ROOT",
-    os.path.abspath(os.path.join(BASE, "..", "Tencentyyy")),
-)
+BASE = os.path.dirname(os.path.abspath(__file__))
+WEB_ROOT = os.environ.get("WEB_ROOT", os.path.abspath(os.path.join(BASE, "..", "Tencentyyy")))
 
-GATE_RE = re.compile(r'[ \t]*<script src="gate\.js"></script>\r?\n')
+GATE_SRC = os.path.join(BASE, "gate.js")
+HEAD_RE = re.compile(r'(<head[^>]*>)', re.IGNORECASE)
+GATE_REF_RE = re.compile(r'[ \t]*<script src="[^"]*gate\.js"></script>\r?\n?', re.IGNORECASE)
 
-# (NPI_vx 來源檔) -> (Tencentyyy 倉庫內的相對路徑，用 / 分隔)
 MAPPING = [
     ("portal.html",                "index.html"),
     ("version.json",               "version.json"),
@@ -52,25 +36,39 @@ MAPPING = [
     ("../spec2/index.standalone.html", "spec2_web/index.html"),
 ]
 
-# webnpi_web 由 push_webnpi.py 單獨推送：本腳本不複製它，但 prune 時要保留
 EXTERNAL_KEEP = {"webnpi_web/index.html"}
-
-ALLOWED = {dst for _, dst in MAPPING} | EXTERNAL_KEEP
+ALLOWED = {dst for _, dst in MAPPING} | EXTERNAL_KEEP | {"gate.js"}
 TEXT_EXT = (".html", ".js", ".css")
 
 
+def gate_rel_path(dst_rel):
+    parts = dst_rel.split("/")
+    depth = max(0, len(parts) - 1)
+    return ("../" * depth) + "gate.js"
+
+
+def inject_gate(content, dst_rel):
+    content = GATE_REF_RE.sub("", content)
+    rel = gate_rel_path(dst_rel)
+    tag = '<script src="' + rel + '"></script>\n'
+    m = HEAD_RE.search(content)
+    if m:
+        content = content[:m.end()] + "\n" + tag + content[m.end():]
+    else:
+        content = tag + content
+    return content
+
+
 def prune(root):
-    """刪除 root 中不在 ALLOWED 的檔案（保留 .git），並清理空的非 .git 資料夾。"""
     removed = []
     for dirpath, dirnames, filenames in os.walk(root):
-        dirnames[:] = [d for d in dirnames if d != ".git"]  # 不走進 .git
+        dirnames[:] = [d for d in dirnames if d != ".git"]
         for name in filenames:
             p = os.path.join(dirpath, name)
             rel = os.path.relpath(p, root).replace(os.sep, "/")
             if rel not in ALLOWED:
                 try:
-                    os.remove(p)
-                    removed.append(rel)
+                    os.remove(p); removed.append(rel)
                 except Exception as e:
                     print("  WARN cannot prune:", rel, e)
     for dirpath, dirnames, filenames in os.walk(root, topdown=False):
@@ -79,79 +77,70 @@ def prune(root):
         if ".git" in dirpath.replace(os.sep, "/").split("/"):
             continue
         if not os.listdir(dirpath):
-            try:
-                os.rmdir(dirpath)
-            except Exception:
-                pass
+            try: os.rmdir(dirpath)
+            except Exception: pass
     return removed
 
 
-def main():
-    print("=== Deploy copy -> Tencentyyy ===")
-    print("SRC :", BASE)
-    print("DST :", WEB_ROOT)
-    if not os.path.isdir(WEB_ROOT):
-        print("[FAIL] WEB_ROOT not found:", WEB_ROOT)
-        return 1
+def inject_all_html(root):
+    n = 0
+    for dirpath, dirnames, filenames in os.walk(root):
+        dirnames[:] = [d for d in dirnames if d != ".git"]
+        for name in filenames:
+            if not name.lower().endswith(".html"):
+                continue
+            p = os.path.join(dirpath, name)
+            rel = os.path.relpath(p, root).replace(os.sep, "/")
+            try:
+                with open(p, "r", encoding="utf-8", errors="replace") as f:
+                    c = f.read()
+                c2 = inject_gate(c, rel)
+                if c2 != c:
+                    with open(p, "w", encoding="utf-8", newline="") as f:
+                        f.write(c2)
+                    print("  gate injected ->", rel)
+                    n += 1
+            except Exception as e:
+                print("  WARN cannot gate:", rel, e)
+    return n
 
-    copied = stripped = skipped = 0
+
+def main():
+    print("=== Deploy copy -> Tencentyyy (with gate.js) ===")
+    print("SRC :", BASE); print("DST :", WEB_ROOT)
+    if not os.path.isdir(WEB_ROOT):
+        print("[FAIL] WEB_ROOT not found:", WEB_ROOT); return 1
+    if not os.path.isfile(GATE_SRC):
+        print("[FAIL] gate.js not found in source:", GATE_SRC); return 1
+    shutil.copy2(GATE_SRC, os.path.join(WEB_ROOT, "gate.js"))
+    print("  -> gate.js (root)")
+    copied = skipped = 0
     for src_name, dst_rel in MAPPING:
         src_path = os.path.join(BASE, src_name)
         if not os.path.isfile(src_path):
-            print("  SKIP (missing source):", src_name)
-            skipped += 1
-            continue
+            print("  SKIP (missing source):", src_name); skipped += 1; continue
         dst_path = os.path.join(WEB_ROOT, *dst_rel.split("/"))
         os.makedirs(os.path.dirname(dst_path), exist_ok=True)
-
-        # 版本戳：每次部署寫入新時間戳，讓線上 portal 的版本檢測腳本觸發自動刷新
         if dst_rel == "version.json":
-            stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+            now = datetime.datetime.now()
+            stamp = "{:04d}{:02d}{:02d}-{:02d}{:02d}{:02d}".format(now.year, now.month, now.day, now.hour, now.minute, now.second)
             with open(dst_path, "w", encoding="utf-8", newline="") as f:
                 f.write(stamp + "\n")
-            print("  ->", dst_rel, "(stamp", stamp + ")")
-            copied += 1
-            continue
-
+            print("  ->", dst_rel, "(stamp", stamp + ")"); copied += 1; continue
         if dst_rel.endswith(TEXT_EXT):
             with open(src_path, "r", encoding="utf-8", errors="replace") as f:
                 content = f.read()
-            new_content = GATE_RE.sub("", content)
-            if new_content != content:
-                stripped += 1
-                content = new_content
-            if "gate.js" in content:
-                print("[FAIL] gate.js reference remains in", src_name, "- abort")
-                return 1
             with open(dst_path, "w", encoding="utf-8", newline="") as f:
                 f.write(content)
         else:
             shutil.copy2(src_path, dst_path)
-        print("  ->", dst_rel)
-        copied += 1
-
+        print("  ->", dst_rel); copied += 1
     removed = prune(WEB_ROOT)
     if removed:
         print("  pruned:", ", ".join(removed))
-
-    # webnpi_web 由 push_webnpi.py / webnpi 專案 sync_web.py 寫入；
-    # 後者會注入 gate.js，這裡一律清掉（線上靠 EdgeOne 訪問密碼，不掛用戶端門）
-    ext_html = os.path.join(WEB_ROOT, "webnpi_web", "index.html")
-    if os.path.isfile(ext_html):
-        with open(ext_html, "r", encoding="utf-8", errors="replace") as f:
-            ext = f.read()
-        new_ext = GATE_RE.sub("", ext)
-        if new_ext != ext:
-            if "gate.js" in new_ext:
-                print("[FAIL] gate.js reference remains in webnpi_web/index.html - abort")
-                return 1
-            with open(ext_html, "w", encoding="utf-8", newline="") as f:
-                f.write(new_ext)
-            stripped += 1
-            print("  cleaned webnpi_web/index.html (gate.js ref stripped)")
-
-    print("DONE. %d file(s) deployed, %d gate-stripped, %d source(s) skipped."
-          % (copied, stripped, skipped))
+    n = inject_all_html(WEB_ROOT)
+    print("  gate injected into", n, "file(s).")
+    print("DONE.", copied, "file(s) deployed,", skipped, "source(s) skipped.")
     return 0
 
 

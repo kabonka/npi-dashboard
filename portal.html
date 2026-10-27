@@ -87,12 +87,7 @@
   .topbar .upd em { color: var(--red); font-style: normal; font-weight: 700; }
 
   /* ===== Group ===== */
-  /* Group 作为 3 列网格容器：同 Group 下所有卡片（跨 sub-section）并排，满 3 张换行 */
-  .group {
-    margin-bottom: 52px;
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; align-items: start;
-  }
-  .group > .group-head { grid-column: 1 / -1; }
+  .group { margin-bottom: 52px; }
   .group-head {
     position: relative;
     display: flex; align-items: flex-end; gap: 18px;
@@ -122,20 +117,10 @@
     color: var(--cyan); border-color: rgba(76,194,255,.4); background: rgba(76,194,255,.07);
   }
 
-  /* ===== Sub-section ===== */
-  /* .sub 与 .cards 用 display:contents 把卡片释放进 Group 的 3 列网格，
-     这样不同 sub 的卡片会真正并排；sub-head 仍作为整行分隔标签 */
-  .sub { display: contents; }
-  .sub-head {
-    grid-column: 1 / -1;
-    display: flex; align-items: baseline; gap: 10px; margin-bottom: 12px;
-    padding-left: 10px; border-left: 3px solid var(--line);
-  }
-  .sub-head .tag { font-size: 10px; font-weight: 700; letter-spacing: 2px; }
-  .sub-head h3 { font-size: 15px; letter-spacing: 1px; }
-  .sub-head .n { font-size: 11px; color: var(--txt-dim); letter-spacing: 1px; }
-
-  .cards { display: contents; }
+  /* ===== Cards =====
+     同一 Group 下的所有卡片共用这一个 3 列网格：并排、满 3 张换行。
+     （不再按 sub-section 拆网格，否则每个 sub 只有 1 张卡时会被挤成 1/3 宽） */
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
   .card {
     background: var(--panel2); border: 1px solid var(--line); border-radius: 10px;
     padding: 20px 18px 16px; display: flex; flex-direction: column; gap: 10px;
@@ -158,6 +143,7 @@
     border: 1px solid color-mix(in srgb, var(--ac) 35%, transparent);
   }
   .card .tag { font-size: 9px; letter-spacing: 2px; font-weight: 700; color: var(--ac); }
+  .card .tag .cat { color: var(--txt-dim); letter-spacing: 1px; font-weight: 400; margin-left: 7px; }
   .card h3 { font-size: 15px; line-height: 1.4; }
   .card p { font-size: 12px; color: var(--txt-dim); line-height: 1.6; flex: 1; }
   .card .meta {
@@ -185,7 +171,7 @@
     .nav a { padding: 7px 16px; font-size: 14px; }
     .sys { display: none; }
     .main { padding: 0 20px 50px; max-width: none; }
-    .group { grid-template-columns: repeat(2, 1fr); }
+    .cards { grid-template-columns: repeat(2, 1fr); }
     .group-head { flex-wrap: wrap; }
     .group-head .desc { margin-left: 0; width: 100%; padding-bottom: 0; }
     .group-head .ghost { font-size: 62px; }
@@ -199,7 +185,7 @@
     .group-head { padding: 16px 14px; gap: 12px; }
     .group-head h2 { font-size: 18px; }
     .group-head .ghost { display: none; }
-    .group { grid-template-columns: 1fr; }
+    .cards { grid-template-columns: 1fr; }
     .card { padding: 16px 14px 12px; }
   }
 </style>
@@ -263,26 +249,17 @@
         <span class="ghost">01</span>
       </div>
 
-      <div class="sub" id="g1-s1">
-        <div class="sub-head"><span class="tag" style="color:var(--red)">QUERY</span><h3>查詢工具</h3><span class="n">1 SITES</span></div>
-        <div class="cards">
-          <a class="card ac-red" href="NPI_vx_web/npi_search.html">
-            <div class="head"><span class="ico">S</span><div><div class="tag">SEARCH</div><h3>NPI Search</h3></div></div>
-            <p>NPI 產品資料查詢 — 依機種 / 階段 / 日期快速檢索明細。</p>
-            <div class="meta"><span class="owner">負責者 : <b>NPI</b></span><span class="open">OPEN &#8594;</span></div>
-          </a>
-        </div>
-      </div>
-
-      <div class="sub" id="g1-s2">
-        <div class="sub-head"><span class="tag" style="color:var(--purple)">CHECK</span><h3>檢查工具</h3><span class="n">1 SITES</span></div>
-        <div class="cards">
-          <a class="card ac-purple" href="NPI_vx_web/TTM_check.html">
-            <div class="head"><span class="ico">T</span><div><div class="tag">CHECKER</div><h3>TTM Check</h3></div></div>
-            <p>TTM 檢查工具 — 時程合理性核對與異常提示。</p>
-            <div class="meta"><span class="owner">負責者 : <b>NPI</b></span><span class="open">OPEN &#8594;</span></div>
-          </a>
-        </div>
+      <div class="cards">
+        <a class="card ac-red" id="g1-s1" href="NPI_vx_web/npi_search.html">
+          <div class="head"><span class="ico">S</span><div><div class="tag">SEARCH <span class="cat">查詢工具</span></div><h3>NPI Search</h3></div></div>
+          <p>NPI 產品資料查詢 — 依機種 / 階段 / 日期快速檢索明細。</p>
+          <div class="meta"><span class="owner">負責者 : <b>NPI</b></span><span class="open">OPEN &#8594;</span></div>
+        </a>
+        <a class="card ac-purple" id="g1-s2" href="NPI_vx_web/TTM_check.html">
+          <div class="head"><span class="ico">T</span><div><div class="tag">CHECKER <span class="cat">檢查工具</span></div><h3>TTM Check</h3></div></div>
+          <p>TTM 檢查工具 — 時程合理性核對與異常提示。</p>
+          <div class="meta"><span class="owner">負責者 : <b>NPI</b></span><span class="open">OPEN &#8594;</span></div>
+        </a>
       </div>
     </section>
 
@@ -298,26 +275,17 @@
         <span class="ghost">02</span>
       </div>
 
-      <div class="sub" id="g2-s1">
-        <div class="sub-head"><span class="tag" style="color:var(--cyan)">MATRIX</span><h3>產品矩陣</h3><span class="n">1 SITES</span></div>
-        <div class="cards">
-          <a class="card ac-cyan" href="webnpi_web/index.html">
-            <div class="head"><span class="ico">M</span><div><div class="tag">MATRIX</div><h3>WebNPI Product Matrix</h3></div></div>
-            <p>產品矩陣總覽 — 依 MKT / Size / CPU / GPU 檢索各機種量產時程。</p>
-            <div class="meta"><span class="owner">負責者 : <b>NPI</b></span><span class="open">OPEN &#8594;</span></div>
-          </a>
-        </div>
-      </div>
-
-      <div class="sub" id="g2-s2">
-        <div class="sub-head"><span class="tag" style="color:var(--green)">SPEC</span><h3>規格查詢</h3><span class="n">1 SITES</span></div>
-        <div class="cards">
-          <a class="card ac-green" href="spec2_web/index.html">
-            <div class="head"><span class="ico">P</span><div><div class="tag">SPEC</div><h3>Spec 總表 · 規格查詢</h3></div></div>
-            <p>依 Group / Feature / 機種檢索產品規格明細，支援 Excel 匯出。</p>
-            <div class="meta"><span class="owner">負責者 : <b>NPI</b></span><span class="open">OPEN &#8594;</span></div>
-          </a>
-        </div>
+      <div class="cards">
+        <a class="card ac-cyan" id="g2-s1" href="webnpi_web/index.html">
+          <div class="head"><span class="ico">M</span><div><div class="tag">MATRIX <span class="cat">產品矩陣</span></div><h3>WebNPI Product Matrix</h3></div></div>
+          <p>產品矩陣總覽 — 依 MKT / Size / CPU / GPU 檢索各機種量產時程。</p>
+          <div class="meta"><span class="owner">負責者 : <b>NPI</b></span><span class="open">OPEN &#8594;</span></div>
+        </a>
+        <a class="card ac-green" id="g2-s2" href="spec2_web/index.html">
+          <div class="head"><span class="ico">P</span><div><div class="tag">SPEC <span class="cat">規格查詢</span></div><h3>Spec 總表 · 規格查詢</h3></div></div>
+          <p>依 Group / Feature / 機種檢索產品規格明細，支援 Excel 匯出。</p>
+          <div class="meta"><span class="owner">負責者 : <b>NPI</b></span><span class="open">OPEN &#8594;</span></div>
+        </a>
       </div>
     </section>
     <!-- ============ GROUP 3 : PM Assistant ============ -->
@@ -332,15 +300,12 @@
         <span class="ghost">03</span>
       </div>
 
-      <div class="sub" id="g3-s1">
-        <div class="sub-head"><span class="tag" style="color:var(--green)">EPEAT</span><h3>EPEAT 儀表盤</h3><span class="n">1 SITES</span></div>
-        <div class="cards">
-          <a class="card ac-green" href="epeats_web/index.html">
-            <div class="head"><span class="ico">E</span><div><div class="tag">EPEAT</div><h3>EPEAT Dashboard</h3></div></div>
-            <p>EPEAT 環保合規資料儀表盤 — 依機種 / 類別檢視合規狀態，支援 Excel 匯出。</p>
-            <div class="meta"><span class="owner">負責者 : <b>PM</b></span><span class="open">OPEN &#8594;</span></div>
-          </a>
-        </div>
+      <div class="cards">
+        <a class="card ac-green" id="g3-s1" href="epeats_web/index.html">
+          <div class="head"><span class="ico">E</span><div><div class="tag">EPEAT <span class="cat">EPEAT 儀表盤</span></div><h3>EPEAT Dashboard</h3></div></div>
+          <p>EPEAT 環保合規資料儀表盤 — 依機種 / 類別檢視合規狀態，支援 Excel 匯出。</p>
+          <div class="meta"><span class="owner">負責者 : <b>PM</b></span><span class="open">OPEN &#8594;</span></div>
+        </a>
       </div>
     </section>
 

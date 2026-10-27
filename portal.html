@@ -36,7 +36,7 @@
 
   /* ===== Sidebar ===== */
   .sidebar {
-    width: 240px; flex-shrink: 0;
+    width: 270px; flex-shrink: 0;
     background: var(--panel);
     border-right: 1px solid var(--line);
     padding: 24px 0;
@@ -53,20 +53,20 @@
   .brand .sub { font-size: 11px; color: var(--red); letter-spacing: 2px; margin-top: 2px; }
   .nav-group { margin-top: 18px; }
   .nav-label {
-    padding: 0 20px 8px; font-size: 10px; letter-spacing: 2.5px;
+    padding: 0 20px 8px; font-size: 12px; letter-spacing: 2.5px;
     color: var(--txt-dim); text-transform: uppercase;
     display: flex; align-items: center; gap: 8px;
   }
   .nav-label .bar { width: 12px; height: 2px; background: currentColor; }
   .nav a {
     display: flex; justify-content: space-between; align-items: center;
-    padding: 8px 20px 8px 34px; font-size: 13px; color: var(--txt-dim);
+    padding: 8px 20px 8px 34px; font-size: 15.6px; color: var(--txt-dim);
     border-left: 3px solid transparent;
   }
   .nav a:hover { color: var(--txt); background: var(--panel2); }
   .nav a .dot { width: 7px; height: 7px; border-radius: 50%; margin-right: 9px; flex-shrink: 0; }
   .nav a .nm { flex: 1; display: flex; align-items: center; }
-  .nav a .cnt { font-size: 11px; color: var(--txt-dim); }
+  .nav a .cnt { font-size: 13px; color: var(--txt-dim); }
   .sys {
     margin: 26px 20px 0; padding-top: 16px; border-top: 1px solid var(--line);
     font-size: 11px; letter-spacing: 1px;
@@ -128,7 +128,7 @@
   .sub-head h3 { font-size: 15px; letter-spacing: 1px; }
   .sub-head .n { font-size: 11px; color: var(--txt-dim); letter-spacing: 1px; }
 
-  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
   .card {
     background: var(--panel2); border: 1px solid var(--line); border-radius: 10px;
     padding: 20px 18px 16px; display: flex; flex-direction: column; gap: 10px;
@@ -168,12 +168,32 @@
   .ac-green { --ac: var(--green); }
   .ac-orange { --ac: var(--orange); }
 
-  @media (max-width: 860px) {
+  /* ---- 窄屏回退 1：平板 / 小笔记本 ---- */
+  @media (max-width: 980px) {
     .layout { flex-direction: column; }
-    .sidebar { width: 100%; height: auto; position: static; }
-    .main { padding: 0 16px 40px; }
+    .sidebar { width: 100%; height: auto; position: static; padding: 16px 0 12px; }
+    .brand { padding: 0 16px 14px; }
+    .nav-group { margin-top: 10px; }
+    .nav-label { padding: 0 16px 6px; }
+    .nav a { padding: 7px 16px; font-size: 14px; }
+    .sys { display: none; }
+    .main { padding: 0 20px 50px; max-width: none; }
+    .cards { grid-template-columns: repeat(2, 1fr); }
     .group-head { flex-wrap: wrap; }
-    .group-head .desc { margin-left: 0; width: 100%; }
+    .group-head .desc { margin-left: 0; width: 100%; padding-bottom: 0; }
+    .group-head .ghost { font-size: 62px; }
+  }
+
+  /* ---- 窄屏回退 2：手机 ---- */
+  @media (max-width: 640px) {
+    .main { padding: 0 14px 40px; }
+    .topbar { flex-wrap: wrap; justify-content: flex-start; gap: 14px 24px; }
+    .group { margin-bottom: 36px; }
+    .group-head { padding: 16px 14px; gap: 12px; }
+    .group-head h2 { font-size: 18px; }
+    .group-head .ghost { display: none; }
+    .cards { grid-template-columns: 1fr; }
+    .card { padding: 16px 14px 12px; }
   }
 </style>
 </head>

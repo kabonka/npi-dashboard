@@ -25,6 +25,8 @@ GATE_SRC = os.path.join(BASE, "gate.js")
 HEAD_RE = re.compile(r'(<head[^>]*>)', re.IGNORECASE)
 GATE_REF_RE = re.compile(r'[ \t]*<script src="[^"]*gate\.js"></script>\r?\n?', re.IGNORECASE)
 
+CDN_RE = re.compile(r'https://cdnjs\.cloudflare\.com/ajax/libs/xlsx/[0-9.]+/xlsx\.full\.min\.js')
+
 MAPPING = [
     ("portal.html",                "index.html"),
     ("version.json",               "version.json"),
@@ -34,6 +36,8 @@ MAPPING = [
     ("TTM_expect_mp.json",         "TTM_expect_mp.json"),
     ("functions/api/expect-mp.js", "functions/api/expect-mp.js"),
     ("../spec2/index.standalone.html", "spec2_web/index.html"),
+    ("../epeats/epeat_dashboard.html",  "epeats_web/index.html"),
+    ("epeats_web/xlsx.full.min.js",     "epeats_web/xlsx.full.min.js"),
 ]
 
 EXTERNAL_KEEP = {"webnpi_web/index.html"}
@@ -130,6 +134,7 @@ def main():
         if dst_rel.endswith(TEXT_EXT):
             with open(src_path, "r", encoding="utf-8", errors="replace") as f:
                 content = f.read()
+            content = CDN_RE.sub("xlsx.full.min.js", content)
             with open(dst_path, "w", encoding="utf-8", newline="") as f:
                 f.write(content)
         else:

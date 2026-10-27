@@ -92,7 +92,7 @@ echo ExitCode: %errorlevel%
 
 echo.
 echo === STEP 5: Backup push old repo (kabonka/npi-dashboard) ===
-%PYCMD% "%~dp0build_npi.py" --upload-only
+%PYCMD% "%~dp0..\build_npi.py" --upload-only
 echo ExitCode: %errorlevel%
 
 echo.

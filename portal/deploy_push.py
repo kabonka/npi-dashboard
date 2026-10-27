@@ -12,7 +12,7 @@ deploy_push.py — 推送 Tencentyyy 部署倉庫到 GitHub（EdgeOne 收到 pus
   4. 無變更 → 直接結束；有變更 → commit + push
   5. push 失敗不中斷 bat（印出錯誤供查看），本機 commit 保留、日後可重推
 
-路徑可攜：WEB_ROOT 預設 = 本腳本上層資料夾的 Tencentyyy（與 NPI_vx 同級），
+路徑可攜：WEB_ROOT 預設 = NPI_vx 上層資料夾的 Tencentyyy（與 NPI_vx 同級），
 可用環境變數 WEB_ROOT 覆蓋。
 """
 import os
@@ -25,10 +25,11 @@ try:
 except Exception:
     pass
 
-BASE = os.path.dirname(os.path.abspath(__file__))  # NPI_vx
+BASE = os.path.dirname(os.path.abspath(__file__))  # NPI_vx\portal
+ROOT = os.path.dirname(BASE)                       # NPI_vx
 WEB_ROOT = os.environ.get(
     "WEB_ROOT",
-    os.path.abspath(os.path.join(BASE, "..", "Tencentyyy")),
+    os.path.abspath(os.path.join(ROOT, "..", "Tencentyyy")),
 )
 
 

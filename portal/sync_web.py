@@ -18,26 +18,29 @@ try:
 except Exception:
     pass
 
-BASE = os.path.dirname(os.path.abspath(__file__))
-WEB_ROOT = os.environ.get("WEB_ROOT", os.path.abspath(os.path.join(BASE, "..", "Tencentyyy")))
+BASE = os.path.dirname(os.path.abspath(__file__))   # NPI_vx\portal
+ROOT = os.path.dirname(BASE)                        # NPI_vx
+WEB_ROOT = os.environ.get("WEB_ROOT", os.path.abspath(os.path.join(ROOT, "..", "Tencentyyy")))
 
 GATE_SRC = os.path.join(BASE, "gate.js")
 HEAD_RE = re.compile(r'(<head[^>]*>)', re.IGNORECASE)
-GATE_REF_RE = re.compile(r'[ \t]*<script src="[^"]*gate\.js"></script>\r?\n?', re.IGNORECASE)
+GATE_REF_RE = re.compile(r'\r?\n?[ \t]*<script src="[^"]*gate\.js"></script>\r?\n?', re.IGNORECASE)
 
 CDN_RE = re.compile(r'https://cdnjs\.cloudflare\.com/ajax/libs/xlsx/[0-9.]+/xlsx\.full\.min\.js')
 
+# (来源, 落点) — 来源相对 BASE(=portal/)；落点相对 Tencentyyy 仓库根目录
 MAPPING = [
     ("portal.html",                "index.html"),
     ("version.json",               "version.json"),
     ("DEPLOY_README.md",           "README.md"),
-    ("npi_search.html",            "NPI_vx_web/npi_search.html"),
-    ("TTM_check.html",             "NPI_vx_web/TTM_check.html"),
-    ("TTM_expect_mp.json",         "TTM_expect_mp.json"),
     ("functions/api/expect-mp.js", "functions/api/expect-mp.js"),
-    ("../spec2/index.standalone.html", "spec2_web/index.html"),
-    ("../epeats/epeat_dashboard.html",  "epeats_web/index.html"),
-    ("epeats_web/xlsx.full.min.js",     "epeats_web/xlsx.full.min.js"),
+    ("../npi_search.html",         "NPI_vx_web/npi_search.html"),
+    ("../TTM_check.html",          "NPI_vx_web/TTM_check.html"),
+    ("../TTM_expect_mp.json",      "TTM_expect_mp.json"),
+    ("../../spec2/index.standalone.html", "spec2_web/index.html"),
+    ("../../epeats/epeat_dashboard.html",  "epeats_web/index.html"),
+    ("../epeats_web/xlsx.full.min.js",     "epeats_web/xlsx.full.min.js"),
+    ("../../kpc/html material/material.html", "kpc_web/material.html"),
 ]
 
 EXTERNAL_KEEP = {"webnpi_web/index.html"}

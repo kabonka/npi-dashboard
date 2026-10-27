@@ -115,7 +115,7 @@ echo ExitCode: %errorlevel%
 
 echo.
 echo === Sync NPI_vx_web (Tencentyyy) ===
-%PYCMD% "%~dp0sync_web.py"
+%PYCMD% "%~dp0portal\sync_web.py"
 echo ExitCode: %errorlevel%
 
 echo.

@@ -87,7 +87,12 @@
   .topbar .upd em { color: var(--red); font-style: normal; font-weight: 700; }
 
   /* ===== Group ===== */
-  .group { margin-bottom: 52px; }
+  /* Group 作为 3 列网格容器：同 Group 下所有卡片（跨 sub-section）并排，满 3 张换行 */
+  .group {
+    margin-bottom: 52px;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; align-items: start;
+  }
+  .group > .group-head { grid-column: 1 / -1; }
   .group-head {
     position: relative;
     display: flex; align-items: flex-end; gap: 18px;
@@ -118,9 +123,11 @@
   }
 
   /* ===== Sub-section ===== */
-  .sub { margin-bottom: 24px; }
-  .sub:last-child { margin-bottom: 0; }
+  /* .sub 与 .cards 用 display:contents 把卡片释放进 Group 的 3 列网格，
+     这样不同 sub 的卡片会真正并排；sub-head 仍作为整行分隔标签 */
+  .sub { display: contents; }
   .sub-head {
+    grid-column: 1 / -1;
     display: flex; align-items: baseline; gap: 10px; margin-bottom: 12px;
     padding-left: 10px; border-left: 3px solid var(--line);
   }
@@ -128,7 +135,7 @@
   .sub-head h3 { font-size: 15px; letter-spacing: 1px; }
   .sub-head .n { font-size: 11px; color: var(--txt-dim); letter-spacing: 1px; }
 
-  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .cards { display: contents; }
   .card {
     background: var(--panel2); border: 1px solid var(--line); border-radius: 10px;
     padding: 20px 18px 16px; display: flex; flex-direction: column; gap: 10px;
@@ -178,7 +185,7 @@
     .nav a { padding: 7px 16px; font-size: 14px; }
     .sys { display: none; }
     .main { padding: 0 20px 50px; max-width: none; }
-    .cards { grid-template-columns: repeat(2, 1fr); }
+    .group { grid-template-columns: repeat(2, 1fr); }
     .group-head { flex-wrap: wrap; }
     .group-head .desc { margin-left: 0; width: 100%; padding-bottom: 0; }
     .group-head .ghost { font-size: 62px; }
@@ -192,7 +199,7 @@
     .group-head { padding: 16px 14px; gap: 12px; }
     .group-head h2 { font-size: 18px; }
     .group-head .ghost { display: none; }
-    .cards { grid-template-columns: 1fr; }
+    .group { grid-template-columns: 1fr; }
     .card { padding: 16px 14px 12px; }
   }
 </style>

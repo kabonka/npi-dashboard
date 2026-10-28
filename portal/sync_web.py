@@ -41,6 +41,7 @@ MAPPING = [
     ("../../epeats/epeat_dashboard.html",  "epeats_web/index.html"),
     ("../epeats_web/xlsx.full.min.js",     "epeats_web/xlsx.full.min.js"),
     ("../../kpc/html material/material.html", "kpc_web/material.html"),
+    ("../WB/WB 訂單管控表 - 1027.html", "weibu_web/weiBu_shipment.html"),
 ]
 
 EXTERNAL_KEEP = {"webnpi_web/index.html"}

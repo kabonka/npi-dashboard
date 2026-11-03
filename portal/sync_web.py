@@ -12,6 +12,7 @@ import re
 import shutil
 import sys
 import datetime
+import glob as globmod
 
 try:
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -44,13 +45,33 @@ MAPPING = [
     ("../../epeats/epeat_dashboard.html",  "epeats_web/index.html"),
     ("../epeats_web/xlsx.full.min.js",     "epeats_web/xlsx.full.min.js"),
     ("../../kpc/html material/material.html", "kpc_web/material.html"),
-    ("../../WB/WB 訂單管控表 - 1027.html", "weibu_web/weiBu_shipment.html"),
+    ("../../WB/WB 訂單管控表 - *.html",   "weibu_web/weiBu_shipment.html"),
     ("../../../certificate/dashboard.html", "cert_map_web/dashboard.html"),
 ]
 
 EXTERNAL_KEEP = {"webnpi_web/index.html"}
 ALLOWED = {dst for _, dst in MAPPING} | EXTERNAL_KEEP | {"gate.js"}
 TEXT_EXT = (".html", ".js", ".css")
+
+
+def resolve_src(src_name):
+    """Resolve a MAPPING source; if it uses a wildcard, pick the NEWEST match.
+
+    WB 訂單管控表 emits one dated HTML per xlsx version
+    (e.g. "WB 訂單管控表 - 1027.html" / "... - 1029.html"), so the deploy copy
+    must always take the latest version instead of a hardcoded old filename.
+
+    Sorting is by FILENAME (the date is embedded and zero-padded), because
+    mtime is useless here: rebuilding produces several versions with the
+    same timestamp.
+    """
+    if not any(ch in src_name for ch in "*?["):
+        return src_name
+    matches = globmod.glob(os.path.join(BASE, src_name))
+    if not matches:
+        return src_name
+    rels = [os.path.relpath(p, BASE).replace(os.sep, "/") for p in matches]
+    return sorted(rels)[-1]
 
 
 def gate_rel_path(dst_rel):
@@ -128,7 +149,8 @@ def main():
     print("  -> gate.js (root)")
     copied = skipped = 0
     today = datetime.datetime.now().strftime("%Y.%m.%d")
-    for src_name, dst_rel in MAPPING:
+    for src_entry, dst_rel in MAPPING:
+        src_name = resolve_src(src_entry)
         src_path = os.path.join(BASE, src_name)
         if not os.path.isfile(src_path):
             print("  SKIP (missing source):", src_name); skipped += 1; continue
@@ -150,7 +172,7 @@ def main():
                 f.write(content)
         else:
             shutil.copy2(src_path, dst_path)
-        print("  ->", dst_rel); copied += 1
+        print("  ->", dst_rel, ("(latest: " + src_name + ")") if src_name != src_entry else ""); copied += 1
     removed = prune(WEB_ROOT)
     if removed:
         print("  pruned:", ", ".join(removed))

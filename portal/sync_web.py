@@ -28,6 +28,9 @@ GATE_REF_RE = re.compile(r'\r?\n?[ \t]*<script src="[^"]*gate\.js"></script>\r?\
 
 CDN_RE = re.compile(r'https://cdnjs\.cloudflare\.com/ajax/libs/xlsx/[0-9.]+/xlsx\.full\.min\.js')
 
+# refresh the homepage "UPDATED <em>YYYY.MM.DD</em>" stamp at deploy time
+UPDATED_RE = re.compile(r'(UPDATED\s*<em>)[\d.]+(</em>)')
+
 # (来源, 落点) — 来源相对 BASE(=portal/)；落点相对 Tencentyyy 仓库根目录
 MAPPING = [
     ("portal.html",                "index.html"),
@@ -124,6 +127,7 @@ def main():
     shutil.copy2(GATE_SRC, os.path.join(WEB_ROOT, "gate.js"))
     print("  -> gate.js (root)")
     copied = skipped = 0
+    today = datetime.datetime.now().strftime("%Y.%m.%d")
     for src_name, dst_rel in MAPPING:
         src_path = os.path.join(BASE, src_name)
         if not os.path.isfile(src_path):
@@ -140,6 +144,8 @@ def main():
             with open(src_path, "r", encoding="utf-8", errors="replace") as f:
                 content = f.read()
             content = CDN_RE.sub("xlsx.full.min.js", content)
+            # refresh homepage UPDATED stamp to deploy date
+            content = UPDATED_RE.sub(lambda m: m.group(1) + today + m.group(2), content)
             with open(dst_path, "w", encoding="utf-8", newline="") as f:
                 f.write(content)
         else:

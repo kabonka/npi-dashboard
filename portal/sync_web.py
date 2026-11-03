@@ -47,6 +47,11 @@ MAPPING = [
     ("../../kpc/html material/material.html", "kpc_web/material.html"),
     ("../../WB/WB 訂單管控表 - *.html",   "weibu_web/weiBu_shipment.html"),
     ("../../../certificate/dashboard.html", "cert_map_web/dashboard.html"),
+    # materail prep 3 deliverables + landing page (self-contained, data inlined)
+    ("../../materail prep/web/index.html",                  "material_prep_web/index.html"),
+    ("../../materail prep/web/KP公版比案表单_v3.html",       "material_prep_web/KP公版比案表单_v3.html"),
+    ("../../materail prep/web/ME265x_Dashboard.html",       "material_prep_web/ME265x_Dashboard.html"),
+    ("../../materail prep/web/material_prep_viewer.html",   "material_prep_web/material_prep_viewer.html"),
 ]
 
 EXTERNAL_KEEP = {"webnpi_web/index.html"}

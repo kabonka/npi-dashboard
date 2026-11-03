@@ -117,6 +117,10 @@
   .group.g-spec .group-head .no {
     color: var(--cyan); border-color: rgba(76,194,255,.4); background: rgba(76,194,255,.07);
   }
+  .group.g-mat .group-head { border-left-color: var(--orange); }
+  .group.g-mat .group-head .no {
+    color: var(--orange); border-color: rgba(255,180,84,.4); background: rgba(255,180,84,.07);
+  }
 
   /* ===== Cards =====
      同一 Group 下的所有卡片共用这一个 3 列网格：并排、满 3 张换行。
@@ -227,6 +231,15 @@
       </nav>
     </div>
 
+    <div class="nav-group">
+      <div class="nav-label" style="color:var(--orange)"><span class="bar"></span>NPI Material</div>
+      <nav class="nav">
+        <a href="#g4-s1"><span class="nm"><span class="dot" style="background:var(--orange)"></span>keypart list</span><span class="cnt">1</span></a>
+        <a href="#g4-s2"><span class="nm"><span class="dot" style="background:var(--cyan)"></span>ME list</span><span class="cnt">1</span></a>
+        <a href="#g4-s3"><span class="nm"><span class="dot" style="background:var(--purple)"></span>Material Preparation</span><span class="cnt">1</span></a>
+      </nav>
+    </div>
+
     <div class="sys">
       <div class="on">&#9679; SYSTEM ONLINE</div>
       <div class="dim">KEEP BUILDING &middot; EST. 2026</div>
@@ -235,9 +248,9 @@
 
   <main class="main">
     <div class="topbar">
-      <div class="stat"><b>6</b><span>SITES</span></div>
-      <div class="stat"><b>3</b><span>GROUPS</span></div>
-      <div class="stat"><b>6</b><span>SECTORS</span></div>
+      <div class="stat"><b>11</b><span>SITES</span></div>
+      <div class="stat"><b>4</b><span>GROUPS</span></div>
+      <div class="stat"><b>11</b><span>SECTORS</span></div>
       <div class="upd">UPDATED <em>2026.10.27</em></div>
     </div>
 
@@ -324,6 +337,37 @@
           <div class="head"><span class="ico">C</span><div><div class="tag">CERT <span class="cat">Cert. Map</span></div><h3>Cert. Map</h3></div></div>
           <p>Certificate Map 仪表板 — 集中查看认证状态、测试报告与合规进度，支持多条件检索与 Excel 导出。</p>
           <div class="meta"><span class="owner">Editor : <b>Mirror/Auyoya</b></span><span class="open">OPEN &#8594;</span></div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============ GROUP 4 : NPI Material / NPI 物料 ============ -->
+    <section class="group g-mat" id="g4">
+      <div class="group-head">
+        <span class="no">G4</span>
+        <div>
+          <div class="en">NPI Material</div>
+          <h2>NPI 物料</h2>
+        </div>
+        <span class="desc">Key Part 比案 / ME 物料 / 合併物料準備檢視</span>
+        <span class="ghost">04</span>
+      </div>
+
+      <div class="cards">
+        <a class="card ac-orange" id="g4-s1" href="material_prep_web/KP公版比案表单_v3.html">
+          <div class="head"><span class="ico">K</span><div><div class="tag">KEYPART <span class="cat">keypart list</span></div><h3>keypart list</h3></div></div>
+          <p>Key Part 廠商比較記錄表單 — 依 MS 專案組織零件類別 / 規格 / 廠商 / 採用決策。</p>
+          <div class="meta"><span class="owner">Editor : <b>Mirror</b></span><span class="open">OPEN &#8594;</span></div>
+        </a>
+        <a class="card ac-cyan" id="g4-s2" href="material_prep_web/ME265x_Dashboard.html">
+          <div class="head"><span class="ico">M</span><div><div class="tag">ME LIST <span class="cat">ME265x</span></div><h3>ME list</h3></div></div>
+          <p>ME265x 專案物料與外包 SO 看板（多 PC 同步維護）。</p>
+          <div class="meta"><span class="owner">Editor : <b>Mirror</b></span><span class="open">OPEN &#8594;</span></div>
+        </a>
+        <a class="card ac-purple" id="g4-s3" href="material_prep_web/material_prep_viewer.html">
+          <div class="head"><span class="ico">P</span><div><div class="tag">MERGE <span class="cat">Material Preparation</span></div><h3>Material Preparation 檢視器（即時比對版）</h3></div></div>
+          <p>合併後物料準備檔檢視器，與上版本逐列比對（A/B/C 黃底＝值不同）。</p>
+          <div class="meta"><span class="owner">Editor : <b>Mirror</b></span><span class="open">OPEN &#8594;</span></div>
         </a>
       </div>
     </section>

@@ -1,22 +1,24 @@
 @echo off
 rem ============================================================
-rem  一键生成2.bat - DEPLOY step only (since 2026-10-26):
+rem  deploy2.bat - DEPLOY step only (since 2026-10-26):
 rem    sync sources into Tencentyyy -> push to GitHub ->
 rem    EdgeOne auto-deploys (~15-20s).
 rem
 rem  Full flow (3 stages):
 rem    [1] source data update  (edit Excel / HTML by hand)
 rem    [2] update_xxx.bat      rebuild + sync into Tencentyyy
-rem    [3] 一键生成2.bat        upload to EdgeOne  <- this file
+rem    [3] deploy2.bat               upload to EdgeOne  <- this file
 rem
 rem  This script NO LONGER rebuilds anything. If you changed
 rem  source data, run the matching update_*.bat FIRST:
-rem    update_npi_search.bat      (Spec總表.xlsx -> NPI Search)
-rem    update_TTM_check.bat       (Spec總表.xlsx -> TTM Check)
+rem    update_npi_search.bat      (Spec master workbook -> NPI Search)
+rem    update_TTM_check.bat       (Spec master workbook -> TTM Check)
 rem    update_product_matrix.bat  (webnpi xlsx -> Product Matrix)
 rem    update_standalone.bat      (spec2 xlsx -> Spec standalone)
 rem  portal.html / expect-mp.js / TTM_expect_mp.json have no
 rem  generator - just run this file, its sync covers them.
+rem  sync_web.py MAPPING also carries the 3 "NPI Material" (G4) pages
+rem  from ..\..\materail prep\web\ into Tencentyyy\material_prep_web\.
 rem ============================================================
 chcp 65001 >nul 2>&1
 cd /d "%~dp0"

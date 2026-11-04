@@ -121,6 +121,10 @@
   .group.g-mat .group-head .no {
     color: var(--orange); border-color: rgba(255,180,84,.4); background: rgba(255,180,84,.07);
   }
+  .group.g-doc .group-head { border-left-color: var(--purple); }
+  .group.g-doc .group-head .no {
+    color: var(--purple); border-color: rgba(167,139,250,.4); background: rgba(167,139,250,.07);
+  }
 
   /* ===== Cards =====
      同一 Group 下的所有卡片共用这一个 3 列网格：并排、满 3 张换行。
@@ -240,6 +244,13 @@
       </nav>
     </div>
 
+    <div class="nav-group">
+      <div class="nav-label" style="color:var(--purple)"><span class="bar"></span>Docs</div>
+      <nav class="nav">
+        <a href="#g5-s1"><span class="nm"><span class="dot" style="background:var(--purple)"></span>Deploy Guide</span><span class="cnt">1</span></a>
+      </nav>
+    </div>
+
     <div class="sys">
       <div class="on">&#9679; SYSTEM ONLINE</div>
       <div class="dim">KEEP BUILDING &middot; EST. 2026</div>
@@ -248,9 +259,9 @@
 
   <main class="main">
     <div class="topbar">
-      <div class="stat"><b>11</b><span>SITES</span></div>
-      <div class="stat"><b>4</b><span>GROUPS</span></div>
-      <div class="stat"><b>11</b><span>SECTORS</span></div>
+      <div class="stat"><b>12</b><span>SITES</span></div>
+      <div class="stat"><b>5</b><span>GROUPS</span></div>
+      <div class="stat"><b>12</b><span>SECTORS</span></div>
       <div class="upd">UPDATED <em>2026.10.27</em></div>
     </div>
 
@@ -368,6 +379,27 @@
           <div class="head"><span class="ico">P</span><div><div class="tag">MERGE <span class="cat">Material Preparation</span></div><h3>Material Preparation 檢視器（即時比對版）</h3></div></div>
           <p>合併後物料準備檔檢視器，與上版本逐列比對（A/B/C 黃底＝值不同）。</p>
           <div class="meta"><span class="owner">Editor : <b>Mirror</b></span><span class="open">OPEN &#8594;</span></div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============ GROUP 5 : Docs ============ -->
+    <section class="group g-doc" id="g5">
+      <div class="group-head">
+        <span class="no">G5</span>
+        <div>
+          <div class="en">Docs &amp; Guide</div>
+          <h2>文件與說明</h2>
+        </div>
+        <span class="desc">部署流程與資料來源對照</span>
+        <span class="ghost">05</span>
+      </div>
+
+      <div class="cards">
+        <a class="card ac-purple" id="g5-s1" href="deploy_guide.html">
+          <div class="head"><span class="ico">D</span><div><div class="tag">GUIDE <span class="cat">說明文件</span></div><h3>Deploy Guide</h3></div></div>
+          <p>一键生成2.bat 上傳對照表 — 每張卡片對應的上傳路徑、來源資料夾與更新程式（含自動重建判斷規則）。</p>
+          <div class="meta"><span class="owner">Source : <b>sync_web.py</b></span><span class="open">OPEN &#8594;</span></div>
         </a>
       </div>
     </section>

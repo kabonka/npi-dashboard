@@ -1,24 +1,31 @@
 @echo off
 rem ============================================================
-rem  deploy2.bat - DEPLOY step only (since 2026-10-26):
-rem    sync sources into Tencentyyy -> push to GitHub ->
-rem    EdgeOne auto-deploys (~15-20s).
+rem  deploy2.bat - DEPLOY + auto-rebuild (since 2026-11-04):
+rem    [1] rebuild ONLY the pages whose sources are newer than the HTML
+rem        (implemented inside sync_web.py; see the list below)
+rem    [2] sync sources into Tencentyyy
+rem    [3] push to GitHub -> EdgeOne auto-deploys (~15-20s)
 rem
-rem  Full flow (3 stages):
-rem    [1] source data update  (edit Excel / HTML by hand)
-rem    [2] update_xxx.bat      rebuild + sync into Tencentyyy
-rem    [3] deploy2.bat               upload to EdgeOne  <- this file
+rem  The per-page update_*.bat files still work, but they are no longer
+rem  required before running this file.
 rem
-rem  This script NO LONGER rebuilds anything. If you changed
-rem  source data, run the matching update_*.bat FIRST:
-rem    update_npi_search.bat      (Spec master workbook -> NPI Search)
-rem    update_TTM_check.bat       (Spec master workbook -> TTM Check)
-rem    update_product_matrix.bat  (webnpi xlsx -> Product Matrix)
-rem    update_standalone.bat      (spec2 xlsx -> Spec standalone)
-rem  portal.html / expect-mp.js / TTM_expect_mp.json have no
-rem  generator - just run this file, its sync covers them.
-rem  sync_web.py MAPPING also carries the 3 "NPI Material" (G4) pages
-rem  from ..\..\materail prep\web\ into Tencentyyy\material_prep_web\.
+rem  ALL pages are now AUTO-REBUILT before deploy. sync_web.py compares
+rem  each page's sources against the built HTML and rebuilds only the
+rem  stale ones, then copies into Tencentyyy and pushes:
+rem    NPI Search       <- NPI_vx\Spec master workbook
+rem    TTM Check        <- NPI_vx\Spec master workbook + TTM_expect_mp.json
+rem    Spec2 standalone <- spec2\Spec master copy
+rem    KeyPart material <- kpc\KP_material\*.xlsx
+rem    WB shipment      <- WB\WB order-control sheet (*.xlsx)
+rem    Certificate map  <- Desktop\certificate\certificate0626.xlsx
+rem    NPI Material     <- materail prep (KP_material, ME material, Spec,
+rem                        Model_MKT_list) -> root + web\ -> Tencentyyy
+rem  A shared Spec master sync runs first, so editing only the master
+rem  workbook in NPI_vx is enough to refresh every Spec-fed page.
+rem    Flags: --no-build (deploy existing HTML only)
+rem           --dry-run  (print decisions, write nothing)
+rem    NOTE: close every Excel / LibreOffice file first. A failed rebuild
+rem    aborts the deploy instead of uploading stale pages.
 rem ============================================================
 chcp 65001 >nul 2>&1
 cd /d "%~dp0"
@@ -83,7 +90,7 @@ echo === STEP 2: Install openpyxl ===
 echo Done
 
 echo.
-echo === STEP 3: Sync sources into Tencentyyy (safety pass) ===
+echo === STEP 3: Refresh NPI Material + sync sources into Tencentyyy ===
 %PYCMD% "%~dp0sync_web.py"
 echo ExitCode: %errorlevel%
 

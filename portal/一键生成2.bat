@@ -9,7 +9,7 @@ rem
 rem  The per-page update_*.bat files still work, but they are no longer
 rem  required before running this file.
 rem
-rem  ALL pages are now AUTO-REBUILT before deploy. sync_web.py compares
+rem  MOST pages are now AUTO-REBUILT before deploy (Cert. Map is a static copy). sync_web.py compares
 rem  each page's sources against the built HTML and rebuilds only the
 rem  stale ones, then copies into Tencentyyy and pushes:
 rem    NPI Search       <- NPI_vx\Spec master workbook
@@ -17,7 +17,7 @@ rem    TTM Check        <- NPI_vx\Spec master workbook + TTM_expect_mp.json
 rem    Spec2 standalone <- spec2\Spec master copy
 rem    KeyPart material <- kpc\KP_material\*.xlsx
 rem    WB shipment      <- WB\WB order-control sheet (*.xlsx)
-rem    Certificate map  <- Desktop\certificate\certificate0626.xlsx
+rem    Certificate map  <- AI assistant\certificate1\certificate\MSI_Weibu_认证档案.html (靜態拷貝，手動 rebuild_archive.bat 後部署)
 rem    NPI Material     <- materail prep (KP_material, ME material, Spec,
 rem                        Model_MKT_list) -> root + web\ -> Tencentyyy
 rem  A shared Spec master sync runs first, so editing only the master

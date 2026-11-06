@@ -50,7 +50,9 @@ MAPPING = [
     ("../epeats_web/xlsx.full.min.js",     "epeats_web/xlsx.full.min.js"),
     ("../../kpc/html material/material.html", "kpc_web/material.html"),
     ("../../WB/WB 訂單管控表 - *.html",   "weibu_web/weiBu_shipment.html"),
-    ("../../../certificate/dashboard.html", "cert_map_web/dashboard.html"),
+    # Cert. Map：改用 certificate1 的 MSI_Weibu_认证档案.html（自包含單檔，靜態拷貝）
+    ("../../certificate1/certificate/MSI_Weibu_认证档案.html",
+     "cert_map_web/MSI_Weibu_认证档案.html"),
     # materail prep 3 deliverables + landing page (self-contained, data inlined)
     ("../../materail prep/web/index.html",                  "material_prep_web/index.html"),
     ("../../materail prep/web/KP公版比案表单_v3.html",       "material_prep_web/KP公版比案表单_v3.html"),
@@ -145,12 +147,6 @@ OTHER_BUILDS = [
         "pairs": [((os.path.join(AA_ROOT, "WB"), "WB 訂單管控表 - *.html"),
                    [(os.path.join(AA_ROOT, "WB"), "WB 訂單管控表 - *.xlsx")])],
         "steps": [(os.path.join(AA_ROOT, "WB"), "build_dashboard.py", [], True)],
-    },
-    {
-        "name": "Certificate map",
-        "pairs": [((os.path.join(DESKTOP_DIR, "certificate"), "dashboard.html"),
-                   [(os.path.join(DESKTOP_DIR, "certificate"), "certificate0626.xlsx")])],
-        "steps": [(os.path.join(DESKTOP_DIR, "certificate"), "build_dashboard.py", [], True)],
     },
 ]
 

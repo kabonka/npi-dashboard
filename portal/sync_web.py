@@ -54,7 +54,7 @@ MAPPING = [
     # materail prep 3 deliverables + landing page (self-contained, data inlined)
     ("../../materail prep/web/index.html",                  "material_prep_web/index.html"),
     ("../../materail prep/web/KP公版比案表单_v3.html",       "material_prep_web/KP公版比案表单_v3.html"),
-    ("../../materail prep/web/ME265x_Dashboard.html",       "material_prep_web/ME265x_Dashboard.html"),
+    ("../../materail prep/web/ME_part_Dashboard.html",      "material_prep_web/ME_part_Dashboard.html"),
     ("../../materail prep/web/material_prep_viewer.html",   "material_prep_web/material_prep_viewer.html"),
 ]
 
@@ -72,23 +72,23 @@ TEXT_EXT = (".html", ".js", ".css")
 # ===========================================================================
 MP_ROOT = os.path.abspath(os.path.join(ROOT, "..", "materail prep"))
 MP_FORM = os.path.join(MP_ROOT, "form")
-MP_ME = os.path.join(MP_ROOT, "ME265x")
+MP_ME = os.path.join(MP_ROOT, "ME_part")
 MP_NEW = os.path.join(MP_ROOT, "1new")
 MP_WEB = os.path.join(MP_ROOT, "web")
 
 # 產出物（相對 MP_ROOT）：任一存在即可
 MP_OUTPUTS = [
     "form/KP*.html",
-    "ME265x/ME265x_Dashboard.html",
+    "ME_part/ME_part_Dashboard.html",
     "1new/material_prep_viewer.html",
 ]
 # 逐頁判斷「來源比產出物新」才重建（避免不相干的檔案時間戳造成每次重跑）
 # (產出物 pattern, [該頁真正的來源 pattern])
 MP_GROUPS = [
     ("form/KP*.html", ["form/KP_material/*.xlsx", "form/Spec總表.xlsx"]),
-    ("ME265x/ME265x_Dashboard.html", ["ME265x/ME material/*.xlsx"]),
+    ("ME_part/ME_part_Dashboard.html", ["ME_part/ME material/*.xlsx"]),
     ("1new/material_prep_viewer.html",
-     ["1new/Model_MKT_list.xlsx", "form/KP_material/*.xlsx", "ME265x/ME material/*.xlsx"]),
+     ["1new/Model_MKT_list.xlsx", "form/KP_material/*.xlsx", "ME_part/ME material/*.xlsx"]),
 ]
 # 重建步驟：(工作目錄, 腳本, 額外參數, 失敗是否致命)
 # 註：sync_spec_master.py 已移到 PRE_STEPS，執行前只跑一次。
@@ -434,6 +434,17 @@ def inject_all_html(root):
     return n
 
 
+def _file_changed(dst_path, new_bytes):
+    """回傳 True 表示 dst 不存在或內容與 new_bytes 不同（需要寫入）。"""
+    if not os.path.isfile(dst_path):
+        return True
+    try:
+        with open(dst_path, "rb") as f:
+            return f.read() != new_bytes
+    except Exception:
+        return True
+
+
 def main(auto_build=True, dry_run=False):
     print("=== Deploy copy -> Tencentyyy (with gate.js) ===")
     print("SRC :", BASE); print("DST :", WEB_ROOT)
@@ -451,8 +462,17 @@ def main(auto_build=True, dry_run=False):
         print("\n[dry-run] 以上僅為判斷與模擬，未寫入任何檔案。")
         return 0
 
-    shutil.copy2(GATE_SRC, os.path.join(WEB_ROOT, "gate.js"))
-    print("  -> gate.js (root)")
+    real_changed = False
+    # gate.js：只在內容真的變動時才覆寫（避免每次都產生無意義 diff）
+    with open(GATE_SRC, "rb") as f:
+        gate_bytes = f.read()
+    if _file_changed(os.path.join(WEB_ROOT, "gate.js"), gate_bytes):
+        with open(os.path.join(WEB_ROOT, "gate.js"), "wb") as f:
+            f.write(gate_bytes)
+        real_changed = True
+        print("  -> gate.js (root) [changed]")
+    else:
+        print("  -> gate.js (root) [same]")
     copied = skipped = 0
     today = datetime.datetime.now().strftime("%Y.%m.%d")
     for src_entry, dst_rel in MAPPING:
@@ -463,28 +483,50 @@ def main(auto_build=True, dry_run=False):
         dst_path = os.path.join(WEB_ROOT, *dst_rel.split("/"))
         os.makedirs(os.path.dirname(dst_path), exist_ok=True)
         if dst_rel == "version.json":
-            now = datetime.datetime.now()
-            stamp = "{:04d}{:02d}{:02d}-{:02d}{:02d}{:02d}".format(now.year, now.month, now.day, now.hour, now.minute, now.second)
-            with open(dst_path, "w", encoding="utf-8", newline="") as f:
-                f.write(stamp + "\n")
-            print("  ->", dst_rel, "(stamp", stamp + ")"); copied += 1; continue
+            # 版本戳記延後到迴圈結束才寫，且只有「本批次真有檔案變動」才更新，
+            # 避免沒有 .html 變動時也觸發 git push / EdgeOne 重建。
+            continue
         if dst_rel.endswith(TEXT_EXT):
             with open(src_path, "r", encoding="utf-8", errors="replace") as f:
                 content = f.read()
             content = CDN_RE.sub("xlsx.full.min.js", content)
-            # refresh homepage UPDATED stamp to deploy date
+            # refresh homepage UPDATED stamp to deploy date（同日重跑不會產生 diff）
             content = UPDATED_RE.sub(lambda m: m.group(1) + today + m.group(2), content)
-            with open(dst_path, "w", encoding="utf-8", newline="") as f:
-                f.write(content)
+            # 複製當下就把 gate.js 注入 html 內容，使寫入結果與線上最終狀態一致，
+            # 否則下一輪複製會把「已注入 gate 的線上檔」蓋成「未注入的源檔」造成誤判變動。
+            if dst_rel.endswith(".html"):
+                content = inject_gate(content, dst_rel)
+            new_bytes = content.encode("utf-8", "replace")
         else:
-            shutil.copy2(src_path, dst_path)
-        print("  ->", dst_rel, ("(latest: " + src_name + ")") if src_name != src_entry else ""); copied += 1
+            with open(src_path, "rb") as f:
+                new_bytes = f.read()
+        if _file_changed(dst_path, new_bytes):
+            with open(dst_path, "wb") as f:
+                f.write(new_bytes)
+            real_changed = True
+            print("  ->", dst_rel, ("(latest: " + src_name + ")") if src_name != src_entry else ""); copied += 1
+        else:
+            print("  same:", dst_rel)
     removed = prune(WEB_ROOT)
     if removed:
+        real_changed = True
         print("  pruned:", ", ".join(removed))
     n = inject_all_html(WEB_ROOT)
+    if n:
+        real_changed = True
     print("  gate injected into", n, "file(s).")
-    print("DONE.", copied, "file(s) deployed,", skipped, "source(s) skipped.")
+    # version.json：只有本批次確實有變動（或檔案不存在）才寫入新戳記
+    vpath = os.path.join(WEB_ROOT, "version.json")
+    if real_changed or not os.path.isfile(vpath):
+        now = datetime.datetime.now()
+        stamp = "{:04d}{:02d}{:02d}-{:02d}{:02d}{:02d}".format(now.year, now.month, now.day, now.hour, now.minute, now.second)
+        with open(vpath, "w", encoding="utf-8", newline="") as f:
+            f.write(stamp + "\n")
+        print("  -> version.json (stamp", stamp + ", 因有變動才更新)"); copied += 1
+    else:
+        print("  SKIP version.json (no change -> 不觸發 push)")
+    print("DONE.", copied, "file(s) deployed,", skipped, "source(s) skipped.",
+          "(real_changed=" + str(real_changed) + ")")
     return 0
 
 

@@ -370,6 +370,54 @@ def resolve_src(src_name):
     return sorted(rels)[-1]
 
 
+# ---- portal 卡片「最後更改時間」注入 ----
+# 部署時依每張卡片連結的「來源檔」mtime 自動填寫，讓門戶上的每張卡片顯示
+# 該 HTML 的最後更改時間（來源比產出新 -> 時間更新；沒變 -> 時間不變，不會誤觸發 push）。
+CARD_RE = re.compile(r'<a class="card[^"]*"[^>]*href="([^"]+)"[^>]*>.*?</a>',
+                     re.IGNORECASE | re.DOTALL)
+MTIME_DIV_RE = re.compile(r'\s*<div class="mtime">[^<]*</div>')
+
+
+def build_dst_to_src():
+    """MAPPING 的 (來源, 落點) -> {落點: 來源(已解析 wildcard)}。"""
+    m = {}
+    for src_entry, dst_rel in MAPPING:
+        if dst_rel == "version.json":
+            continue
+        m[dst_rel] = resolve_src(src_entry)
+    return m
+
+
+def _fmt_mtime(ts):
+    return datetime.datetime.fromtimestamp(ts).strftime("%Y.%m.%d %H:%M")
+
+
+def inject_card_mtimes(content, dst_to_src, web_root):
+    """在每張 <a class="card" href="X"> 的 .meta 上方插入「最後更改：YYYY.MM.DD HH:MM」。"""
+    # 先移除舊的 mtime 行，確保冪等（來源 portal.html 不應殘留寫死的時間）
+    content = MTIME_DIV_RE.sub("", content)
+
+    def repl(m):
+        href = m.group(1)
+        block = m.group(0)
+        stamp = None
+        src_name = dst_to_src.get(href)
+        if src_name:
+            sp = os.path.join(BASE, src_name)
+            if os.path.isfile(sp):
+                stamp = _fmt_mtime(os.path.getmtime(sp))
+        if stamp is None:
+            dp = os.path.join(web_root, *href.split("/"))
+            if os.path.isfile(dp):
+                stamp = _fmt_mtime(os.path.getmtime(dp))
+        if stamp is None:
+            return block
+        mtime_html = '\n          <div class="mtime">最後更改：' + stamp + '</div>'
+        return re.sub(r'(\s*<div class="meta">)', mtime_html + r'\1', block, count=1, flags=re.DOTALL)
+
+    return CARD_RE.sub(repl, content)
+
+
 def gate_rel_path(dst_rel):
     parts = dst_rel.split("/")
     depth = max(0, len(parts) - 1)
@@ -475,6 +523,7 @@ def main(auto_build=True, dry_run=False):
         print("  -> gate.js (root) [same]")
     copied = skipped = 0
     today = datetime.datetime.now().strftime("%Y.%m.%d")
+    dst_to_src = build_dst_to_src()
     for src_entry, dst_rel in MAPPING:
         src_name = resolve_src(src_entry)
         src_path = os.path.join(BASE, src_name)
@@ -496,6 +545,8 @@ def main(auto_build=True, dry_run=False):
             # 否則下一輪複製會把「已注入 gate 的線上檔」蓋成「未注入的源檔」造成誤判變動。
             if dst_rel.endswith(".html"):
                 content = inject_gate(content, dst_rel)
+                if dst_rel == "index.html":
+                    content = inject_card_mtimes(content, dst_to_src, WEB_ROOT)
             new_bytes = content.encode("utf-8", "replace")
         else:
             with open(src_path, "rb") as f:

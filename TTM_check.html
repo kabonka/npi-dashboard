@@ -31845,13 +31845,13 @@ function rpLines(arr, fallback) {
   return rpBreakNums(stripTags(fallback));
 }
 
-/* 在「數字)」或「數字）」前斷行（與 NPI_dashboard2 一致）：
-   單一欄位值內含 1) 2) ... 時，分別成行；無序號則原樣輸出。 */
+/* 在「數字)」「字母)」或「數字）」「字母）」前斷行（與其他儀表板一致）：
+   單一欄位值內含 1) 2) ... 或 a) b) ... 時，分別成行；無序號則原樣輸出。 */
 function rpBreakNums(t) {
   if (!t || t === '.') return '';
   const s = String(t);
-  if (!/\d+[)）]/.test(s)) return escapeHtml(s);
-  const fmt = s.replace(/([^\n])(\s*)(\d+[)）])/g, '$1\n$3');
+  if (!/(?:\d+|[A-Za-z])[)）]/.test(s)) return escapeHtml(s);
+  const fmt = s.replace(/([^\n])(\s*)(\d+[)）])/g, '$1\n$3').replace(/([^\n])(\s+)([A-Za-z][)）])/g, '$1\n$3');
   const parts = fmt.split('\n').map(function (p) { return p.trim(); })
     .filter(function (p) { return p !== ''; });
   if (parts.length <= 1) return escapeHtml(s);
@@ -31861,7 +31861,7 @@ function rpBreakNums(t) {
 }
 
 /* 主表 Current Status / Highlight 專用：資料本身已含 HTML（<div class="merged-item">），
-   因此不 escape，只在 text node 內遇到 1) 2) 時插入 <br>，保留原有徽章結構。 */
+   因此不 escape，只在 text node 內遇到 1) 2) / a) b) 時插入 <br>，保留原有徽章結構。 */
 function rpBreakHtmlText(el) {
   if (!el) return;
   const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
@@ -31872,7 +31872,9 @@ function rpBreakHtmlText(el) {
     let current = node;
     while (current && current.nodeType === Node.TEXT_NODE) {
       const text = current.textContent;
-      const m = text.match(/([^\n])(\s*)(\d+[)）])/);
+      const mNum = text.match(/([^\n])(\s*)(\d+[)）])/);
+      const mAlpha = text.match(/([^\n])(\s+)([A-Za-z][)）])/);
+      const m = mNum && mAlpha ? (mNum.index <= mAlpha.index ? mNum : mAlpha) : (mNum || mAlpha);
       if (!m) break;
       // 在前一個字元後面切開，並把後半段的開頭空白清掉
       const splitPos = m.index + m[1].length;

@@ -80,7 +80,7 @@ tr:hover td{background:#fafcff}
 .mname{font-weight:600;color:#0f172a}
 .delta{font-weight:700;text-align:center;min-width:52px}
 .delta.pos{color:var(--red)} .delta.neg{color:var(--green)} .delta.zero{color:var(--gray)}
-.hl{color:#334155;max-width:520px;line-height:1.45}
+.hl{color:#334155;max-width:520px;line-height:1.45;white-space:pre-line}
 .hl.empty{color:var(--gray);font-style:italic}
 .stage{display:inline-block;padding:1px 8px;border-radius:6px;font-size:11px;font-weight:700;color:#fff;white-space:nowrap}
 .muted{color:var(--gray);font-size:12px}
@@ -92,7 +92,7 @@ tr:hover td{background:#fafcff}
 .hl-list{display:flex;flex-direction:column;gap:8px}
 .hl-item{border:1px solid var(--line);border-radius:8px;padding:9px 11px;background:#fff}
 .hl-item .h-top{display:flex;gap:10px;font-size:12px;color:var(--sub);margin-bottom:4px;flex-wrap:wrap}
-.hl-item .h-txt{color:#1f2933;line-height:1.5}
+.hl-item .h-txt{color:#1f2933;line-height:1.5;white-space:pre-line}
 mark{background:#fff3a3;padding:0 2px;border-radius:3px}
 .foot{color:var(--gray);font-size:12px;padding:0 16px 24px;text-align:center}
 .empty-state{padding:40px;text-align:center;color:var(--gray)}
@@ -186,6 +186,14 @@ const stageColor = {MVT:'#7c3aed',DVT:'#2563eb',EVT:'#0891b2',ATS:'#0d9488','ATS
 let state = { view:'dedup', models:new Set(MODELS), stage2s:new Set(STAGE2S.filter(s=>s==='MP')), years:new Set(YEARS), onlyHL:false, kw:'', theme:null, hlkw:'' };
 
 function esc(s){return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+// Highlight 序號斷行：1) 2) 3) / a) b) c)（與 TTM_check 同規則）
+function fmtHL(t){
+  if(!t)return '';
+  const s=String(t);
+  if(!/(?:\d+|[A-Za-z])[)）]/.test(s))return esc(s);
+  const fmt=s.replace(/([^\n])(\s*)(\d+[)）])/g,'$1\n$3').replace(/([^\n])(\s+)([A-Za-z][)）])/g,'$1\n$3');
+  return esc(fmt);
+}
 function fmtDate(s){return s? s.replace(/-/g,'/'):'';}
 
 function activeRecs(){ return state.view==='raw'? RAW : DEDU; }
@@ -248,7 +256,7 @@ function renderGroups(){
     const rowsHtml=list.map(r=>{
         const dc=r.delta>0?`pos`:r.delta<0?`neg`:`zero`;
         const sign=r.delta>0?'+':'';
-        const hl=r.hasHL?`<div class="hl">${esc(r.highlight)}</div>`:`<div class="hl empty">— 無說明 —</div>`;
+        const hl=r.hasHL?`<div class="hl">${fmtHL(r.highlight)}</div>`:`<div class="hl empty">— 無說明 —</div>`;
         const sc=stageColor[r.stage]||'#64748b';
         return `<tr>
           <td class="mname">${esc(r.mkt)}</td>
@@ -305,7 +313,7 @@ function renderHLList(){
   const box=document.getElementById('hlList');
   if(!f.length){box.innerHTML='<div class="empty-state">無 Highlight 資料</div>';return;}
   const html=f.slice().sort((a,b)=>b.modTime>a.modTime?1:-1).map(r=>{
-    let txt=esc(r.highlight);
+    let txt=fmtHL(r.highlight);
     if(kw){const re=new RegExp('('+kw.replace(/[\\^$.*+?()[\\]{}|]/g,'\\$&')+')','gi');txt=txt.replace(re,'<mark>$1</mark>');}
     const sc=stageColor[r.stage]||'#64748b';
     return `<div class="hl-item">

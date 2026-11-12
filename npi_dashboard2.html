@@ -18909,8 +18909,8 @@ function escAttr(s){return String(s).replace(/'/g,'&#39;').replace(/"/g,'&quot;'
 
 function fmtListText(t){
   if(!t||t==='.')return '';
-  if(!/\d+[)）]/.test(t))return escHtml(t);
-  const fmt=t.replace(/([^\n])(\s*)(\d+[)）])/g,'$1\n$3');
+  if(!/(?:\d+|[A-Za-z])[)）]/.test(t))return escHtml(t);
+  const fmt=t.replace(/([^\n])(\s*)(\d+[)）])/g,'$1\n$3').replace(/([^\n])(\s+)([A-Za-z][)）])/g,'$1\n$3');
   const parts=fmt.split('\n').map(s=>s.trim()).filter(s=>s);
   return parts.length<=1?escHtml(t):parts.map(p=>'<span style="display:block;margin-bottom:3px">'+escHtml(p)+'</span>').join('');
 }
@@ -18986,9 +18986,9 @@ function renderList(){
 function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function formatSectionText(text){
   if(!text)return 'N/A';
-  if(!/\d+[)）]/.test(text))return escHtml(text);
-  // 在每個非開頭的「數字)」或「數字）」前斷行
-  const formatted=text.replace(/([^\n])(\s*)(\d+[)）])/g,'$1\n$3');
+  if(!/(?:\d+|[A-Za-z])[)）]/.test(text))return escHtml(text);
+  // 在每個非開頭的「數字)」「字母)」或「數字）」「字母）」前斷行
+  const formatted=text.replace(/([^\n])(\s*)(\d+[)）])/g,'$1\n$3').replace(/([^\n])(\s+)([A-Za-z][)）])/g,'$1\n$3');
   const parts=formatted.split('\n').map(s=>s.trim()).filter(s=>s);
   if(parts.length<=1)return escHtml(text);
   return parts.map(p=>'<div style="margin-bottom:6px">'+escHtml(p)+'</div>').join('');
@@ -19036,8 +19036,8 @@ async function downloadExcel(){
   var rowInfo=[null];
   var no=1;
   function wrapText(t){
-    if(!t||!/\d+[)）]/.test(t))return t||'';
-    return t.replace(/([^\n])(\s*)(\d+[)）])/g,'$1\n$3');
+    if(!t||!/(?:\d+|[A-Za-z])[)）]/.test(t))return t||'';
+    return t.replace(/([^\n])(\s*)(\d+[)）])/g,'$1\n$3').replace(/([^\n])(\s+)([A-Za-z][)）])/g,'$1\n$3');
   }
   for(var si=0;si<sorted.length;si++){
     var rows=sorted[si][1];
@@ -19098,8 +19098,8 @@ async function downloadExcelProject(){
   var data=[headers];
   var no=1;
   function wrapText(t){
-    if(!t||!/\d+[)）]/.test(t))return t||'';
-    return t.replace(/([^\n])(\s*)(\d+[)）])/g,'$1\n$3');
+    if(!t||!/(?:\d+|[A-Za-z])[)）]/.test(t))return t||'';
+    return t.replace(/([^\n])(\s*)(\d+[)）])/g,'$1\n$3').replace(/([^\n])(\s+)([A-Za-z][)）])/g,'$1\n$3');
   }
   for(var si=0;si<sorted.length;si++){
     var rows=sorted[si][1];
@@ -19152,8 +19152,8 @@ async function downloadExcelModel(){
   var rowInfo=[null];
   var no=1;
   function wrapText(t){
-    if(!t||!/\d+[)）]/.test(t))return t||'';
-    return t.replace(/([^\n])(\s*)(\d+[)）])/g,'$1\n$3');
+    if(!t||!/(?:\d+|[A-Za-z])[)）]/.test(t))return t||'';
+    return t.replace(/([^\n])(\s*)(\d+[)）])/g,'$1\n$3').replace(/([^\n])(\s+)([A-Za-z][)）])/g,'$1\n$3');
   }
   function normMP(s){ return s ? String(s).trim().replace(/[\/\s]/g,'-') : ''; }
   for(var si=0;si<sorted.length;si++){

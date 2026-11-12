@@ -18870,12 +18870,12 @@ document.getElementById('detailModal').addEventListener('click',function(e){
   if(e.target===this)closeDetail();
 });
 
-// ── 排版工具：遇「數字)」或「數字）」換行分段 ──
+// ── 排版工具：遇「數字)」「字母)」或「數字）」「字母）」換行分段 ──
 function formatSectionText(text){
   if(!text)return 'N/A';
-  if(!/\d+[)）]/.test(text))return escHtml(text);
-  // 在每個非開頭的「數字)」或「數字）」前斷行
-  const formatted=text.replace(/([^\n])(\s*)(\d+[)）])/g,'$1\n$3');
+  if(!/(?:\d+|[A-Za-z])[)）]/.test(text))return escHtml(text);
+  // 在每個非開頭的「數字)」「字母)」或「數字）」「字母）」前斷行
+  const formatted=text.replace(/([^\n])(\s*)(\d+[)）])/g,'$1\n$3').replace(/([^\n])(\s+)([A-Za-z][)）])/g,'$1\n$3');
   const parts=formatted.split('\n').map(s=>s.trim()).filter(s=>s);
   if(parts.length<=1)return escHtml(text);
   return parts.map(p=>'<div style="margin-bottom:6px">'+escHtml(p)+'</div>').join('');

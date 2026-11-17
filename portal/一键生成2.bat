@@ -15,6 +15,9 @@ rem  stale ones, then copies into Tencentyyy and pushes:
 rem    NPI Search       <- NPI_vx\Spec master workbook
 rem    TTM Check        <- NPI_vx\Spec master workbook + TTM_expect_mp.json
 rem    Spec2 standalone <- spec2\Spec master copy
+rem    WebNPI Product Matrix <- webnpi\Spec master copy + mktt.xlsx + 不統計.xlsx + template.html
+rem                       (same logic as webnpi\update.bat steps 1-2, but only rebuilds
+rem                        when a source is newer; copy+gate done by sync_web.py MAPPING)
 rem    KeyPart material <- kpc\KP_material\*.xlsx
 rem    WB shipment      <- WB\WB order-control sheet (*.xlsx)
 rem    Certificate map  <- AI assistant\certificate1\certificate\MSI_Weibu_认证档案.html (靜態拷貝，手動 rebuild_archive.bat 後部署)

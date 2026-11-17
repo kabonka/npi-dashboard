@@ -46,9 +46,13 @@ MAPPING = [
     ("../TTM_check.html",          "NPI_vx_web/TTM_check.html"),
     ("../TTM_expect_mp.json",      "TTM_expect_mp.json"),
     ("../../spec2/index.standalone.html", "spec2_web/index.html"),
+    # WebNPI Product Matrix：由 webnpi 的 gen_matrix.py + build.py 產出，
+    # 和 SPEC2 一樣走標準 MAPPING → 統一 gate 注入 + 卡片 mtime 注入。
+    ("../../webnpi/product_matrix.html",   "webnpi_web/index.html"),
     ("../../epeats/epeat_dashboard.html",  "epeats_web/index.html"),
     ("../epeats_web/xlsx.full.min.js",     "epeats_web/xlsx.full.min.js"),
-    ("../../kpc/html material/material.html", "kpc_web/material.html"),
+    # Spec vs Keypart：改用 kpc2（精簡版工具鏈，KP_material 比 kpc 新）
+    ("../../kpc2/html material/material.html", "kpc_web/material.html"),
     ("../../WB/WB 訂單管控表 - *.html",   "weibu_web/weiBu_shipment.html"),
     # Cert. Map：改用 certificate1 的 MSI_Weibu_认证档案.html（自包含單檔，靜態拷貝）
     ("../../certificate1/certificate/MSI_Weibu_认证档案.html",
@@ -60,7 +64,8 @@ MAPPING = [
     ("../../materail prep/web/material_prep_viewer.html",   "material_prep_web/material_prep_viewer.html"),
 ]
 
-EXTERNAL_KEEP = {"webnpi_web/index.html"}
+# webnpi_web/index.html 已改走標準 MAPPING，不再需要外部保留例外。
+EXTERNAL_KEEP = set()
 ALLOWED = {dst for _, dst in MAPPING} | EXTERNAL_KEEP | {"gate.js"}
 TEXT_EXT = (".html", ".js", ".css")
 
@@ -137,10 +142,23 @@ OTHER_BUILDS = [
         "steps": [(os.path.join(AA_ROOT, "spec2"), "update_all.py", [], True)],
     },
     {
+        # WebNPI Product Matrix：等同 webnpi\update.bat 的 [1/3]+[2/3]，
+        # 但沿用統一的「來源比產出新才重建」判斷，避免每次一鍵都無謂重建。
+        # [3/3]（複製到 webnpi_web）由本腳本的 MAPPING 統一處理。
+        "name": "WebNPI Product Matrix",
+        "pairs": [((os.path.join(AA_ROOT, "webnpi"), "product_matrix.html"),
+                   [(os.path.join(AA_ROOT, "webnpi"), "Spec總表.xlsx"),
+                    (os.path.join(AA_ROOT, "webnpi"), "mktt.xlsx"),
+                    (os.path.join(AA_ROOT, "webnpi"), "不統計.xlsx"),
+                    (os.path.join(AA_ROOT, "webnpi"), "template.html")])],
+        "steps": [(os.path.join(AA_ROOT, "webnpi"), "gen_matrix.py", [], True),
+                  (os.path.join(AA_ROOT, "webnpi"), "build.py", [], True)],
+    },
+    {
         "name": "KeyPart material",
-        "pairs": [((os.path.join(AA_ROOT, "kpc"), os.path.join("html material", "material.html")),
-                   [(os.path.join(AA_ROOT, "kpc"), os.path.join("KP_material", "*.xlsx"))])],
-        "steps": [(os.path.join(AA_ROOT, "kpc"), "build_keypart_material.py", [], True)],
+        "pairs": [((os.path.join(AA_ROOT, "kpc2"), os.path.join("html material", "material.html")),
+                   [(os.path.join(AA_ROOT, "kpc2"), os.path.join("KP_material", "*.xlsx"))])],
+        "steps": [(os.path.join(AA_ROOT, "kpc2"), "build_keypart_material.py", [], True)],
     },
     {
         "name": "WB shipment",

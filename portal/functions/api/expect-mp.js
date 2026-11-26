@@ -77,14 +77,14 @@ export async function onRequestGet(context) {
   try {
     const map = await kvMap(context);
     if (Object.keys(map).length === 0) {
-      const r = await fetch(SEED_URL, { cache: 'no-store' });
+      const r = await fetch(new URL(SEED_URL, context.request.url).href, { cache: 'no-store' });
       if (r.ok) return json(await r.json());
     }
     return json(map);
   } catch (e) {
-    // KV unbound or error -> try static seed.
+    // KV unbound or error -> try static seed (absolute URL: relative fetch fails in Edge Functions).
     try {
-      const r = await fetch(SEED_URL, { cache: 'no-store' });
+      const r = await fetch(new URL(SEED_URL, context.request.url).href, { cache: 'no-store' });
       if (r.ok) return json(await r.json());
     } catch (_) {}
     return json({ error: String(e) }, 500);

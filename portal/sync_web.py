@@ -42,6 +42,8 @@ MAPPING = [
     ("version.json",               "version.json"),
     ("DEPLOY_README.md",           "README.md"),
     ("functions/api/expect-mp.js", "functions/api/expect-mp.js"),
+    ("functions/api/login-log.js", "functions/api/login-log.js"),
+    ("login-log.html",             "login-log.html"),
     ("../npi_search.html",         "NPI_vx_web/npi_search.html"),
     ("../TTM_check.html",          "NPI_vx_web/TTM_check.html"),
     ("../TTM_expect_mp.json",      "TTM_expect_mp.json"),

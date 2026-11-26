@@ -5,6 +5,8 @@ rem    [1] rebuild ONLY the pages whose sources are newer than the HTML
 rem        (implemented inside sync_web.py; see the list below)
 rem    [2] sync sources into Tencentyyy
 rem    [3] push to GitHub -> EdgeOne auto-deploys (~15-20s)
+rem  NEW STEP 3: build_whitelist.py regenerates gate.js ALLOWED_EMAILS from portal\whitelist.xlsx.
+rem  whitelist.xlsx is a LOCAL source only - it is never deployed to the site.
 rem
 rem  The per-page update_*.bat files still work, but they are no longer
 rem  required before running this file.
@@ -93,17 +95,22 @@ echo === STEP 2: Install openpyxl ===
 echo Done
 
 echo.
-echo === STEP 3: Refresh NPI Material + sync sources into Tencentyyy ===
+echo === STEP 3: Rebuild gate.js whitelist from whitelist.xlsx ===
+%PYCMD% "%~dp0build_whitelist.py"
+echo ExitCode: %errorlevel%
+
+echo.
+echo === STEP 4: Refresh NPI Material + sync sources into Tencentyyy ===
 %PYCMD% "%~dp0sync_web.py"
 echo ExitCode: %errorlevel%
 
 echo.
-echo === STEP 4: Push deploy repo (Tencentyyy = LIVE site) ===
+echo === STEP 5: Push deploy repo (Tencentyyy = LIVE site) ===
 %PYCMD% "%~dp0deploy_push.py"
 echo ExitCode: %errorlevel%
 
 echo.
-echo === STEP 5: Backup push old repo (kabonka/npi-dashboard) ===
+echo === STEP 6: Backup push old repo (kabonka/npi-dashboard) ===
 %PYCMD% "%~dp0..\build_npi.py" --upload-only
 echo ExitCode: %errorlevel%
 
